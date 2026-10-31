@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Heart, Phone } from "lucide-react";
 import { FaInstagram, FaViber } from "react-icons/fa6";
+import { SiGooglemaps } from "react-icons/si";
+import { INSTAGRAM_URL, MAPS_URL } from "@/data/contact";
 
 const socials = [
   { href: "tel:+38268210652", label: "Phone", icon: Phone, color: "bg-[#0c024e]" },
+  { href: MAPS_URL, label: "Google Maps", icon: SiGooglemaps, color: "bg-[#4285F4]" },
   {
-    href: "https://www.instagram.com/fantazija20/",
+    href: INSTAGRAM_URL,
     label: "Instagram",
     icon: FaInstagram,
     color: "bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)]",

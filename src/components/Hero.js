@@ -6,7 +6,7 @@ const heroImage = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?
 
 export default function Hero() {
   return (
-    <section id="top" className="mx-auto grid min-h-[620px] max-w-[1240px] items-center gap-[70px] px-8 pt-9 pb-18 max-lg:flex max-md:flex-col max-md:gap-11 max-md:px-5 lg:grid-cols-[0.92fr_1.08fr]">
+    <section id="top" className="mx-auto grid max-w-[1240px] items-center gap-[70px] px-8 pt-9 pb-10 md:min-h-[620px] md:pb-18 max-lg:flex max-md:flex-col max-md:gap-11 max-md:px-5 lg:grid-cols-[0.92fr_1.08fr]">
       <div className="max-md:order-2 w-full">
         <p className={eyebrow}>
           <Heart className="size-3.25" fill="currentColor" /> Poslastičarnica u Tuzima · od 2012.
@@ -27,7 +27,7 @@ export default function Hero() {
             Upoznajte nas <ArrowRight className="size-4" />
           </Link>
         </div>
-        <div className="mt-17 flex items-center gap-3 text-[11px] uppercase tracking-[0.1em] text-[#a89891]">
+        <div className="mt-10 flex items-center gap-3 md:mt-17 text-[11px] uppercase tracking-[0.1em] text-[#a89891]">
           <span className="h-px w-10.5 bg-gold" />
           <span>Tuzi · Montenegro</span>
         </div>

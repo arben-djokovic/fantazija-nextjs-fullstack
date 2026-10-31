@@ -12,7 +12,7 @@ const products = [
 
 export default function Offer() {
   return (
-    <section id="offer" className={`${section} scroll-mt-24`}>
+    <section id="offer" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-12 md:px-8 md:py-28">
       <div className="mb-8 flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
         <div>
           <p className={eyebrow}>01 · Ponuda</p>
