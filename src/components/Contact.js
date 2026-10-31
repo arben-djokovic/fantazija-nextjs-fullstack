@@ -10,7 +10,7 @@ export default function Contact() {
         <p style={{color: "#e8b3c4"}} className={`${eyebrow}`}>06 · Kontakt</p>
         <h2 className="mb-4 font-serif text-[clamp(38px,4vw,57px)] leading-none tracking-[-2px] text-[#fffaf5]">Posjetite nas</h2>
         <p className="text-[15px] leading-[1.7] text-[#c8b8b0]">Dođite da se upoznamo — vrata su vam uvijek otvorena.</p>
-        <div className="md:my-9.5 flex flex-col gap-5">
+        <div className="mt-6 md:mt-9.5 md:my-9.5 flex flex-col gap-5">
           <a href={MAPS_URL} target="_blank" rel="noreferrer" className="group grid grid-cols-[23px_1fr] gap-x-2.25">
             <MapPin className="row-span-2 size-3.75 text-[#e8b3c4]" />
             <strong className="text-[13px] font-medium group-hover:underline">Tuzi, Montenegro</strong>

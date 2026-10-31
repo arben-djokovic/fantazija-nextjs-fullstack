@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cakeCategories, cakes, pastries } from "@/data/offer";
 import OfferCard from "@/components/OfferCard";
-import { eyebrow, linkBtn, section, sectionTitle } from "@/components/styles";
+import { eyebrow, linkBtn, sectionTitle } from "@/components/styles";
 
 const tabs = [
   { value: "cakes", label: "Torte" },
@@ -19,7 +19,7 @@ export default function OfferCatalog() {
   const visibleCakes = category === "all" ? cakes : cakes.filter((cake) => cake.category === category);
 
   return (
-    <section className={section}>
+    <section className="mx-auto max-w-7xl px-5 pt-8 pb-20 md:px-8 md:pt-12 md:pb-28">
       <div className="mb-12 text-center">
         <p className={`${eyebrow} justify-center`}>Ponuda</p>
         <h1 className={sectionTitle}>Naša ponuda</h1>
