@@ -42,7 +42,7 @@ export default async function LocaleLayout({ children, params }) {
             <PageLoader label={tLoader("loading")} />
             <SmoothAnchors />
             <Header />
-            <div className="flex-1 min-h-[calc(100vh-200px)] w-full flex flex-col items-center justify-center">
+            <div className="flex-1 min-h-[calc(100vh-200px)] w-full flex flex-col justify-center">
             {children}
             </div>
             <Footer />

@@ -17,7 +17,7 @@ async function GalleryContent({ params }) {
 
 export default function GalleryPage({ params }) {
   return (
-    <main className="mx-auto max-w-6xl px-4 py-16">
+    <main className="mx-auto w-full max-w-6xl px-4 py-16">
       <Suspense fallback={null}>
         <GalleryContent params={params} />
       </Suspense>

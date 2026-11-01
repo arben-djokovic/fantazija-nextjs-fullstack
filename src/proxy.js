@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
 
@@ -12,7 +12,10 @@ export default function proxy(request) {
     return NextResponse.next();
   }
 
-  return handleI18n(request);
+  // 404 stranica nije u [locale] i ne zna adresu, pa joj je šaljemo da zastavice vode na istu adresu na drugom jeziku.
+  const headers = new Headers(request.headers);
+  headers.set("x-pathname", pathname);
+  return handleI18n(new NextRequest(request, { headers }));
 }
 
 export const config = {

@@ -247,9 +247,7 @@
     "steps": {
       "type": "Tip torte",
       "flavour": "Ukus",
-      "decoration": "Dekoracija",
-      "pickup": "Preuzimanje",
-      "details": "Vaši podaci"
+      "decoration": "Dekoracija"
     },
     "eyebrow": "Slatki trenutak po vašoj želji",
     "title": "Napravi svoju tortu",
@@ -311,21 +309,9 @@
     "fasting": "Posna torta",
     "gluten": "Bez glutena",
     "onRequestAvailable": "(dostupno na zahtjev)",
-    "pickupTitle": "Preuzimanje",
-    "pickupDate": "Datum preuzimanja",
-    "pickupTime": "Vrijeme",
-    "pickupDefault": "09:00 – 22:00",
-    "shopOnly": "Preuzimanje je moguće samo u našoj radnji u Tuzima.",
-    "detailsTitle": "Vaši podaci",
-    "fullName": "Ime i prezime",
-    "namePlaceholder": "Milica Petrović",
-    "phone": "Broj telefona",
-    "phonePlaceholder": "+382 68 000 000",
-    "viber": "Koristim Viber na ovom broju",
-    "mustConfirm": "Svaka porudžbina mora biti potvrđena telefonom.",
     "finalPrice": "Konačna cijena se potvrđuje kada vas pozovemo.",
     "successTitle": "Hvala vam!",
-    "successText": "Vaša torta je dodata u korpu. Porudžbina nije potvrđena dok vas ne pozovemo.",
+    "successText": "Vaša torta je dodata u korpu. U korpi izaberite termin preuzimanja i ostavite kontakt da završite porudžbinu.",
     "viewCart": "Pogledaj korpu",
     "callUs": "Pozovite nas",
     "summaryTitle": "Pregled porudžbine",
@@ -336,5 +322,10 @@
   },
   "Loader": {
     "loading": "Učitavanje..."
+  },
+  "NotFound": {
+    "title": "Stranica ne postoji",
+    "text": "Stranica ne postoji.",
+    "back": "Nazad na početnu"
   }
 }

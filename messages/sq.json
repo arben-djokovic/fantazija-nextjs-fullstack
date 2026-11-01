@@ -2,7 +2,7 @@
   "Metadata": {
     "home": {
       "title": "Pasticeria Fantazija",
-      "description": "Torta shtëpiake, ëmbëlsira dhe shijet e ëmbla nga Pasticeria Fantazija në Tuz."
+      "description": "Torta shtëpiake, ëmbëlsira dhe kafshata të ëmbla nga Pasticeria Fantazija në Tuz."
     },
     "offer": {
       "title": "Oferta",
@@ -37,19 +37,19 @@
     }
   },
   "Hero": {
-    "eyebrow": "Pasticeri në Tuzi · që nga 2012.",
+    "eyebrow": "Pasticeri në Tuz · që nga viti 2012",
     "titleLine1": "Momente të ëmbla",
     "titleLine2": "për t’u kujtuar.",
-    "text": "Torta shtëpiake, ëmbëlsira dhe aroma e kafesë — të përgatitura me dashuri për ditët e rëndësishme dhe ato të zakonshme.",
+    "text": "Torta shtëpiake, ëmbëlsira dhe aroma e kafesë — të përgatitura me dashuri për ditët e rëndësishme dhe për ato krejt të zakonshme.",
     "viewOffer": "Shikoni ofertën",
     "meetUs": "Na njihni",
-    "location": "Tuzi · Montenegro",
-    "imageAlt": "Tortë elegante me çokollatë dhe fruta me boronica"
+    "location": "Tuz · Mali i Zi",
+    "imageAlt": "Tortë elegante me çokollatë dhe fruta pyjore"
   },
   "OfferHome": {
     "eyebrow": "01 · Oferta",
     "title": "Nga vitrina jonë",
-    "subtitle": "Një zgjedhje e vogël kënaqësish të mëdha, çdo ditë të freskëta.",
+    "subtitle": "Një zgjedhje e vogël kënaqësish të mëdha, të freskëta çdo ditë.",
     "seeAll": "Shikoni të gjithë ofertën",
     "priceFrom": "nga {price}",
     "pricePiece": "{price} / copë",
@@ -58,15 +58,15 @@
     "products": {
       "cokoladna": {
         "name": "Tortë me çokollatë",
-        "desc": "Biskotë e pasur me çokollatë, krem mëndafshi dhe pak magji."
+        "desc": "Pandispanjë e pasur me çokollatë, krem i butë si mëndafshi dhe pak magji."
       },
       "vocna": {
         "name": "Tortë me fruta",
-        "desc": "Krem i lehtë me vanilje, fruta të stinës dhe gëzim të freskët."
+        "desc": "Krem i lehtë me vanilje, fruta të stinës dhe gëzim i freskët."
       },
       "trilece": {
-        "name": "Trileće",
-        "desc": "E butë, me qumësht dhe jashtëzakonisht delikate — favoriti i vërtetë."
+        "name": "Trileçe",
+        "desc": "E butë, me qumësht dhe jashtëzakonisht delikate — e preferuara e të gjithëve."
       },
       "rafaelo": {
         "name": "Rafaelo",
@@ -76,12 +76,12 @@
   },
   "About": {
     "eyebrow": "02 · Rreth nesh",
-    "titleLine1": "Familja, traditë",
+    "titleLine1": "Familje, traditë",
     "titleLine2": "dhe shumë",
     "titleAccent": "dashuri.",
-    "text": "Fantazija është një pasticeri e vogël familjare në zemër të Tuzit. Që nga 2012 bëjmë torta dhe ëmbëlsira që mbledhin njerëzit rreth tryezës — nga kafshata e parë deri te thërrimi i fundit.",
+    "text": "Fantazija është një pasticeri e vogël familjare në zemër të Tuzit. Që nga viti 2012 përgatisim torta dhe ëmbëlsira që i mbledhin njerëzit rreth tryezës — nga kafshata e parë deri te thërrimja e fundit.",
     "quote": "„Kujtimet më të bukura fillojnë me diçka të ëmbël.”",
-    "cta": "Vizitoni",
+    "cta": "Na vizitoni",
     "badgeNumber": "12",
     "badgeLine1": "vjet",
     "badgeLine2": "histori të ëmbla",
@@ -94,7 +94,7 @@
     "photos": {
       "cake": "Tortë me çokollatë për festë",
       "fruit": "Tortë me fruta",
-      "pastries": "Ëmbëlsira të freskëta, të pjekura",
+      "pastries": "Ëmbëlsira të sapopjekura",
       "cream": "Ëmbëlsirë kremoze",
       "wedding": "Tortë dasme"
     }
@@ -103,7 +103,7 @@
     "eyebrow": "06 · Kontakti",
     "title": "Na vizitoni",
     "text": "Ejani të njihemi — dyert tona janë gjithmonë të hapura për ju.",
-    "address": "Tuzi, Montenegro",
+    "address": "Tuz, Mali i Zi",
     "plusCode": "Kodi plus i Google Maps · 986H+GW9",
     "hoursLabel": "Hapur çdo ditë",
     "hours": "09:00 – 22:00",
@@ -115,7 +115,7 @@
   "Footer": {
     "tagline": "Vendi ku çdo ditë ka shijen e festës.",
     "contactTitle": "Kontakti",
-    "address": "Tuzi, Montenegro",
+    "address": "Tuz, Mali i Zi",
     "hours": "09:00 – 22:00 · çdo ditë",
     "copyright": "© 2024 Fantazija",
     "madeIn": "Me dashuri nga Tuzi",
@@ -134,19 +134,19 @@
       },
       "vocna": {
         "name": "Tortë me fruta",
-        "desc": "Krem i lehtë, fruta të freskëta dhe biskotë e butë."
+        "desc": "Krem i lehtë, fruta të freskëta dhe pandispanjë e butë."
       },
       "rafaelo-torta": {
         "name": "Tortë Rafaelo",
-        "desc": "Kokos, çokollatë e bardhë dhe bajame në një shtresë luksoze."
+        "desc": "Kokos, çokollatë e bardhë dhe bajame në shtresa luksoze."
       },
       "pistachio": {
         "name": "Pistachio dream",
-        "desc": "Fëstëkë, çokollatë e bardhë dhe krem mëndafshi."
+        "desc": "Fëstëkë, çokollatë e bardhë dhe krem i butë si mëndafshi."
       },
       "svadbena": {
         "name": "Tortë dasme",
-        "desc": "Tortë sipas masës për ditën tuaj më të rëndësishme."
+        "desc": "Tortë sipas porosisë për ditën tuaj më të rëndësishme."
       },
       "po-zamisli": {
         "name": "Tortë sipas idesë suaj",
@@ -155,16 +155,16 @@
     },
     "pastries": {
       "trilece": {
-        "name": "Trileće",
-        "desc": "E butë dhe me qumësht."
+        "name": "Trileçe",
+        "desc": "E butë, me qumësht dhe delikate."
       },
       "rafaelo": {
         "name": "Rafaelo",
         "desc": "Kokos, çokollatë e bardhë dhe bajame."
       },
       "baklava": {
-        "name": "Baklava",
-        "desc": "Fletë të freskëta dhe shurup shtëpiak."
+        "name": "Bakllava",
+        "desc": "Petë krokante dhe shurup shtëpiak."
       }
     },
     "options": {
@@ -173,7 +173,7 @@
       "kilogram": "Kilogram",
       "mala": "E vogël",
       "velika": "E madhe",
-      "cijela": "Tortë e tërë",
+      "cijela": "Tortë e plotë",
       "poDogovoru": "Sipas marrëveshjes"
     },
     "notes": {
@@ -182,7 +182,7 @@
     },
     "badges": {
       "glutenFree": "Pa gluten",
-      "fasting": "Pa yndyrë shtazore"
+      "fasting": "Pa produkte shtazore"
     }
   },
   "Offer": {
@@ -197,7 +197,7 @@
       "premium": "Premium",
       "special": "Speciale"
     },
-    "bannerEyebrow": "TORTË SIPAS MASËS SUAJ",
+    "bannerEyebrow": "TORTË SIPAS DËSHIRËS SUAJ",
     "bannerTitle": "Krijo tortën tënde",
     "bannerText": "Zgjidh shijen, madhësinë, dekorimin dhe fotografinë hap pas hapi.",
     "bannerCta": "Fillo krijimin"
@@ -215,14 +215,14 @@
     "eyebrowText": "Fantazija · Tuz",
     "sentEyebrow": "Kërkesa u dërgua",
     "sentTitle": "Faleminderit!",
-    "sentText": "E morëm kërkesën tuaj. Porosia nuk konfirmohet derisa t’ju telefonojmë. Do t’ju kontaktojmë së shpejti në {phone}.",
-    "backHome": "Kthehu në fillim",
+    "sentText": "E morëm kërkesën tuaj. Porosia nuk është e konfirmuar derisa t’ju telefonojmë. Do t’ju kontaktojmë së shpejti në {phone}.",
+    "backHome": "Kthehu në ballinë",
     "callUs": "Na telefononi",
     "emptyTitle": "Shporta është bosh",
     "emptyText": "Shtoni një tortë ose ëmbëlsira për të vazhduar.",
     "viewOffer": "Shiko ofertën",
     "title": "Porosia juaj",
-    "backToOffer": "Porosit edhe",
+    "backToOffer": "Porosit diçka tjetër",
     "remove": "Hiqe",
     "decrease": "Zvogëlo",
     "increase": "Rrit",
@@ -237,19 +237,17 @@
     "viber": "Përdor Viber",
     "total": "Totali",
     "phoneNote": "Çmimi i disa artikujve caktohet me telefon.",
-    "notConfirmed": "Porosia juaj nuk konfirmohet derisa t’ju telefonojmë.",
+    "notConfirmed": "Porosia juaj nuk është e konfirmuar derisa t’ju telefonojmë.",
     "submit": "Dërgo kërkesën",
     "orCall": "Ose na telefononi në",
-    "namePlaceholder": "Milica Petrović",
+    "namePlaceholder": "Arta Gjokaj",
     "phonePlaceholder": "+382 68 000 000"
   },
   "CakeBuilder": {
     "steps": {
       "type": "Lloji i tortës",
       "flavour": "Shija",
-      "decoration": "Dekorimi",
-      "pickup": "Marrja",
-      "details": "Të dhënat tuaja"
+      "decoration": "Dekorimi"
     },
     "eyebrow": "Një moment i ëmbël sipas dëshirës suaj",
     "title": "Krijo tortën tënde",
@@ -269,7 +267,7 @@
       },
       "special": {
         "label": "Torta speciale",
-        "hint": "Dasma, torta me kate dhe dizajne sipas idesë suaj."
+        "hint": "Torta dasme, torta me kate dhe torta sipas idesë suaj."
       }
     },
     "priceFrom": "nga {price}",
@@ -298,43 +296,36 @@
     },
     "ideaTitle": "Përshkruani idenë tuaj",
     "idea": "Ideja juaj",
-    "ideaPlaceholder": "Numri i kateve, afërsisht numri i mysafirëve, stili...",
+    "ideaPlaceholder": "Numri i kateve, numri i përafërt i të ftuarve, stili...",
     "decorationTitle": "Dekorimi dhe detajet",
-    "photoLabel": "Foto mbi tortë",
-    "photoHint": "Shtoni fotografinë që dëshironi (+{price})",
+    "photoLabel": "Fotografi në tortë",
+    "photoHint": "Shtoni fotografinë që dëshironi në tortë (+{price})",
     "addPhoto": "Shtoni fotografi",
-    "inscription": "Shkrimi mbi tortë",
+    "inscription": "Mbishkrimi në tortë",
     "optional": "(opsionale)",
     "inscriptionPlaceholder": "Sipas dëshirës",
-    "wishes": "Dëshirat për dekorim",
-    "wishesPlaceholder": "Ngjyra, temë, figura...",
-    "fasting": "Tortë pa yndyrë shtazore",
+    "wishes": "Dëshirat për dekorimin",
+    "wishesPlaceholder": "Ngjyrat, tema, figurinat...",
+    "fasting": "Tortë pa produkte shtazore",
     "gluten": "Pa gluten",
     "onRequestAvailable": "(e disponueshme me kërkesë)",
-    "pickupTitle": "Marrja",
-    "pickupDate": "Data e marrjes",
-    "pickupTime": "Ora",
-    "pickupDefault": "09:00 – 22:00",
-    "shopOnly": "Marrja është e mundur vetëm në dyqanin tonë në Tuz.",
-    "detailsTitle": "Të dhënat tuaja",
-    "fullName": "Emri dhe mbiemri",
-    "namePlaceholder": "Milica Petrović",
-    "phone": "Numri i telefonit",
-    "phonePlaceholder": "+382 68 000 000",
-    "viber": "Përdor Viber në këtë numër",
-    "mustConfirm": "Çdo porosi duhet të konfirmohet me telefon.",
     "finalPrice": "Çmimi përfundimtar konfirmohet kur t’ju telefonojmë.",
     "successTitle": "Faleminderit!",
-    "successText": "Torta juaj u shtua në shportë. Porosia nuk konfirmohet derisa t’ju telefonojmë.",
+    "successText": "Torta juaj u shtua në shportë. Në shportë zgjidhni orarin e marrjes dhe lini kontaktin për të përfunduar porosinë.",
     "viewCart": "Shiko shportën",
     "callUs": "Na telefononi",
     "summaryTitle": "Përmbledhja e porosisë",
-    "estimated": "Çmimi i vlerësuar",
+    "estimated": "Çmimi i përafërt",
     "phonePricing": "Çmimi caktohet me telefon",
     "photo": "Fotografia",
     "specialCake": "Tortë speciale"
   },
   "Loader": {
     "loading": "Duke u ngarkuar..."
+  },
+  "NotFound": {
+    "title": "Faqja nuk ekziston",
+    "text": "Faqja që kërkuat nuk ekziston.",
+    "back": "Kthehu në ballinë"
   }
 }

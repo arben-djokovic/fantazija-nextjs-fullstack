@@ -6,10 +6,10 @@ import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Heart, Phone, 
 import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, linkBtn, section } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
-import { pickupTimes, tomorrowISO } from "@/lib/date";
 import { Link } from "@/i18n/navigation";
 
-const STEP_KEYS = ["type", "flavour", "decoration", "pickup", "details"];
+// Termin preuzimanja i podatke kupca unosi checkout, pa se torta ovdje samo sastavi i doda u korpu.
+const STEP_KEYS = ["type", "flavour", "decoration"];
 
 const CAKE_TYPES = {
   classic: { icon: "01", price: 15 },
@@ -103,11 +103,6 @@ export default function CakeBuilder() {
   const [idea, setIdea] = useState("");
   const [fasting, setFasting] = useState(false);
   const [gluten, setGluten] = useState(false);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [viber, setViber] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const basePrice =
@@ -137,7 +132,16 @@ export default function CakeBuilder() {
       quantity: 1,
       unitPrice: total ?? undefined,
       phonePrice: phonePricing,
-      summary: [wishes.trim(), inscription.trim() && `${t("inscription")}: ${inscription.trim()}`].filter(Boolean).join(" · ") || undefined,
+      summary:
+        [
+          cakeType === "special" && idea.trim(),
+          wishes.trim(),
+          inscription.trim() && `${t("inscription")}: ${inscription.trim()}`,
+          fasting && t("fasting"),
+          gluten && t("gluten"),
+        ]
+          .filter(Boolean)
+          .join(" · ") || undefined,
     });
     setSubmitted(true);
   };
@@ -323,55 +327,6 @@ export default function CakeBuilder() {
               </>
             )}
 
-            {step === 4 && (
-              <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">{t("pickupTitle")}</h2>
-                <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <label className="flex flex-col gap-2 text-xs font-semibold text-ink">
-                    {t("pickupDate")}
-                    <input type="date" min={tomorrowISO()} value={date} onChange={(event) => setDate(event.target.value)} className={fieldInput} />
-                  </label>
-                  <label className="flex flex-col gap-2 text-xs font-semibold text-ink">
-                    {t("pickupTime")}
-                    <select value={time} onChange={(event) => setTime(event.target.value)} className={fieldInput}>
-                      <option value="">{t("pickupDefault")}</option>
-                      {pickupTimes.map((hour) => (
-                        <option key={hour} value={hour}>
-                          {hour}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="flex items-center gap-3 rounded-lg bg-blush p-4 text-xs text-muted">
-                  <Heart className="size-4 flex-none text-primary" fill="currentColor" />
-                  {t("shopOnly")}
-                </div>
-              </>
-            )}
-
-            {step === 5 && (
-              <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">{t("detailsTitle")}</h2>
-                <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                  {t("fullName")}
-                  <input value={name} onChange={(event) => setName(event.target.value)} placeholder={t("namePlaceholder")} className={fieldInput} required />
-                </label>
-                <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                  {t("phone")}
-                  <input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder={t("phonePlaceholder")} className={fieldInput} required />
-                </label>
-                <label className={`${checkboxLabel} mb-6`}>
-                  <input type="checkbox" checked={viber} onChange={(event) => setViber(event.target.checked)} className="mt-0.5 accent-primary" />
-                  {t("viber")}
-                </label>
-                <div className="flex flex-col gap-1.5 border-t border-line pt-5 text-xs">
-                  <strong className="text-ink">{t("mustConfirm")}</strong>
-                  <span className="text-muted">{t("finalPrice")}</span>
-                </div>
-              </>
-            )}
-
             <div className="mt-auto flex items-center gap-3 border-t border-line pt-8">
               {step > 1 && (
                 <button
@@ -394,8 +349,7 @@ export default function CakeBuilder() {
                 <button
                   type="button"
                   onClick={handleAdd}
-                  disabled={!name.trim() || !phone.trim()}
-                  className="ml-auto inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="ml-auto inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
                   {t("addToCart")} <ArrowRight className="size-4" />
                 </button>

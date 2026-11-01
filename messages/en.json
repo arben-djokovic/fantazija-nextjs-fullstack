@@ -247,9 +247,7 @@
     "steps": {
       "type": "Cake type",
       "flavour": "Flavour",
-      "decoration": "Decoration",
-      "pickup": "Pickup",
-      "details": "Your details"
+      "decoration": "Decoration"
     },
     "eyebrow": "A sweet moment, made your way",
     "title": "Create your own cake",
@@ -311,21 +309,9 @@
     "fasting": "Fasting cake",
     "gluten": "Gluten-free",
     "onRequestAvailable": "(available on request)",
-    "pickupTitle": "Pickup",
-    "pickupDate": "Pickup date",
-    "pickupTime": "Time",
-    "pickupDefault": "09:00 – 22:00",
-    "shopOnly": "Pickup is only possible at our shop in Tuzi.",
-    "detailsTitle": "Your details",
-    "fullName": "Full name",
-    "namePlaceholder": "Milica Petrović",
-    "phone": "Phone number",
-    "phonePlaceholder": "+382 68 000 000",
-    "viber": "I use Viber on this number",
-    "mustConfirm": "Every order must be confirmed by phone.",
     "finalPrice": "The final price is confirmed when we call you.",
     "successTitle": "Thank you!",
-    "successText": "Your cake has been added to the cart. The order is not confirmed until we call you.",
+    "successText": "Your cake has been added to the cart. In the cart, choose a pickup time and leave your contact details to finish the order.",
     "viewCart": "View cart",
     "callUs": "Call us",
     "summaryTitle": "Order summary",
@@ -336,5 +322,10 @@
   },
   "Loader": {
     "loading": "Loading..."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "text": "This page does not exist.",
+    "back": "Back to home"
   }
 }

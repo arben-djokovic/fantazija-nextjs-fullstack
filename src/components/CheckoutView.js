@@ -178,7 +178,7 @@ export default function CheckoutView() {
             disabled={!canSubmit}
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {t("submit")} <Phone className="size-4" />
+            {t("submit")}
           </button>
           <p className="text-center text-xs text-muted">
             {t("orCall")} <a href={`tel:${PHONE}`} className="font-semibold text-primary">{PHONE_LABEL}</a>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { languages } from "@/data/languages";
 
 const navLinks = [
   { href: "/", key: "home" },
@@ -11,12 +12,6 @@ const navLinks = [
   { href: "/#gallery", key: "gallery" },
   { href: "/#about", key: "about" },
   { href: "/#contact", key: "contact" },
-];
-
-const languages = [
-  { code: "me", flag: "/flags/me.png" },
-  { code: "sq", flag: "/flags/al.png" },
-  { code: "en", flag: "/flags/gb.png" },
 ];
 
 function Logo({ alt, tagline }) {
