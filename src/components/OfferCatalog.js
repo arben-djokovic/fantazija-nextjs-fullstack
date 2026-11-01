@@ -1,18 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { cakeCategories, cakes, pastries } from "@/data/offer";
 import OfferCard from "@/components/OfferCard";
 import { eyebrow, linkBtn, sectionTitle } from "@/components/styles";
+import { Link } from "@/i18n/navigation";
 
 const tabs = [
-  { value: "cakes", label: "Torte" },
-  { value: "pastries", label: "Kolači" },
+  { value: "cakes", labelKey: "tabCakes" },
+  { value: "pastries", labelKey: "tabPastries" },
 ];
 
 export default function OfferCatalog() {
+  const t = useTranslations("Offer");
   const [tab, setTab] = useState("cakes");
   const [category, setCategory] = useState("all");
 
@@ -21,11 +23,9 @@ export default function OfferCatalog() {
   return (
     <section className="mx-auto max-w-7xl px-5 pt-8 pb-20 md:px-8 md:pt-12 md:pb-28">
       <div className="mb-12 text-center">
-        <p className={`${eyebrow} justify-center`}>Ponuda</p>
-        <h1 className={sectionTitle}>Naša ponuda</h1>
-        <p className="mx-auto max-w-xl leading-relaxed text-muted">
-          Svježe torte, kolači i mali slatki zalogaji za svaki dan.
-        </p>
+        <p className={`${eyebrow} justify-center`}>{t("eyebrow")}</p>
+        <h1 className={sectionTitle}>{t("title")}</h1>
+        <p className="mx-auto max-w-xl leading-relaxed text-muted">{t("subtitle")}</p>
       </div>
 
       <div className="mb-10 flex justify-center">
@@ -41,7 +41,7 @@ export default function OfferCatalog() {
                 tab === item.value ? "bg-primary text-white" : "text-muted hover:text-ink"
               }`}
             >
-              {item.label}
+              {t(item.labelKey)}
             </button>
           ))}
         </div>
@@ -52,16 +52,14 @@ export default function OfferCatalog() {
           <div className="relative isolate mb-10 grid grid-cols-1 items-center gap-6 overflow-hidden rounded-[20px] border border-primary/30 bg-[linear-gradient(115deg,color-mix(in_srgb,var(--color-primary)_12%,var(--color-card)),var(--color-card)_60%)] px-6 py-8 shadow-[0_18px_50px_color-mix(in_srgb,var(--color-primary)_9%,transparent)] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:rounded-[24px] md:px-12 md:py-[42px]">
             <span aria-hidden="true" className="absolute -top-28 -right-17 -z-10 size-[300px] rounded-full bg-primary/20 blur-[2px]" />
             <div>
-              <p className="mb-3 text-[11px] font-bold tracking-[0.2em] text-primary">TORTA PO TVOJOJ MJERI</p>
+              <p className="mb-3 text-[11px] font-bold tracking-[0.2em] text-primary">{t("bannerEyebrow")}</p>
               <h2 className="max-w-[520px] font-serif text-[clamp(34px,5vw,58px)] leading-[0.98] tracking-[-2px] text-ink">
-                Napravi svoju tortu
+                {t("bannerTitle")}
               </h2>
-              <p className="mt-4 max-w-[510px] text-[15px] leading-[1.65] text-muted">
-                Izaberi ukus, veličinu, dekoraciju i fotografiju korak po korak.
-              </p>
+              <p className="mt-4 max-w-[510px] text-[15px] leading-[1.65] text-muted">{t("bannerText")}</p>
             </div>
             <Link href="/cake-builder" className={`${linkBtn} h-12 whitespace-nowrap px-[22px] md:justify-self-end`}>
-              Počni izradu <ArrowRight className="size-4" />
+              {t("bannerCta")} <ArrowRight className="size-4" />
             </Link>
           </div>
 
@@ -77,7 +75,7 @@ export default function OfferCatalog() {
                     : "border-line text-muted hover:border-primary hover:text-primary"
                 }`}
               >
-                {item.label}
+                {t(`categories.${item.value}`)}
               </button>
             ))}
           </div>

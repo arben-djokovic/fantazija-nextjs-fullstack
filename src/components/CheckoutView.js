@@ -2,17 +2,20 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Minus, Phone, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, linkBtn, section } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { pickupTimes, tomorrowISO } from "@/lib/date";
+import { Link } from "@/i18n/navigation";
 
 const PHONE = "+38268210652";
 const PHONE_LABEL = "+382 68 210 652";
 
 export default function CheckoutView() {
+  const t = useTranslations("Checkout");
+  const locale = useLocale();
   const { items, total, hasPhonePrice, updateQuantity, removeItem, clear } = useCart();
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -25,18 +28,15 @@ export default function CheckoutView() {
     return (
       <section className={`${section} text-center`}>
         <div className="mx-auto max-w-xl rounded-2xl border border-line bg-card p-10">
-          <p className={`${eyebrow} justify-center`}>Zahtjev poslat</p>
-          <h1 className="mb-5 font-serif text-5xl text-ink">Hvala vam!</h1>
-          <p className="leading-relaxed text-muted">
-            Primili smo vaš zahtjev. Porudžbina nije potvrđena dok vas ne pozovemo. Javićemo vam se uskoro na{" "}
-            <strong className="text-ink">{phone}</strong>.
-          </p>
+          <p className={`${eyebrow} justify-center`}>{t("sentEyebrow")}</p>
+          <h1 className="mb-5 font-serif text-5xl text-ink">{t("sentTitle")}</h1>
+          <p className="leading-relaxed text-muted">{t("sentText", { phone })}</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/" className={linkBtn}>
-              Nazad na početnu
+              {t("backHome")}
             </Link>
             <a href={`tel:${PHONE}`} className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 text-sm font-semibold text-ink transition-colors hover:border-primary">
-              <Phone className="size-4" /> Pozovite nas
+              <Phone className="size-4" /> {t("callUs")}
             </a>
           </div>
         </div>
@@ -47,14 +47,14 @@ export default function CheckoutView() {
   if (items.length === 0) {
     return (
       <section className={section}>
-        <p className={eyebrow}>Fantazija · Tuzi</p>
-        <h1 className="mb-8 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">Vaša porudžbina</h1>
+        <p className={eyebrow}>{t("eyebrowText")}</p>
+        <h1 className="mb-8 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">{t("title")}</h1>
         <div className="rounded-2xl border border-line bg-card p-8">
-          <h2 className="font-serif text-3xl text-ink">Porudžbina je prazna</h2>
-          <p className="mt-2 text-muted">Dodajte tortu ili kolače da biste nastavili.</p>
+          <h2 className="font-serif text-3xl text-ink">{t("emptyTitle")}</h2>
+          <p className="mt-2 text-muted">{t("emptyText")}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/offer" className={linkBtn}>
-              Pogledaj ponudu
+              {t("viewOffer")}
             </Link>
           </div>
         </div>
@@ -74,10 +74,10 @@ export default function CheckoutView() {
   return (
     <section className={section}>
       <Link href="/offer" className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-ink">
-        <ArrowLeft className="size-4" /> Naruči još
+        <ArrowLeft className="size-4" /> {t("backToOffer")}
       </Link>
-      <p className={eyebrow}>Fantazija · Tuzi</p>
-      <h1 className="mb-10 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">Vaša porudžbina</h1>
+      <p className={eyebrow}>{t("eyebrowText")}</p>
+      <h1 className="mb-10 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">{t("title")}</h1>
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="flex flex-col gap-3">
@@ -89,14 +89,16 @@ export default function CheckoutView() {
                   <h2 className="font-serif text-xl text-ink">{item.name}</h2>
                   <p className="text-xs text-muted">
                     {item.option}
-                    {item.unitPrice !== undefined ? ` · ${formatPrice(item.unitPrice)}` : " · cijena po dogovoru"}
+                    {item.unitPrice !== undefined
+                      ? ` · ${formatPrice(item.unitPrice, locale)}`
+                      : ` · ${t("priceOnRequestLine")}`}
                   </p>
                   {item.summary && <p className="mt-1 text-xs text-muted">{item.summary}</p>}
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    aria-label="Smanji količinu"
+                    aria-label={t("decrease")}
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     className="grid size-7 place-items-center rounded-full border border-line hover:border-primary"
                   >
@@ -105,7 +107,7 @@ export default function CheckoutView() {
                   <strong className="w-6 text-center text-sm">{item.quantity}</strong>
                   <button
                     type="button"
-                    aria-label="Povećaj količinu"
+                    aria-label={t("increase")}
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     className="grid size-7 place-items-center rounded-full border border-line hover:border-primary"
                   >
@@ -113,7 +115,7 @@ export default function CheckoutView() {
                   </button>
                   <button
                     type="button"
-                    aria-label="Ukloni"
+                    aria-label={t("remove")}
                     onClick={() => removeItem(item.id)}
                     className="ml-2 grid size-7 place-items-center rounded-full text-primary hover:bg-blush"
                   >
@@ -122,24 +124,24 @@ export default function CheckoutView() {
                 </div>
               </div>
               <strong className="text-sm whitespace-nowrap text-primary">
-                {item.unitPrice !== undefined ? formatPrice(item.unitPrice * item.quantity) : "Po dogovoru"}
+                {item.unitPrice !== undefined ? formatPrice(item.unitPrice * item.quantity, locale) : t("onRequestShort")}
               </strong>
             </article>
           ))}
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 self-start rounded-2xl border border-line bg-card p-6 md:p-7">
-          <h2 className="font-serif text-3xl text-ink">Preuzimanje u Tuzima</h2>
+          <h2 className="font-serif text-3xl text-ink">{t("pickupTitle")}</h2>
 
           <label className="flex flex-col gap-1.5 text-xs font-semibold text-muted">
-            Datum
+            {t("date")}
             <input type="date" min={tomorrowISO()} value={date} onChange={(e) => setDate(e.target.value)} className={fieldInput} required />
           </label>
 
           <label className="flex flex-col gap-1.5 text-xs font-semibold text-muted">
-            Vrijeme
+            {t("time")}
             <select value={time} onChange={(e) => setTime(e.target.value)} className={fieldInput} required>
-              <option value="">Izaberite vrijeme</option>
+              <option value="">{t("chooseTime")}</option>
               {pickupTimes.map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}
@@ -149,37 +151,37 @@ export default function CheckoutView() {
           </label>
 
           <label className="flex flex-col gap-1.5 text-xs font-semibold text-muted">
-            Ime i prezime
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Milica Petrović" className={fieldInput} required />
+            {t("name")}
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder={t("namePlaceholder")} className={fieldInput} required />
           </label>
 
           <label className="flex flex-col gap-1.5 text-xs font-semibold text-muted">
-            Broj telefona
-            <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+382 68 000 000" className={fieldInput} required />
+            {t("phone")}
+            <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t("phonePlaceholder")} className={fieldInput} required />
           </label>
 
           <label className="flex items-center gap-2 text-sm text-ink">
             <input type="checkbox" checked={viber} onChange={(e) => setViber(e.target.checked)} className="accent-primary" />
-            Koristim Viber
+            {t("viber")}
           </label>
 
           <div className="flex items-center justify-between border-t border-line pt-4 text-sm">
-            <span>Ukupno</span>
-            <strong className="font-serif text-2xl text-primary">{formatPrice(total)}</strong>
+            <span>{t("total")}</span>
+            <strong className="font-serif text-2xl text-primary">{formatPrice(total, locale)}</strong>
           </div>
 
-          {hasPhonePrice && <p className="text-xs leading-relaxed text-muted">Cijena nekih stavki dogovara se telefonom.</p>}
-          <p className="text-xs leading-relaxed text-muted">Vaša porudžbina nije potvrđena dok vas ne pozovemo.</p>
+          {hasPhonePrice && <p className="text-xs leading-relaxed text-muted">{t("phoneNote")}</p>}
+          <p className="text-xs leading-relaxed text-muted">{t("notConfirmed")}</p>
 
           <button
             type="submit"
             disabled={!canSubmit}
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Pošalji zahtjev <Phone className="size-4" />
+            {t("submit")} <Phone className="size-4" />
           </button>
           <p className="text-center text-xs text-muted">
-            Ili nas pozovite na <a href={`tel:${PHONE}`} className="font-semibold text-primary">{PHONE_LABEL}</a>
+            {t("orCall")} <a href={`tel:${PHONE}`} className="font-semibold text-primary">{PHONE_LABEL}</a>
           </p>
         </form>
       </div>

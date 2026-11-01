@@ -1,19 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Heart, Phone, Upload } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, linkBtn, section } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { pickupTimes, tomorrowISO } from "@/lib/date";
+import { Link } from "@/i18n/navigation";
 
-const STEPS = ["Tip torte", "Ukus", "Dekoracija", "Preuzimanje", "Vaši podaci"];
+const STEP_KEYS = ["type", "flavour", "decoration", "pickup", "details"];
 
 const CAKE_TYPES = {
-  classic: { label: "Klasične torte", hint: "Provjereni ukusi za svaku priliku.", note: "od 15 €", icon: "01" },
-  premium: { label: "Premium torte", hint: "Bogati ukusi i posebni sastojci.", note: "27 €", icon: "02" },
-  special: { label: "Specijalne torte", hint: "Vjenčane, spratne i torte po vašoj zamisli.", note: "po dogovoru", icon: "03" },
+  classic: { icon: "01", price: 15 },
+  premium: { icon: "02", price: 27 },
+  special: { icon: "03", price: null },
 };
 
 // Gradijenti služe kao uzorci ukusa dok nemamo fotografije.
@@ -25,13 +26,13 @@ const SWATCHES = [
 ];
 
 const FLAVOURS = {
-  classic: ["Čokoladna torta", "Voćna torta", "Plazma torta", "Kinder torta"],
-  premium: ["Rafaelo", "Ferrero", "Pistachio dream", "Red velvet"],
+  classic: ["cokolada", "voca", "plazma", "kinder"],
+  premium: ["rafaelo", "ferrero", "pistachio", "redVelvet"],
 };
 
 const SIZE_PRICES = {
-  small: { label: "Mala", people: "oko 15 osoba", price: 15 },
-  large: { label: "Velika", people: "oko 20 osoba", price: 20 },
+  small: 15,
+  large: 20,
 };
 
 const PREMIUM_PRICE = 27;
@@ -55,12 +56,11 @@ function StepBadge({ index, step }) {
   );
 }
 
-function FileDrop({ label, files, onFiles, optional }) {
+function FileDrop({ label, files, onFiles }) {
   return (
     <label className="relative mb-5 flex min-h-20 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-primary/40 bg-blush/40 text-xs text-primary">
       <span className="flex items-center gap-2 font-semibold">
         <Upload className="size-4" /> {label}
-        {optional && <small className="font-normal text-muted">(opciono)</small>}
       </span>
       <input
         type="file"
@@ -88,6 +88,9 @@ function Toggle({ label, hint, checked, onChange }) {
 }
 
 export default function CakeBuilder() {
+  const t = useTranslations("CakeBuilder");
+  const tCheckout = useTranslations("Checkout");
+  const locale = useLocale();
   const { addItem } = useCart();
   const [step, setStep] = useState(1);
   const [cakeType, setCakeType] = useState("classic");
@@ -108,12 +111,13 @@ export default function CakeBuilder() {
   const [submitted, setSubmitted] = useState(false);
 
   const basePrice =
-    cakeType === "classic" ? SIZE_PRICES[size].price : cakeType === "premium" ? PREMIUM_PRICE : null;
+    cakeType === "classic" ? SIZE_PRICES[size] : cakeType === "premium" ? PREMIUM_PRICE : null;
   const total = basePrice === null ? null : basePrice + (photo ? PHOTO_EXTRA : 0);
   // Posebni zahtjevi i specijalne torte se ne mogu odmah cijeniti, pa cijenu dogovaramo telefonom.
   const phonePricing = cakeType === "special" || wishes.trim().length > 0;
-  const cakeName = cakeType === "special" ? "Specijalna torta" : flavour;
-  const optionLabel = cakeType === "classic" ? SIZE_PRICES[size].label : CAKE_TYPES[cakeType].label;
+  const cakeName = cakeType === "special" ? t("specialCake") : t(`flavours.${flavour}`);
+  const optionLabel = cakeType === "classic" ? t(`sizes.${size}.label`) : t(`types.${cakeType}.label`);
+  const money = (value) => formatPrice(value, locale);
 
   const selectType = (type) => {
     setCakeType(type);
@@ -133,7 +137,7 @@ export default function CakeBuilder() {
       quantity: 1,
       unitPrice: total ?? undefined,
       phonePrice: phonePricing,
-      summary: [wishes.trim(), inscription.trim() && `Natpis: ${inscription.trim()}`].filter(Boolean).join(" · ") || undefined,
+      summary: [wishes.trim(), inscription.trim() && `${t("inscription")}: ${inscription.trim()}`].filter(Boolean).join(" · ") || undefined,
     });
     setSubmitted(true);
   };
@@ -145,17 +149,15 @@ export default function CakeBuilder() {
           <div className="mx-auto mb-7 grid size-22 place-items-center rounded-full bg-blush text-primary">
             <Heart className="size-9" fill="currentColor" />
           </div>
-          <p className={`${eyebrow} justify-center`}>Fantazija · Tuzi</p>
-          <h1 className="mb-5 font-serif text-5xl text-ink">Hvala vam!</h1>
-          <p className="leading-relaxed text-muted">
-            Vaša torta je dodata u korpu. Porudžbina nije potvrđena dok vas ne pozovemo.
-          </p>
+          <p className={`${eyebrow} justify-center`}>{tCheckout("eyebrowText")}</p>
+          <h1 className="mb-5 font-serif text-5xl text-ink">{t("successTitle")}</h1>
+          <p className="leading-relaxed text-muted">{t("successText")}</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/order/checkout" className={linkBtn}>
-              Pogledaj korpu
+              {t("viewCart")}
             </Link>
             <a href="tel:+38268210652" className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 text-sm font-semibold text-ink transition-colors hover:border-primary">
-              <Phone className="size-4" /> Pozovite nas
+              <Phone className="size-4" /> {t("callUs")}
             </a>
           </div>
         </div>
@@ -163,7 +165,7 @@ export default function CakeBuilder() {
     );
   }
 
-  const next = () => setStep((current) => Math.min(current + 1, STEPS.length));
+  const next = () => setStep((current) => Math.min(current + 1, STEP_KEYS.length));
   const previous = () => setStep((current) => Math.max(current - 1, 1));
 
   return (
@@ -171,21 +173,21 @@ export default function CakeBuilder() {
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-14">
         <div>
           <Link href="/offer" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-ink">
-            <ArrowLeft className="size-4" /> Nazad na ponudu
+            <ArrowLeft className="size-4" /> {t("backToOffer")}
           </Link>
 
           <div className="mt-12 mb-10">
-            <p className={eyebrow}>Slatki trenutak po vašoj želji</p>
-            <h1 className="mb-4 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">Napravi svoju tortu</h1>
-            <p className="max-w-xl leading-relaxed text-muted">Izaberite ukus, veličinu, dekoraciju i detalje korak po korak.</p>
+            <p className={eyebrow}>{t("eyebrow")}</p>
+            <h1 className="mb-4 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">{t("title")}</h1>
+            <p className="max-w-xl leading-relaxed text-muted">{t("intro")}</p>
           </div>
 
           <ol className="mb-8 flex items-center">
-            {STEPS.map((label, index) => (
-              <li key={label} className={`flex items-center gap-2 ${index < STEPS.length - 1 ? "flex-1" : ""} ${step >= index + 1 ? "text-primary" : "text-muted/70"}`}>
+            {STEP_KEYS.map((key, index) => (
+              <li key={key} className={`flex items-center gap-2 ${index < STEP_KEYS.length - 1 ? "flex-1" : ""} ${step >= index + 1 ? "text-primary" : "text-muted/70"}`}>
                 <StepBadge index={index} step={step} />
-                <span className="hidden text-[11px] whitespace-nowrap md:inline">{label}</span>
-                {index < STEPS.length - 1 && <span className="mx-2 hidden h-px flex-1 bg-line md:block" />}
+                <span className="hidden text-[11px] whitespace-nowrap md:inline">{t(`steps.${key}`)}</span>
+                {index < STEP_KEYS.length - 1 && <span className="mx-2 hidden h-px flex-1 bg-line md:block" />}
               </li>
             ))}
           </ol>
@@ -193,7 +195,7 @@ export default function CakeBuilder() {
           <div className="flex min-h-[460px] flex-col rounded-2xl border border-line bg-card p-6 md:p-8">
             {step === 1 && (
               <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">{STEPS[0]}</h2>
+                <h2 className="mb-6 font-serif text-3xl text-ink">{t("steps.type")}</h2>
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                   {Object.entries(CAKE_TYPES).map(([type, info]) => (
                     <button
@@ -203,9 +205,15 @@ export default function CakeBuilder() {
                       className={`${cardBase} md:min-h-52 ${cakeType === type ? selectedRing : ""}`}
                     >
                       <span className="mb-2 font-serif text-xl text-primary italic md:mb-6 md:text-2xl">{info.icon}</span>
-                      <strong className="font-serif text-lg text-ink md:text-xl">{info.label}</strong>
-                      <p className="mt-1 mb-3 text-xs leading-relaxed text-muted md:mt-2 md:mb-4">{info.hint}</p>
-                      <em className="mt-auto text-xs text-primary not-italic">{info.note}</em>
+                      <strong className="font-serif text-lg text-ink md:text-xl">{t(`types.${type}.label`)}</strong>
+                      <p className="mt-1 mb-3 text-xs leading-relaxed text-muted md:mt-2 md:mb-4">{t(`types.${type}.hint`)}</p>
+                      <em className="mt-auto text-xs text-primary not-italic">
+                        {info.price === null
+                          ? t("onRequest")
+                          : type === "classic"
+                            ? t("priceFrom", { price: money(info.price) })
+                            : money(info.price)}
+                      </em>
                     </button>
                   ))}
                 </div>
@@ -216,20 +224,20 @@ export default function CakeBuilder() {
               <>
                 {cakeType === "special" ? (
                   <>
-                    <h2 className="mb-6 font-serif text-3xl text-ink">Opišite vašu ideju</h2>
+                    <h2 className="mb-6 font-serif text-3xl text-ink">{t("ideaTitle")}</h2>
                     <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                      Vaša ideja
+                      {t("idea")}
                       <textarea
                         value={idea}
                         onChange={(event) => setIdea(event.target.value)}
-                        placeholder="Broj spratova, približan broj gostiju, stil..."
+                        placeholder={t("ideaPlaceholder")}
                         className={`${fieldInput} min-h-28 resize-y`}
                       />
                     </label>
                   </>
                 ) : (
                   <>
-                    <h2 className="mb-6 font-serif text-3xl text-ink">Izaberite ukus</h2>
+                    <h2 className="mb-6 font-serif text-3xl text-ink">{t("chooseFlavour")}</h2>
                     <div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2">
                       {FLAVOURS[cakeType].map((item, index) => (
                         <button
@@ -241,7 +249,7 @@ export default function CakeBuilder() {
                           }`}
                         >
                           <span className={`h-16 w-18 flex-none rounded-lg bg-linear-to-br ${SWATCHES[index]}`} />
-                          <strong className="flex-1 font-serif text-base text-ink">{item}</strong>
+                          <strong className="flex-1 font-serif text-base text-ink">{t(`flavours.${item}`)}</strong>
                           <Check className={`size-4 text-primary ${flavour === item ? "opacity-100" : "opacity-0"}`} />
                         </button>
                       ))}
@@ -249,18 +257,18 @@ export default function CakeBuilder() {
 
                     {cakeType === "classic" && (
                       <>
-                        <h3 className="mb-3 font-serif text-lg text-ink">Veličina</h3>
+                        <h3 className="mb-3 font-serif text-lg text-ink">{t("size")}</h3>
                         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {Object.entries(SIZE_PRICES).map(([key, info]) => (
+                          {Object.keys(SIZE_PRICES).map((key) => (
                             <button
                               key={key}
                               type="button"
                               onClick={() => setSize(key)}
                               className={`${cardBase} gap-1 ${size === key ? selectedRing : ""}`}
                             >
-                              <strong className="font-serif text-lg text-ink">{info.label}</strong>
+                              <strong className="font-serif text-lg text-ink">{t(`sizes.${key}.label`)}</strong>
                               <span className="text-xs text-muted">
-                                {info.people} · {info.price} €
+                                {t(`sizes.${key}.people`)} · {money(SIZE_PRICES[key])}
                               </span>
                             </button>
                           ))}
@@ -274,26 +282,26 @@ export default function CakeBuilder() {
 
             {step === 3 && (
               <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">Dekoracija i detalji</h2>
+                <h2 className="mb-6 font-serif text-3xl text-ink">{t("decorationTitle")}</h2>
                 <Toggle
-                  label="Fotografija na torti"
-                  hint={`Dodajte fotografiju koju želite na torti (+${PHOTO_EXTRA} €)`}
+                  label={t("photoLabel")}
+                  hint={t("photoHint", { price: money(PHOTO_EXTRA) })}
                   checked={photo}
                   onChange={setPhoto}
                 />
-                {photo && <FileDrop label="Dodajte fotografiju" files={photoFiles} onFiles={addFiles} />}
+                {photo && <FileDrop label={t("addPhoto")} files={photoFiles} onFiles={addFiles} />}
 
                 <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                  Natpis na torti <small className="font-normal text-muted">(opciono)</small>
-                  <input value={inscription} onChange={(event) => setInscription(event.target.value)} placeholder="Po želji" className={fieldInput} />
+                  {t("inscription")} <small className="font-normal text-muted">{t("optional")}</small>
+                  <input value={inscription} onChange={(event) => setInscription(event.target.value)} placeholder={t("inscriptionPlaceholder")} className={fieldInput} />
                 </label>
 
                 <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                  Želje za dekoraciju <small className="font-normal text-muted">(opciono)</small>
+                  {t("wishes")} <small className="font-normal text-muted">{t("optional")}</small>
                   <textarea
                     value={wishes}
                     onChange={(event) => setWishes(event.target.value)}
-                    placeholder="Boje, tema, figurice..."
+                    placeholder={t("wishesPlaceholder")}
                     className={`${fieldInput} min-h-24 resize-y`}
                   />
                 </label>
@@ -302,13 +310,13 @@ export default function CakeBuilder() {
                   <label className={checkboxLabel}>
                     <input type="checkbox" checked={fasting} onChange={(event) => setFasting(event.target.checked)} className="mt-0.5 accent-primary" />
                     <span>
-                      Posna torta <small className="block text-[10px] text-muted">(dostupno na zahtjev)</small>
+                      {t("fasting")} <small className="block text-[10px] text-muted">{t("onRequestAvailable")}</small>
                     </span>
                   </label>
                   <label className={checkboxLabel}>
                     <input type="checkbox" checked={gluten} onChange={(event) => setGluten(event.target.checked)} className="mt-0.5 accent-primary" />
                     <span>
-                      Bez glutena <small className="block text-[10px] text-muted">(dostupno na zahtjev)</small>
+                      {t("gluten")} <small className="block text-[10px] text-muted">{t("onRequestAvailable")}</small>
                     </span>
                   </label>
                 </div>
@@ -317,16 +325,16 @@ export default function CakeBuilder() {
 
             {step === 4 && (
               <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">Preuzimanje</h2>
+                <h2 className="mb-6 font-serif text-3xl text-ink">{t("pickupTitle")}</h2>
                 <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <label className="flex flex-col gap-2 text-xs font-semibold text-ink">
-                    Datum preuzimanja
+                    {t("pickupDate")}
                     <input type="date" min={tomorrowISO()} value={date} onChange={(event) => setDate(event.target.value)} className={fieldInput} />
                   </label>
                   <label className="flex flex-col gap-2 text-xs font-semibold text-ink">
-                    Vrijeme
+                    {t("pickupTime")}
                     <select value={time} onChange={(event) => setTime(event.target.value)} className={fieldInput}>
-                      <option value="">09:00 – 22:00</option>
+                      <option value="">{t("pickupDefault")}</option>
                       {pickupTimes.map((hour) => (
                         <option key={hour} value={hour}>
                           {hour}
@@ -337,29 +345,29 @@ export default function CakeBuilder() {
                 </div>
                 <div className="flex items-center gap-3 rounded-lg bg-blush p-4 text-xs text-muted">
                   <Heart className="size-4 flex-none text-primary" fill="currentColor" />
-                  Preuzimanje je moguće samo u našoj radnji u Tuzima.
+                  {t("shopOnly")}
                 </div>
               </>
             )}
 
             {step === 5 && (
               <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">Vaši podaci</h2>
+                <h2 className="mb-6 font-serif text-3xl text-ink">{t("detailsTitle")}</h2>
                 <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                  Ime i prezime
-                  <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Milica Petrović" className={fieldInput} required />
+                  {t("fullName")}
+                  <input value={name} onChange={(event) => setName(event.target.value)} placeholder={t("namePlaceholder")} className={fieldInput} required />
                 </label>
                 <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                  Broj telefona
-                  <input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="+382 68 000 000" className={fieldInput} required />
+                  {t("phone")}
+                  <input type="tel" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder={t("phonePlaceholder")} className={fieldInput} required />
                 </label>
                 <label className={`${checkboxLabel} mb-6`}>
                   <input type="checkbox" checked={viber} onChange={(event) => setViber(event.target.checked)} className="mt-0.5 accent-primary" />
-                  Koristim Viber na ovom broju
+                  {t("viber")}
                 </label>
                 <div className="flex flex-col gap-1.5 border-t border-line pt-5 text-xs">
-                  <strong className="text-ink">Svaka porudžbina mora biti potvrđena telefonom.</strong>
-                  <span className="text-muted">Konačna cijena se potvrđuje kada vas pozovemo.</span>
+                  <strong className="text-ink">{t("mustConfirm")}</strong>
+                  <span className="text-muted">{t("finalPrice")}</span>
                 </div>
               </>
             )}
@@ -371,16 +379,16 @@ export default function CakeBuilder() {
                   onClick={previous}
                   className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-sm font-semibold text-ink transition-colors hover:border-primary"
                 >
-                  <ChevronLeft className="size-4" /> Nazad
+                  <ChevronLeft className="size-4" /> {t("back")}
                 </button>
               )}
-              {step < STEPS.length ? (
+              {step < STEP_KEYS.length ? (
                 <button
                   type="button"
                   onClick={next}
                   className="ml-auto inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
-                  Nastavi <ChevronRight className="size-4" />
+                  {t("next")} <ChevronRight className="size-4" />
                 </button>
               ) : (
                 <button
@@ -389,7 +397,7 @@ export default function CakeBuilder() {
                   disabled={!name.trim() || !phone.trim()}
                   className="ml-auto inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Dodaj tortu u korpu <ArrowRight className="size-4" />
+                  {t("addToCart")} <ArrowRight className="size-4" />
                 </button>
               )}
             </div>
@@ -397,31 +405,31 @@ export default function CakeBuilder() {
         </div>
 
         <aside className="self-start rounded-2xl bg-ink p-6 text-white lg:sticky lg:top-24">
-          <p className="mb-4 text-xs font-semibold tracking-widest text-blush uppercase">Pregled porudžbine</p>
-          <h3 className="mb-6 font-serif text-2xl">{cakeName || CAKE_TYPES[cakeType].label}</h3>
+          <p className="mb-4 text-xs font-semibold tracking-widest text-blush uppercase">{t("summaryTitle")}</p>
+          <h3 className="mb-6 font-serif text-2xl">{cakeName || t(`types.${cakeType}.label`)}</h3>
 
           <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
-            <span>{CAKE_TYPES[cakeType].label}</span>
-            <strong className="font-medium text-white">{basePrice === null ? "po dogovoru" : formatPrice(basePrice)}</strong>
+            <span>{t(`types.${cakeType}.label`)}</span>
+            <strong className="font-medium text-white">{basePrice === null ? t("onRequest") : money(basePrice)}</strong>
           </div>
           {cakeType === "classic" && (
             <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
-              <span>{SIZE_PRICES[size].label}</span>
-              <span>{SIZE_PRICES[size].people}</span>
+              <span>{t(`sizes.${size}.label`)}</span>
+              <span>{t(`sizes.${size}.people`)}</span>
             </div>
           )}
           {photo && (
             <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
-              <span>Fotografija</span>
-              <strong className="font-medium text-white">+{PHOTO_EXTRA} €</strong>
+              <span>{t("photo")}</span>
+              <strong className="font-medium text-white">+{money(PHOTO_EXTRA)}</strong>
             </div>
           )}
 
           <div className="flex items-end justify-between gap-3 pt-5 text-xs">
-            <span>{phonePricing ? "Cijena se dogovara telefonom" : "Procijenjena cijena"}</span>
-            <strong className="font-serif text-2xl text-blush">{phonePricing || total === null ? "—" : formatPrice(total)}</strong>
+            <span>{phonePricing ? t("phonePricing") : t("estimated")}</span>
+            <strong className="font-serif text-2xl text-blush">{phonePricing || total === null ? "—" : money(total)}</strong>
           </div>
-          <p className="mt-5 text-[11px] leading-relaxed text-white/50">Konačna cijena se potvrđuje kada vas pozovemo.</p>
+          <p className="mt-5 text-[11px] leading-relaxed text-white/50">{t("finalPrice")}</p>
         </aside>
       </div>
     </section>

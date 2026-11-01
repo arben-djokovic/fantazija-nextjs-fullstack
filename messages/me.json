@@ -1,0 +1,337 @@
+{
+  "Metadata": {
+    "home": {
+      "title": "Poslastičarnica Fantazija",
+      "description": "Domaće torte, kolači i slatki zalogaji iz poslastičarnice Fantazija u Tuzima."
+    },
+    "offer": {
+      "title": "Ponuda",
+      "description": "Torte, kolači i slatki zalogaji iz naše poslastičarnice."
+    },
+    "gallery": {
+      "title": "Galerija"
+    },
+    "cakeBuilder": {
+      "title": "Napravi svoju tortu",
+      "description": "Izaberite ukus, veličinu, dekoraciju i preuzimanje za vašu tortu."
+    },
+    "checkout": {
+      "title": "Vaša porudžbina",
+      "description": "Pregled korpe i slanje zahtjeva za preuzimanje u Tuzima."
+    }
+  },
+  "Header": {
+    "home": "Početna",
+    "offer": "Ponuda",
+    "gallery": "Galerija",
+    "about": "O nama",
+    "contact": "Kontakt",
+    "logoAlt": "Poslastičarnica logo",
+    "tagline": "POSLASTIČARNICA",
+    "openMenu": "Otvori meni",
+    "closeMenu": "Zatvori meni",
+    "languageNames": {
+      "me": "Crnogorski",
+      "sq": "Shqip",
+      "en": "English"
+    }
+  },
+  "Hero": {
+    "eyebrow": "Poslastičarnica u Tuzima · od 2012.",
+    "titleLine1": "Slatki trenuci",
+    "titleLine2": "za pamćenje.",
+    "text": "Domaće torte, kolači i miris kafe — napravljeno s ljubavlju za važne i sasvim obične dane.",
+    "viewOffer": "Pogledajte ponudu",
+    "meetUs": "Upoznajte nas",
+    "location": "Tuzi · Montenegro",
+    "imageAlt": "Elegantna čokoladna torta sa bobičastim voćem"
+  },
+  "OfferHome": {
+    "eyebrow": "01 · Ponuda",
+    "title": "Iz naše vitrine",
+    "subtitle": "Mali izbor velikih uživanja, svakog dana svježe.",
+    "seeAll": "Pogledaj cijelu ponudu",
+    "priceFrom": "od {price}",
+    "pricePiece": "{price} / kom",
+    "tagPopular": "Popular",
+    "tagNew": "New",
+    "products": {
+      "cokoladna": {
+        "name": "Čokoladna torta",
+        "desc": "Bogat čokoladni biskvit, svilenkasta krema i malo magije."
+      },
+      "vocna": {
+        "name": "Voćna torta",
+        "desc": "Lagana vanilija krema sa sezonskim voćem i svježom radošću."
+      },
+      "trilece": {
+        "name": "Trileće",
+        "desc": "Mekano, mliječno i nevjerovatno nežno — pravi favorit."
+      },
+      "rafaelo": {
+        "name": "Rafaelo",
+        "desc": "Kokos, bijela čokolada i krema od prženog badema."
+      }
+    }
+  },
+  "About": {
+    "eyebrow": "02 · O nama",
+    "titleLine1": "Porodica, tradicija",
+    "titleLine2": "i mnogo",
+    "titleAccent": "ljubavi.",
+    "text": "Fantazija je mala porodična poslastičarnica u srcu Tuzi. Od 2012. godine pravimo torte i kolače koji okupljaju ljude oko stola — od prvog zalogaja do posljednje mrvice.",
+    "quote": "„Najljepše uspomene počinju nečim slatkim.”",
+    "cta": "Posjetite nas",
+    "badgeNumber": "12",
+    "badgeLine1": "godina",
+    "badgeLine2": "slatkih priča",
+    "imageAlt": "Topla i ugodna slastičarnica"
+  },
+  "Gallery": {
+    "eyebrow": "05 · Galerija",
+    "title": "Trenuci iz Fantazije",
+    "subtitle": "Zapratite nas za još malo slatke inspiracije.",
+    "photos": {
+      "cake": "Čokoladna torta za slavlje",
+      "fruit": "Voćna torta",
+      "pastries": "Svježe pečeni kolači",
+      "cream": "Kremasti kolač",
+      "wedding": "Svadbena torta"
+    }
+  },
+  "Contact": {
+    "eyebrow": "06 · Kontakt",
+    "title": "Posjetite nas",
+    "text": "Dođite da se upoznamo — vrata su vam uvijek otvorena.",
+    "address": "Tuzi, Montenegro",
+    "plusCode": "Google Maps plus code · 986H+GW9",
+    "hoursLabel": "Otvoreno svakog dana",
+    "hours": "09:00 – 22:00",
+    "phoneSub": "Viber · +382 68 210 652",
+    "instagram": "Instagram",
+    "mapTitle": "Fantazija na Google mapi",
+    "openMaps": "Otvori u Google Maps"
+  },
+  "Footer": {
+    "tagline": "Mjesto gdje svaki dan ima ukus proslave.",
+    "contactTitle": "Kontakt",
+    "address": "Tuzi, Montenegro",
+    "hours": "09:00 – 22:00 · svaki dan",
+    "copyright": "© 2024 Fantazija",
+    "madeIn": "Sa ljubavlju iz Tuzi",
+    "social": {
+      "phone": "Telefon",
+      "maps": "Google Maps",
+      "instagram": "Instagram",
+      "viber": "Viber"
+    }
+  },
+  "Products": {
+    "cakes": {
+      "cokoladna": {
+        "name": "Čokoladna torta",
+        "desc": "Bogata čokolada, kremasta tekstura i poznati ukus."
+      },
+      "vocna": {
+        "name": "Voćna torta",
+        "desc": "Lagani krem, svježe voće i nježan biskvit."
+      },
+      "rafaelo-torta": {
+        "name": "Rafaelo torta",
+        "desc": "Kokos, bijela čokolada i badem u raskošnom sloju."
+      },
+      "pistachio": {
+        "name": "Pistachio dream",
+        "desc": "Pistaći, bijela čokolada i svilenkasti krem."
+      },
+      "svadbena": {
+        "name": "Svadbena torta",
+        "desc": "Torta po mjeri za vaš najvažniji dan."
+      },
+      "po-zamisli": {
+        "name": "Torta po zamisli",
+        "desc": "Vaša ideja, naši ukusi i pažljiva izrada."
+      }
+    },
+    "pastries": {
+      "trilece": {
+        "name": "Trileće",
+        "desc": "Meko, mliječno i nježno."
+      },
+      "rafaelo": {
+        "name": "Rafaelo",
+        "desc": "Kokos, bijela čokolada i badem."
+      },
+      "baklava": {
+        "name": "Baklava",
+        "desc": "Hrskavi listovi i domaći sirup."
+      }
+    },
+    "options": {
+      "komad": "Komad",
+      "tepsija": "Tepsija",
+      "kilogram": "Kilogram",
+      "mala": "Mala",
+      "velika": "Velika",
+      "cijela": "Cijela torta",
+      "poDogovoru": "Po dogovoru"
+    },
+    "notes": {
+      "people15": "oko 15 osoba",
+      "people20": "oko 20 osoba"
+    },
+    "badges": {
+      "glutenFree": "Bez glutena",
+      "fasting": "Posna"
+    }
+  },
+  "Offer": {
+    "eyebrow": "Ponuda",
+    "title": "Naša ponuda",
+    "subtitle": "Svježe torte, kolači i mali slatki zalogaji za svaki dan.",
+    "tabCakes": "Torte",
+    "tabPastries": "Kolači",
+    "categories": {
+      "all": "Sve torte",
+      "classic": "Klasične",
+      "premium": "Premium",
+      "special": "Specijalne"
+    },
+    "bannerEyebrow": "TORTA PO TVOJOJ MJERI",
+    "bannerTitle": "Napravi svoju tortu",
+    "bannerText": "Izaberi ukus, veličinu, dekoraciju i fotografiju korak po korak.",
+    "bannerCta": "Počni izradu"
+  },
+  "Cart": {
+    "addToCart": "Dodaj u korpu",
+    "added": "Dodato u korpu",
+    "decrease": "Smanji količinu",
+    "increase": "Povećaj količinu",
+    "priceOnRequest": "Cijena po dogovoru",
+    "optionOnRequest": "po dogovoru",
+    "floating": "Korpa, {count, plural, one {# stavka} few {# stavke} other {# stavki}}"
+  },
+  "Checkout": {
+    "eyebrowText": "Fantazija · Tuzi",
+    "sentEyebrow": "Zahtjev poslat",
+    "sentTitle": "Hvala vam!",
+    "sentText": "Primili smo vaš zahtjev. Porudžbina nije potvrđena dok vas ne pozovemo. Javićemo vam se uskoro na {phone}.",
+    "backHome": "Nazad na početnu",
+    "callUs": "Pozovite nas",
+    "emptyTitle": "Porudžbina je prazna",
+    "emptyText": "Dodajte tortu ili kolače da biste nastavili.",
+    "viewOffer": "Pogledaj ponudu",
+    "title": "Vaša porudžbina",
+    "backToOffer": "Naruči još",
+    "remove": "Ukloni",
+    "decrease": "Smanji",
+    "increase": "Povećaj",
+    "onRequestShort": "Po dogovoru",
+    "priceOnRequestLine": "cijena po dogovoru",
+    "pickupTitle": "Preuzimanje u Tuzima",
+    "date": "Datum",
+    "time": "Vrijeme",
+    "chooseTime": "Izaberite vrijeme",
+    "name": "Ime i prezime",
+    "phone": "Broj telefona",
+    "viber": "Koristim Viber",
+    "total": "Ukupno",
+    "phoneNote": "Cijena nekih stavki dogovara se telefonom.",
+    "notConfirmed": "Vaša porudžbina nije potvrđena dok vas ne pozovemo.",
+    "submit": "Pošalji zahtjev",
+    "orCall": "Ili nas pozovite na",
+    "namePlaceholder": "Milica Petrović",
+    "phonePlaceholder": "+382 68 000 000"
+  },
+  "CakeBuilder": {
+    "steps": {
+      "type": "Tip torte",
+      "flavour": "Ukus",
+      "decoration": "Dekoracija",
+      "pickup": "Preuzimanje",
+      "details": "Vaši podaci"
+    },
+    "eyebrow": "Slatki trenutak po vašoj želji",
+    "title": "Napravi svoju tortu",
+    "intro": "Izaberite ukus, veličinu, dekoraciju i detalje korak po korak.",
+    "backToOffer": "Nazad na ponudu",
+    "next": "Nastavi",
+    "back": "Nazad",
+    "addToCart": "Dodaj tortu u korpu",
+    "types": {
+      "classic": {
+        "label": "Klasične torte",
+        "hint": "Provjereni ukusi za svaku priliku."
+      },
+      "premium": {
+        "label": "Premium torte",
+        "hint": "Bogati ukusi i posebni sastojci."
+      },
+      "special": {
+        "label": "Specijalne torte",
+        "hint": "Vjenčane, spratne i torte po vašoj zamisli."
+      }
+    },
+    "priceFrom": "od {price}",
+    "onRequest": "po dogovoru",
+    "flavours": {
+      "cokolada": "Čokoladna torta",
+      "voca": "Voćna torta",
+      "plazma": "Plazma torta",
+      "kinder": "Kinder torta",
+      "rafaelo": "Rafaelo",
+      "ferrero": "Ferrero",
+      "pistachio": "Pistachio dream",
+      "redVelvet": "Red velvet"
+    },
+    "chooseFlavour": "Izaberite ukus",
+    "size": "Veličina",
+    "sizes": {
+      "small": {
+        "label": "Mala",
+        "people": "oko 15 osoba"
+      },
+      "large": {
+        "label": "Velika",
+        "people": "oko 20 osoba"
+      }
+    },
+    "ideaTitle": "Opišite vašu ideju",
+    "idea": "Vaša ideja",
+    "ideaPlaceholder": "Broj spratova, približan broj gostiju, stil...",
+    "decorationTitle": "Dekoracija i detalji",
+    "photoLabel": "Fotografija na torti",
+    "photoHint": "Dodajte fotografiju koju želite na torti (+{price})",
+    "addPhoto": "Dodajte fotografiju",
+    "inscription": "Natpis na torti",
+    "optional": "(opciono)",
+    "inscriptionPlaceholder": "Po želji",
+    "wishes": "Želje za dekoraciju",
+    "wishesPlaceholder": "Boje, tema, figurice...",
+    "fasting": "Posna torta",
+    "gluten": "Bez glutena",
+    "onRequestAvailable": "(dostupno na zahtjev)",
+    "pickupTitle": "Preuzimanje",
+    "pickupDate": "Datum preuzimanja",
+    "pickupTime": "Vrijeme",
+    "pickupDefault": "09:00 – 22:00",
+    "shopOnly": "Preuzimanje je moguće samo u našoj radnji u Tuzima.",
+    "detailsTitle": "Vaši podaci",
+    "fullName": "Ime i prezime",
+    "namePlaceholder": "Milica Petrović",
+    "phone": "Broj telefona",
+    "phonePlaceholder": "+382 68 000 000",
+    "viber": "Koristim Viber na ovom broju",
+    "mustConfirm": "Svaka porudžbina mora biti potvrđena telefonom.",
+    "finalPrice": "Konačna cijena se potvrđuje kada vas pozovemo.",
+    "successTitle": "Hvala vam!",
+    "successText": "Vaša torta je dodata u korpu. Porudžbina nije potvrđena dok vas ne pozovemo.",
+    "viewCart": "Pogledaj korpu",
+    "callUs": "Pozovite nas",
+    "summaryTitle": "Pregled porudžbine",
+    "estimated": "Procijenjena cijena",
+    "phonePricing": "Cijena se dogovara telefonom",
+    "photo": "Fotografija",
+    "specialCake": "Specijalna torta"
+  }
+}

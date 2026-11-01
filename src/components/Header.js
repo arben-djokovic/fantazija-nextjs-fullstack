@@ -1,49 +1,43 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 
 const navLinks = [
-  { href: "/", label: "Početna" },
-  { href: "/offer", label: "Ponuda" },
-  { href: "/#gallery", label: "Galerija" },
-  { href: "/#about", label: "O nama" },
-  { href: "/#contact", label: "Kontakt" },
+  { href: "/", key: "home" },
+  { href: "/offer", key: "offer" },
+  { href: "/#gallery", key: "gallery" },
+  { href: "/#about", key: "about" },
+  { href: "/#contact", key: "contact" },
 ];
 
 const languages = [
-  { code: "me", label: "Crnogorski", flag: "/flags/me.png" },
-  { code: "sq", label: "Shqip", flag: "/flags/al.png" },
-  { code: "en", label: "English", flag: "/flags/gb.png" },
+  { code: "me", flag: "/flags/me.png" },
+  { code: "sq", flag: "/flags/al.png" },
+  { code: "en", flag: "/flags/gb.png" },
 ];
 
-function Logo() {
+function Logo({ alt, tagline }) {
   return (
     <Link href="/" className="flex w-36 flex-col items-center justify-center">
-      <Image
-        src="/logo.e0e08eb7d04655a6ddaf.png"
-        alt="Poslastičarnica logo"
-        width={100}
-        height={40}
-        priority
-        className="h-12 md:h-13 w-auto object-contain"
-      />
-      <span className="whitespace-nowrap text-center text-[8px] tracking-[0.15em] text-zinc-800">
-        POSLASTIČARNICA
-      </span>
+      <Image src="/logo.e0e08eb7d04655a6ddaf.png" alt={alt} width={100} height={40} priority className="h-12 md:h-13 w-auto object-contain" />
+      <span className="whitespace-nowrap text-center text-[8px] tracking-[0.15em] text-zinc-800">{tagline}</span>
     </Link>
   );
 }
 
 export default function Header() {
+  const t = useTranslations("Header");
+  const locale = useLocale();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [lang, setLang] = useState("me");
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95">
       <div style={{justifyContent: "space-between"}} className="mx-auto flex w-full items-center justify-between px-4 py-3 md:px-8">
-        <Logo />
+        <Logo alt={t("logoAlt")} tagline={t("tagline")} />
 
         <nav className="hidden flex-1 justify-center gap-8 md:flex">
           {navLinks.map((link) => (
@@ -52,7 +46,7 @@ export default function Header() {
               href={link.href}
               className="text-sm font-md tracking-wide text-zinc-800 transition-colors hover:text-pink-600"
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
         </nav>
@@ -60,25 +54,25 @@ export default function Header() {
         <div className="flex items-center gap-2 md:gap-4">
           <div className="flex items-center gap-2">
             {languages.map((language) => (
-              <button
+              <Link
                 key={language.code}
-                type="button"
-                onClick={() => setLang(language.code)}
-                aria-label={language.label}
-                aria-pressed={lang === language.code}
+                href={pathname}
+                locale={language.code}
+                aria-label={t(`languageNames.${language.code}`)}
+                aria-pressed={locale === language.code}
                 className={`rounded-sm p-0.5 transition-opacity ${
-                  lang === language.code ? "opacity-100 ring-2 ring-pink-500" : "opacity-60 hover:opacity-100"
+                  locale === language.code ? "opacity-100 ring-2 ring-pink-500" : "opacity-60 hover:opacity-100"
                 }`}
               >
                 <Image src={language.flag} alt="" width={20} height={15} className="h-4 w-6 object-cover cursor-pointer" />
-              </button>
+              </Link>
             ))}
           </div>
 
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            aria-label={menuOpen ? "Zatvori meni" : "Otvori meni"}
+            aria-label={menuOpen ? t("closeMenu") : t("openMenu")}
             aria-expanded={menuOpen}
             className="rounded-md p-2 text-zinc-800 md:hidden cursor-pointer "
           >
@@ -104,7 +98,7 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
               className="py-2 text-sm uppercase tracking-wide text-zinc-500 cursor-pointer"
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
         </nav>

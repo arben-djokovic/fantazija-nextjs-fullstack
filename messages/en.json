@@ -1,0 +1,337 @@
+{
+  "Metadata": {
+    "home": {
+      "title": "Fantazija Patisserie",
+      "description": "Homemade cakes, pastries and sweet treats from Fantazija patisserie in Tuzi."
+    },
+    "offer": {
+      "title": "Offer",
+      "description": "Cakes, pastries and sweet treats from our patisserie."
+    },
+    "gallery": {
+      "title": "Gallery"
+    },
+    "cakeBuilder": {
+      "title": "Create your own cake",
+      "description": "Choose flavour, size, decoration and pickup for your cake."
+    },
+    "checkout": {
+      "title": "Your order",
+      "description": "Review your cart and send a pickup request for Tuzi."
+    }
+  },
+  "Header": {
+    "home": "Home",
+    "offer": "Offer",
+    "gallery": "Gallery",
+    "about": "About us",
+    "contact": "Contact",
+    "logoAlt": "Fantazija logo",
+    "tagline": "PATISSERIE",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageNames": {
+      "me": "Crnogorski",
+      "sq": "Shqip",
+      "en": "English"
+    }
+  },
+  "Hero": {
+    "eyebrow": "Patisserie in Tuzi · since 2012",
+    "titleLine1": "Sweet moments",
+    "titleLine2": "worth remembering.",
+    "text": "Homemade cakes, pastries and the smell of coffee — made with love for important days and ordinary ones alike.",
+    "viewOffer": "View our offer",
+    "meetUs": "Get to know us",
+    "location": "Tuzi · Montenegro",
+    "imageAlt": "Elegant chocolate cake with berries"
+  },
+  "OfferHome": {
+    "eyebrow": "01 · Offer",
+    "title": "From our display",
+    "subtitle": "A small selection of big pleasures, fresh every day.",
+    "seeAll": "View the full offer",
+    "priceFrom": "from {price}",
+    "pricePiece": "{price} / pc",
+    "tagPopular": "Popular",
+    "tagNew": "New",
+    "products": {
+      "cokoladna": {
+        "name": "Chocolate cake",
+        "desc": "Rich chocolate sponge, silky cream and a little magic."
+      },
+      "vocna": {
+        "name": "Fruit cake",
+        "desc": "Light vanilla cream with seasonal fruit and fresh joy."
+      },
+      "trilece": {
+        "name": "Trileće",
+        "desc": "Soft, milky and impossibly delicate — a true favourite."
+      },
+      "rafaelo": {
+        "name": "Rafaelo",
+        "desc": "Coconut, white chocolate and toasted almond cream."
+      }
+    }
+  },
+  "About": {
+    "eyebrow": "02 · About us",
+    "titleLine1": "Family, tradition",
+    "titleLine2": "and lots of",
+    "titleAccent": "love.",
+    "text": "Fantazija is a small family patisserie in the heart of Tuzi. Since 2012 we have been making cakes and pastries that bring people together around the table — from the first bite to the last crumb.",
+    "quote": "“The sweetest memories start with something sweet.”",
+    "cta": "Visit us",
+    "badgeNumber": "12",
+    "badgeLine1": "years of",
+    "badgeLine2": "sweet stories",
+    "imageAlt": "Warm and cosy patisserie"
+  },
+  "Gallery": {
+    "eyebrow": "05 · Gallery",
+    "title": "Moments from Fantazija",
+    "subtitle": "Follow us for a little more sweet inspiration.",
+    "photos": {
+      "cake": "Chocolate cake for a celebration",
+      "fruit": "Fruit cake",
+      "pastries": "Freshly baked pastries",
+      "cream": "Creamy pastry",
+      "wedding": "Wedding cake"
+    }
+  },
+  "Contact": {
+    "eyebrow": "06 · Contact",
+    "title": "Visit us",
+    "text": "Come and say hello — our doors are always open.",
+    "address": "Tuzi, Montenegro",
+    "plusCode": "Google Maps plus code · 986H+GW9",
+    "hoursLabel": "Open every day",
+    "hours": "09:00 – 22:00",
+    "phoneSub": "Viber · +382 68 210 652",
+    "instagram": "Instagram",
+    "mapTitle": "Fantazija on Google Maps",
+    "openMaps": "Open in Google Maps"
+  },
+  "Footer": {
+    "tagline": "Where every day tastes like a celebration.",
+    "contactTitle": "Contact",
+    "address": "Tuzi, Montenegro",
+    "hours": "09:00 – 22:00 · every day",
+    "copyright": "© 2024 Fantazija",
+    "madeIn": "Made with love in Tuzi",
+    "social": {
+      "phone": "Phone",
+      "maps": "Google Maps",
+      "instagram": "Instagram",
+      "viber": "Viber"
+    }
+  },
+  "Products": {
+    "cakes": {
+      "cokoladna": {
+        "name": "Chocolate cake",
+        "desc": "Rich chocolate, silky cream and a familiar taste."
+      },
+      "vocna": {
+        "name": "Fruit cake",
+        "desc": "Light cream, fresh fruit and a soft sponge."
+      },
+      "rafaelo-torta": {
+        "name": "Rafaelo cake",
+        "desc": "Coconut, white chocolate and almond in a luxurious layer."
+      },
+      "pistachio": {
+        "name": "Pistachio dream",
+        "desc": "Pistachio, white chocolate and silky cream."
+      },
+      "svadbena": {
+        "name": "Wedding cake",
+        "desc": "A cake made to measure for your most important day."
+      },
+      "po-zamisli": {
+        "name": "Cake by your idea",
+        "desc": "Your idea, our flavours and careful craftsmanship."
+      }
+    },
+    "pastries": {
+      "trilece": {
+        "name": "Trileće",
+        "desc": "Soft, milky and gentle."
+      },
+      "rafaelo": {
+        "name": "Rafaelo",
+        "desc": "Coconut, white chocolate and almond."
+      },
+      "baklava": {
+        "name": "Baklava",
+        "desc": "Crispy layers and homemade syrup."
+      }
+    },
+    "options": {
+      "komad": "Piece",
+      "tepsija": "Tray",
+      "kilogram": "Kilogram",
+      "mala": "Small",
+      "velika": "Large",
+      "cijela": "Whole cake",
+      "poDogovoru": "On request"
+    },
+    "notes": {
+      "people15": "about 15 people",
+      "people20": "about 20 people"
+    },
+    "badges": {
+      "glutenFree": "Gluten-free",
+      "fasting": "Fasting"
+    }
+  },
+  "Offer": {
+    "eyebrow": "Offer",
+    "title": "Our offer",
+    "subtitle": "Fresh cakes, pastries and small sweet treats for every day.",
+    "tabCakes": "Cakes",
+    "tabPastries": "Pastries",
+    "categories": {
+      "all": "All cakes",
+      "classic": "Classic",
+      "premium": "Premium",
+      "special": "Special"
+    },
+    "bannerEyebrow": "A CAKE MADE TO YOUR TASTE",
+    "bannerTitle": "Create your own cake",
+    "bannerText": "Choose flavour, size, decoration and a photo, step by step.",
+    "bannerCta": "Start building"
+  },
+  "Cart": {
+    "addToCart": "Add to cart",
+    "added": "Added to cart",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "priceOnRequest": "Price on request",
+    "optionOnRequest": "on request",
+    "floating": "Cart, {count, plural, one {# item} other {# items}}"
+  },
+  "Checkout": {
+    "eyebrowText": "Fantazija · Tuzi",
+    "sentEyebrow": "Request sent",
+    "sentTitle": "Thank you!",
+    "sentText": "We received your request. The order is not confirmed until we call you. We will contact you soon on {phone}.",
+    "backHome": "Back to home",
+    "callUs": "Call us",
+    "emptyTitle": "Your cart is empty",
+    "emptyText": "Add a cake or pastries to continue.",
+    "viewOffer": "View offer",
+    "title": "Your order",
+    "backToOffer": "Order more",
+    "remove": "Remove",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "onRequestShort": "On request",
+    "priceOnRequestLine": "price on request",
+    "pickupTitle": "Pickup in Tuzi",
+    "date": "Date",
+    "time": "Time",
+    "chooseTime": "Choose a time",
+    "name": "Full name",
+    "phone": "Phone number",
+    "viber": "I use Viber",
+    "total": "Total",
+    "phoneNote": "The price of some items is agreed by phone.",
+    "notConfirmed": "Your order is not confirmed until we call you.",
+    "submit": "Send request",
+    "orCall": "Or call us on",
+    "namePlaceholder": "Milica Petrović",
+    "phonePlaceholder": "+382 68 000 000"
+  },
+  "CakeBuilder": {
+    "steps": {
+      "type": "Cake type",
+      "flavour": "Flavour",
+      "decoration": "Decoration",
+      "pickup": "Pickup",
+      "details": "Your details"
+    },
+    "eyebrow": "A sweet moment, made your way",
+    "title": "Create your own cake",
+    "intro": "Choose flavour, size, decoration and details step by step.",
+    "backToOffer": "Back to offer",
+    "next": "Continue",
+    "back": "Back",
+    "addToCart": "Add cake to cart",
+    "types": {
+      "classic": {
+        "label": "Classic cakes",
+        "hint": "Tried-and-loved flavours for every occasion."
+      },
+      "premium": {
+        "label": "Premium cakes",
+        "hint": "Rich flavours and special ingredients."
+      },
+      "special": {
+        "label": "Special cakes",
+        "hint": "Wedding, tiered and custom-designed cakes."
+      }
+    },
+    "priceFrom": "from {price}",
+    "onRequest": "on request",
+    "flavours": {
+      "cokolada": "Chocolate cake",
+      "voca": "Fruit cake",
+      "plazma": "Plazma cake",
+      "kinder": "Kinder cake",
+      "rafaelo": "Rafaelo",
+      "ferrero": "Ferrero",
+      "pistachio": "Pistachio dream",
+      "redVelvet": "Red velvet"
+    },
+    "chooseFlavour": "Choose a flavour",
+    "size": "Size",
+    "sizes": {
+      "small": {
+        "label": "Small",
+        "people": "about 15 people"
+      },
+      "large": {
+        "label": "Large",
+        "people": "about 20 people"
+      }
+    },
+    "ideaTitle": "Describe your idea",
+    "idea": "Your idea",
+    "ideaPlaceholder": "Number of tiers, approximate guests, style...",
+    "decorationTitle": "Decoration & details",
+    "photoLabel": "Photo on the cake",
+    "photoHint": "Add the photo you want on the cake (+{price})",
+    "addPhoto": "Add a photo",
+    "inscription": "Inscription on the cake",
+    "optional": "(optional)",
+    "inscriptionPlaceholder": "Optional",
+    "wishes": "Decoration wishes",
+    "wishesPlaceholder": "Colours, theme, figures...",
+    "fasting": "Fasting cake",
+    "gluten": "Gluten-free",
+    "onRequestAvailable": "(available on request)",
+    "pickupTitle": "Pickup",
+    "pickupDate": "Pickup date",
+    "pickupTime": "Time",
+    "pickupDefault": "09:00 – 22:00",
+    "shopOnly": "Pickup is only possible at our shop in Tuzi.",
+    "detailsTitle": "Your details",
+    "fullName": "Full name",
+    "namePlaceholder": "Milica Petrović",
+    "phone": "Phone number",
+    "phonePlaceholder": "+382 68 000 000",
+    "viber": "I use Viber on this number",
+    "mustConfirm": "Every order must be confirmed by phone.",
+    "finalPrice": "The final price is confirmed when we call you.",
+    "successTitle": "Thank you!",
+    "successText": "Your cake has been added to the cart. The order is not confirmed until we call you.",
+    "viewCart": "View cart",
+    "callUs": "Call us",
+    "summaryTitle": "Order summary",
+    "estimated": "Estimated price",
+    "phonePricing": "Price agreed by phone",
+    "photo": "Photo",
+    "specialCake": "Special cake"
+  }
+}

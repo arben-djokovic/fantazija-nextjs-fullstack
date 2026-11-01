@@ -14,7 +14,8 @@ export default function SmoothAnchors() {
       if (!link) return;
 
       const url = new URL(link.href, window.location.href);
-      const samePage = url.origin === window.location.origin && url.pathname === window.location.pathname;
+      const withoutSlash = (path) => path.replace(/\/$/, "") || "/";
+      const samePage = url.origin === window.location.origin && withoutSlash(url.pathname) === withoutSlash(window.location.pathname);
       if (!samePage) return;
 
       // Klik na istu stranicu bez hasha (npr. "Početna" sa /#contact) ide na sam vrh.
