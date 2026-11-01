@@ -7,6 +7,9 @@ import { getPathname } from "@/i18n/navigation";
 import { languages } from "@/data/languages";
 import "./globals.css";
 
+// Jezik i adresa dolaze iz headera zahtjeva, pa se stranica renderuje pri svakom zahtjevu umjesto pri buildu.
+export const instant = false;
+
 // Ova stranica nije u [locale], pa jezik i adresu čita iz headera koje postavlja proxy (npr. /en/abc -> en, /abc).
 async function getRequestInfo() {
   const headerList = await headers();
