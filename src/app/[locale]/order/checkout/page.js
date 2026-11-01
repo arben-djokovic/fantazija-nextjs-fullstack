@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import CheckoutView from "@/components/CheckoutView";
 
@@ -7,13 +8,19 @@ export async function generateMetadata({ params }) {
   return { title: t("title"), description: t("description") };
 }
 
-export default async function CheckoutPage({ params }) {
+async function CheckoutContent({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  return <CheckoutView />;
+}
+
+export default function CheckoutPage({ params }) {
   return (
     <main>
-      <CheckoutView />
+      <Suspense fallback={null}>
+        <CheckoutContent params={params} />
+      </Suspense>
     </main>
   );
 }

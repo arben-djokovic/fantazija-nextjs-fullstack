@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Hero from "@/components/Hero";
 import Offer from "@/components/Offer";
@@ -11,17 +12,28 @@ export async function generateMetadata({ params }) {
   return { title: t("title"), description: t("description") };
 }
 
-export default async function Home({ params }) {
+// Locale se čita unutar Suspense granice, da navigacija između jezika bude odmah.
+async function HomeContent({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   return (
-    <main className="overflow-hidden">
+    <>
       <Hero />
       <Offer />
       <About />
       <Gallery />
       <Contact />
+    </>
+  );
+}
+
+export default function Home({ params }) {
+  return (
+    <main className="overflow-hidden">
+      <Suspense fallback={null}>
+        <HomeContent params={params} />
+      </Suspense>
     </main>
   );
 }

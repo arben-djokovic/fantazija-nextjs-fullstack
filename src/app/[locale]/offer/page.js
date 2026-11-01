@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import OfferCatalog from "@/components/OfferCatalog";
 
@@ -7,13 +8,19 @@ export async function generateMetadata({ params }) {
   return { title: t("title"), description: t("description") };
 }
 
-export default async function OfferPage({ params }) {
+async function OfferContent({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  return <OfferCatalog />;
+}
+
+export default function OfferPage({ params }) {
   return (
     <main>
-      <OfferCatalog />
+      <Suspense fallback={null}>
+        <OfferContent params={params} />
+      </Suspense>
     </main>
   );
 }

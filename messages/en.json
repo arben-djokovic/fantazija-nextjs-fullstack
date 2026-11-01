@@ -333,5 +333,8 @@
     "phonePricing": "Price agreed by phone",
     "photo": "Photo",
     "specialCake": "Special cake"
+  },
+  "Loader": {
+    "loading": "Loading..."
   }
 }

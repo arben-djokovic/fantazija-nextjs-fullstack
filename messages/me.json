@@ -333,5 +333,8 @@
     "phonePricing": "Cijena se dogovara telefonom",
     "photo": "Fotografija",
     "specialCake": "Specijalna torta"
+  },
+  "Loader": {
+    "loading": "Učitavanje..."
   }
 }

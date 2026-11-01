@@ -333,5 +333,8 @@
     "phonePricing": "Çmimi caktohet me telefon",
     "photo": "Fotografia",
     "specialCake": "Tortë speciale"
+  },
+  "Loader": {
+    "loading": "Duke u ngarkuar..."
   }
 }
