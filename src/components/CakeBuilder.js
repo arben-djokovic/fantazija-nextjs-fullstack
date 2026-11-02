@@ -7,15 +7,18 @@ import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, linkBtn, section } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { Link } from "@/i18n/navigation";
+import {
+  CAKE_TYPES,
+  FLAVOURS,
+  PHOTO_EXTRA,
+  SIZE_PRICES,
+  customCakeBasePrice,
+  customCakePrice,
+  needsPhonePricing,
+} from "@/data/cakeBuilder";
 
 // Termin preuzimanja i podatke kupca unosi checkout, pa se torta ovdje samo sastavi i doda u korpu.
 const STEP_KEYS = ["type", "flavour", "decoration"];
-
-const CAKE_TYPES = {
-  classic: { icon: "01", price: 15 },
-  premium: { icon: "02", price: 27 },
-  special: { icon: "03", price: null },
-};
 
 // Gradijenti služe kao uzorci ukusa dok nemamo fotografije.
 const SWATCHES = [
@@ -24,19 +27,6 @@ const SWATCHES = [
   "from-[#d9b394] to-[#65351f]",
   "from-[#eee1c7] to-[#d5a06c]",
 ];
-
-const FLAVOURS = {
-  classic: ["cokolada", "voca", "plazma", "kinder"],
-  premium: ["rafaelo", "ferrero", "pistachio", "redVelvet"],
-};
-
-const SIZE_PRICES = {
-  small: 15,
-  large: 20,
-};
-
-const PREMIUM_PRICE = 27;
-const PHOTO_EXTRA = 5;
 
 const cardBase = "flex flex-col items-start rounded-xl border border-line bg-cream p-4 text-left transition-colors hover:border-primary md:p-5";
 const selectedRing = "border-primary ring-2 ring-blush";
@@ -105,11 +95,9 @@ export default function CakeBuilder() {
   const [gluten, setGluten] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const basePrice =
-    cakeType === "classic" ? SIZE_PRICES[size] : cakeType === "premium" ? PREMIUM_PRICE : null;
-  const total = basePrice === null ? null : basePrice + (photo ? PHOTO_EXTRA : 0);
-  // Posebni zahtjevi i specijalne torte se ne mogu odmah cijeniti, pa cijenu dogovaramo telefonom.
-  const phonePricing = cakeType === "special" || wishes.trim().length > 0;
+  const basePrice = customCakeBasePrice({ cakeType, size });
+  const total = customCakePrice({ cakeType, size, photo });
+  const phonePricing = needsPhonePricing({ cakeType, wishes });
   const cakeName = cakeType === "special" ? t("specialCake") : t(`flavours.${flavour}`);
   const optionLabel = cakeType === "classic" ? t(`sizes.${size}.label`) : t(`types.${cakeType}.label`);
   const money = (value) => formatPrice(value, locale);
@@ -132,6 +120,18 @@ export default function CakeBuilder() {
       quantity: 1,
       unitPrice: total ?? undefined,
       phonePrice: phonePricing,
+      // Izbori idu serveru, koji sam provjerava tortu i računa cijenu.
+      custom: {
+        cakeType,
+        flavour: cakeType === "special" ? undefined : flavour,
+        size: cakeType === "classic" ? size : undefined,
+        photo,
+        inscription: inscription.trim() || undefined,
+        wishes: wishes.trim() || undefined,
+        idea: cakeType === "special" ? idea.trim() || undefined : undefined,
+        fasting,
+        glutenFree: gluten,
+      },
       summary:
         [
           cakeType === "special" && idea.trim(),

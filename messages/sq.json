@@ -178,7 +178,10 @@
     "submit": "Dërgo kërkesën",
     "orCall": "Ose na telefononi në",
     "namePlaceholder": "Arta Gjokaj",
-    "phonePlaceholder": "+382 68 000 000"
+    "phonePlaceholder": "+382 68 000 000",
+    "sending": "Po dërgohet...",
+    "errorGeneric": "Kërkesa nuk u dërgua. Provoni përsëri ose na telefononi.",
+    "errorUnavailable": "Një produkt në shportë nuk është më i disponueshëm. Hiqeni dhe provoni përsëri."
   },
   "CakeBuilder": {
     "steps": {

@@ -23,6 +23,8 @@ export default function CheckoutView() {
   const [phone, setPhone] = useState("");
   const [viber, setViber] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   if (sent) {
     return (
@@ -64,11 +66,45 @@ export default function CheckoutView() {
 
   const canSubmit = name.trim() && phone.trim() && date && time;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!canSubmit) return;
-    clear();
-    setSent(true);
+    if (!canSubmit || sending) return;
+    setSending(true);
+    setError("");
+
+    // Šalju se samo ID-jevi i izbori; naziv i cijenu server uzima iz baze, odnosno računa sam.
+    const orderItems = items.map((item) =>
+      item.custom
+        ? { kind: "custom", quantity: item.quantity, custom: item.custom }
+        : { kind: "item", itemId: item.itemId, optionId: item.optionId, quantity: item.quantity },
+    );
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: { name, phone, viber },
+          pickupDate: date,
+          pickupTime: time,
+          locale,
+          items: orderItems,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        setError(data.code === "ITEM_UNAVAILABLE" ? t("errorUnavailable") : t("errorGeneric"));
+        return;
+      }
+
+      clear();
+      setSent(true);
+    } catch {
+      setError(t("errorGeneric"));
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -175,11 +211,16 @@ export default function CheckoutView() {
 
           <button
             type="submit"
-            disabled={!canSubmit}
+            disabled={!canSubmit || sending}
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {t("submit")}
+            {sending ? t("sending") : t("submit")}
           </button>
+          {error && (
+            <p role="alert" className="text-center text-xs leading-relaxed text-primary">
+              {error}
+            </p>
+          )}
           <p className="text-center text-xs text-muted">
             {t("orCall")} <a href={`tel:${PHONE}`} className="font-semibold text-primary">{PHONE_LABEL}</a>
           </p>

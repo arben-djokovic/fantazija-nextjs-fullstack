@@ -178,7 +178,10 @@
     "submit": "Pošalji zahtjev",
     "orCall": "Ili nas pozovite na",
     "namePlaceholder": "Milica Petrović",
-    "phonePlaceholder": "+382 68 000 000"
+    "phonePlaceholder": "+382 68 000 000",
+    "sending": "Šaljemo...",
+    "errorGeneric": "Zahtjev nije poslat. Pokušajte ponovo ili nas pozovite.",
+    "errorUnavailable": "Neki proizvod iz korpe više nije dostupan. Uklonite ga i pokušajte ponovo."
   },
   "CakeBuilder": {
     "steps": {
