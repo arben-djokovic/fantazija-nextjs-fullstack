@@ -52,27 +52,7 @@
     "subtitle": "Një zgjedhje e vogël kënaqësish të mëdha, të freskëta çdo ditë.",
     "seeAll": "Shikoni të gjithë ofertën",
     "priceFrom": "nga {price}",
-    "pricePiece": "{price} / copë",
-    "tagPopular": "Popullore",
-    "tagNew": "E re",
-    "products": {
-      "cokoladna": {
-        "name": "Tortë me çokollatë",
-        "desc": "Pandispanjë e pasur me çokollatë, krem i butë si mëndafshi dhe pak magji."
-      },
-      "vocna": {
-        "name": "Tortë me fruta",
-        "desc": "Krem i lehtë me vanilje, fruta të stinës dhe gëzim i freskët."
-      },
-      "trilece": {
-        "name": "Trileçe",
-        "desc": "E butë, me qumësht dhe jashtëzakonisht delikate — e preferuara e të gjithëve."
-      },
-      "rafaelo": {
-        "name": "Rafaelo",
-        "desc": "Kokos, çokollatë e bardhë dhe krem me bajame të pjekura."
-      }
-    }
+    "pricePiece": "{price} / copë"
   },
   "About": {
     "eyebrow": "02 · Rreth nesh",
@@ -127,46 +107,6 @@
     }
   },
   "Products": {
-    "cakes": {
-      "cokoladna": {
-        "name": "Tortë me çokollatë",
-        "desc": "Çokollatë e pasur, teksturë kremoze dhe shije e njohur."
-      },
-      "vocna": {
-        "name": "Tortë me fruta",
-        "desc": "Krem i lehtë, fruta të freskëta dhe pandispanjë e butë."
-      },
-      "rafaelo-torta": {
-        "name": "Tortë Rafaelo",
-        "desc": "Kokos, çokollatë e bardhë dhe bajame në shtresa luksoze."
-      },
-      "pistachio": {
-        "name": "Pistachio dream",
-        "desc": "Fëstëkë, çokollatë e bardhë dhe krem i butë si mëndafshi."
-      },
-      "svadbena": {
-        "name": "Tortë dasme",
-        "desc": "Tortë sipas porosisë për ditën tuaj më të rëndësishme."
-      },
-      "po-zamisli": {
-        "name": "Tortë sipas idesë suaj",
-        "desc": "Ideja juaj, shijet tona dhe punë e kujdesshme."
-      }
-    },
-    "pastries": {
-      "trilece": {
-        "name": "Trileçe",
-        "desc": "E butë, me qumësht dhe delikate."
-      },
-      "rafaelo": {
-        "name": "Rafaelo",
-        "desc": "Kokos, çokollatë e bardhë dhe bajame."
-      },
-      "baklava": {
-        "name": "Bakllava",
-        "desc": "Petë krokante dhe shurup shtëpiak."
-      }
-    },
     "options": {
       "komad": "Copë",
       "tepsija": "Tepsi",
@@ -176,10 +116,7 @@
       "cijela": "Tortë e plotë",
       "poDogovoru": "Sipas marrëveshjes"
     },
-    "notes": {
-      "people15": "rreth 15 persona",
-      "people20": "rreth 20 persona"
-    },
+    "servings": "rreth {count} persona",
     "badges": {
       "glutenFree": "Pa gluten",
       "fasting": "Pa produkte shtazore"

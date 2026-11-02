@@ -1,0 +1,248 @@
+[
+  {
+    "slug": "cokoladna",
+    "type": "cake",
+    "category": "classic",
+    "name": {
+      "me": "Čokoladna torta",
+      "sq": "Tortë me çokollatë",
+      "en": "Chocolate cake"
+    },
+    "description": {
+      "me": "Bogata čokolada, kremasta tekstura i poznati ukus.",
+      "sq": "Çokollatë e pasur, teksturë kremoze dhe shije e njohur.",
+      "en": "Rich chocolate, silky cream and a familiar taste."
+    },
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "mala",
+        "servings": 15,
+        "price": 15
+      },
+      {
+        "key": "velika",
+        "servings": 20,
+        "price": 20
+      }
+    ],
+    "featured": true,
+    "sortOrder": 0
+  },
+  {
+    "slug": "vocna",
+    "type": "cake",
+    "category": "classic",
+    "name": {
+      "me": "Voćna torta",
+      "sq": "Tortë me fruta",
+      "en": "Fruit cake"
+    },
+    "description": {
+      "me": "Lagani krem, svježe voće i nježan biskvit.",
+      "sq": "Krem i lehtë, fruta të freskëta dhe pandispanjë e butë.",
+      "en": "Light cream, fresh fruit and a soft sponge."
+    },
+    "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=85",
+    "badges": [
+      "glutenFree"
+    ],
+    "options": [
+      {
+        "key": "mala",
+        "servings": 15,
+        "price": 15
+      },
+      {
+        "key": "velika",
+        "servings": 20,
+        "price": 20
+      }
+    ],
+    "featured": true,
+    "sortOrder": 1
+  },
+  {
+    "slug": "rafaelo-torta",
+    "type": "cake",
+    "category": "premium",
+    "name": {
+      "me": "Rafaelo torta",
+      "sq": "Tortë Rafaelo",
+      "en": "Rafaelo cake"
+    },
+    "description": {
+      "me": "Kokos, bijela čokolada i badem u raskošnom sloju.",
+      "sq": "Kokos, çokollatë e bardhë dhe bajame në shtresa luksoze.",
+      "en": "Coconut, white chocolate and almond in a luxurious layer."
+    },
+    "image": "https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&fit=crop&w=900&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "cijela",
+        "price": 27
+      }
+    ],
+    "featured": false,
+    "sortOrder": 2
+  },
+  {
+    "slug": "pistachio",
+    "type": "cake",
+    "category": "premium",
+    "name": {
+      "me": "Pistachio dream",
+      "sq": "Pistachio dream",
+      "en": "Pistachio dream"
+    },
+    "description": {
+      "me": "Pistaći, bijela čokolada i svilenkasti krem.",
+      "sq": "Fëstëkë, çokollatë e bardhë dhe krem i butë si mëndafshi.",
+      "en": "Pistachio, white chocolate and silky cream."
+    },
+    "image": "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "cijela",
+        "price": 27
+      }
+    ],
+    "featured": false,
+    "sortOrder": 3
+  },
+  {
+    "slug": "svadbena",
+    "type": "cake",
+    "category": "special",
+    "name": {
+      "me": "Svadbena torta",
+      "sq": "Tortë dasme",
+      "en": "Wedding cake"
+    },
+    "description": {
+      "me": "Torta po mjeri za vaš najvažniji dan.",
+      "sq": "Tortë sipas porosisë për ditën tuaj më të rëndësishme.",
+      "en": "A cake made to measure for your most important day."
+    },
+    "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=85",
+    "badges": [
+      "fasting"
+    ],
+    "options": [
+      {
+        "key": "poDogovoru",
+        "price": null
+      }
+    ],
+    "featured": false,
+    "sortOrder": 4
+  },
+  {
+    "slug": "po-zamisli",
+    "type": "cake",
+    "category": "special",
+    "name": {
+      "me": "Torta po zamisli",
+      "sq": "Tortë sipas idesë suaj",
+      "en": "Cake by your idea"
+    },
+    "description": {
+      "me": "Vaša ideja, naši ukusi i pažljiva izrada.",
+      "sq": "Ideja juaj, shijet tona dhe punë e kujdesshme.",
+      "en": "Your idea, our flavours and careful craftsmanship."
+    },
+    "image": "https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=900&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "poDogovoru",
+        "price": null
+      }
+    ],
+    "featured": false,
+    "sortOrder": 5
+  },
+  {
+    "slug": "trilece",
+    "type": "pastry",
+    "name": {
+      "me": "Trileće",
+      "sq": "Trileçe",
+      "en": "Trileće"
+    },
+    "description": {
+      "me": "Meko, mliječno i nježno.",
+      "sq": "E butë, me qumësht dhe delikate.",
+      "en": "Soft, milky and gentle."
+    },
+    "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "komad",
+        "price": 1.5
+      },
+      {
+        "key": "tepsija",
+        "price": 10
+      }
+    ],
+    "featured": true,
+    "sortOrder": 0
+  },
+  {
+    "slug": "rafaelo",
+    "type": "pastry",
+    "name": {
+      "me": "Rafaelo",
+      "sq": "Rafaelo",
+      "en": "Rafaelo"
+    },
+    "description": {
+      "me": "Kokos, bijela čokolada i badem.",
+      "sq": "Kokos, çokollatë e bardhë dhe bajame.",
+      "en": "Coconut, white chocolate and almond."
+    },
+    "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "komad",
+        "price": 1.8
+      }
+    ],
+    "featured": true,
+    "sortOrder": 1
+  },
+  {
+    "slug": "baklava",
+    "type": "pastry",
+    "name": {
+      "me": "Baklava",
+      "sq": "Bakllava",
+      "en": "Baklava"
+    },
+    "description": {
+      "me": "Hrskavi listovi i domaći sirup.",
+      "sq": "Petë krokante dhe shurup shtëpiak.",
+      "en": "Crispy layers and homemade syrup."
+    },
+    "image": "https://images.unsplash.com/photo-1519671282421-2d8d3f4f4f7a?auto=format&fit=crop&w=800&q=85",
+    "badges": [],
+    "options": [
+      {
+        "key": "komad",
+        "price": 1.5
+      },
+      {
+        "key": "kilogram",
+        "price": 12
+      }
+    ],
+    "featured": false,
+    "sortOrder": 2
+  }
+]

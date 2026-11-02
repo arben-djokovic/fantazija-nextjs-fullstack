@@ -4,17 +4,20 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { eyebrow, sectionTitle, textLink } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
+import { getActiveItems, toLocalizedItem } from "@/lib/items";
 
-const products = [
-  { id: "cokoladna", price: 20, unit: "from", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85", tag: "popular" },
-  { id: "vocna", price: 20, unit: "from", image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=85", tag: "new" },
-  { id: "trilece", price: 1.5, unit: "piece", image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85", tag: "popular" },
-  { id: "rafaelo", price: 1.8, unit: "piece", image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=85" },
-];
+// Najjeftinija opcija sa poznatom cijenom; null ako se sve opcije dogovaraju telefonom.
+function cheapestOption(item) {
+  return item.options
+    .filter((option) => option.price !== null)
+    .reduce((cheapest, option) => (!cheapest || option.price < cheapest.price ? option : cheapest), null);
+}
 
 export default async function Offer() {
   const t = await getTranslations("OfferHome");
+  const tCart = await getTranslations("Cart");
   const locale = await getLocale();
+  const products = (await getActiveItems({ featured: true })).map((item) => toLocalizedItem(item, locale));
 
   return (
     <section id="offer" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-12 md:px-8 md:py-28">
@@ -31,26 +34,21 @@ export default async function Offer() {
 
       <div className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-4 md:gap-5">
         {products.map((product) => {
-          const name = t(`products.${product.id}.name`);
-          const price =
-            product.unit === "piece"
-              ? t("pricePiece", { price: formatPrice(product.price, locale) })
-              : t("priceFrom", { price: formatPrice(product.price, locale) });
+          const cheapest = cheapestOption(product);
+          // Ako je najjeftinije po komadu, piše "1,50 € / kom", inače "od 15,00 €".
+          const price = !cheapest
+            ? tCart("priceOnRequest")
+            : t(cheapest.key === "komad" ? "pricePiece" : "priceFrom", { price: formatPrice(cheapest.price, locale) });
 
           return (
             <Link key={product.id} href="/offer" className="group">
               <div className="relative overflow-hidden rounded-xl bg-line">
-                <img src={product.image} alt={name} className="aspect-[0.91] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                {product.tag && (
-                  <span className="absolute top-3 left-3 rounded-full bg-primary px-2.5 py-1 text-[10px] text-white">
-                    {product.tag === "popular" ? t("tagPopular") : t("tagNew")}
-                  </span>
-                )}
+                <img src={product.image} alt={product.name} className="aspect-[0.91] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="mt-4 flex flex-col gap-1 md:flex-row md:justify-between md:gap-3">
                 <div>
-                  <h3 className="font-serif text-lg text-ink md:text-xl">{name}</h3>
-                  <p className="hidden text-xs leading-relaxed text-muted md:block">{t(`products.${product.id}.desc`)}</p>
+                  <h3 className="font-serif text-lg text-ink md:text-xl">{product.name}</h3>
+                  <p className="hidden text-xs leading-relaxed text-muted md:block">{product.description}</p>
                 </div>
                 <strong className="text-xs whitespace-nowrap text-primary">{price}</strong>
               </div>

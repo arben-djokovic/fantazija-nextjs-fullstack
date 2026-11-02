@@ -7,7 +7,7 @@ import { Minus, Plus } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { formatPrice } from "@/lib/format";
 
-export default function OfferCard({ kind, product }) {
+export default function OfferCard({ product }) {
   const t = useTranslations();
   const locale = useLocale();
   const { addItem } = useCart();
@@ -21,9 +21,7 @@ export default function OfferCard({ kind, product }) {
     return () => window.clearTimeout(timer);
   }, [added]);
 
-  const group = kind === "cake" ? "cakes" : "pastries";
-  const name = t(`Products.${group}.${product.id}.name`);
-  const desc = t(`Products.${group}.${product.id}.desc`);
+  const { name, description } = product;
   const option = product.options[optionIndex];
   const onRequest = option.price === null;
   const hasChoice = product.options.length > 1;
@@ -31,8 +29,10 @@ export default function OfferCard({ kind, product }) {
 
   const handleAdd = () => {
     addItem({
-      id: `${kind}-${product.id}-${option.key}`,
-      kind,
+      id: `${product.type}-${product.slug}-${option.key}`,
+      kind: product.type,
+      itemId: product.id,
+      optionId: option.id,
       name,
       image: product.image,
       option: optionLabel,
@@ -48,7 +48,7 @@ export default function OfferCard({ kind, product }) {
     <article className="flex flex-col overflow-hidden rounded-xl border border-line bg-card">
       <img src={product.image} alt={name} className="aspect-4/3 w-full object-cover" />
       <div className="flex flex-1 flex-col gap-4 p-5">
-        {product.badges && (
+        {product.badges.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {product.badges.map((badge) => (
               <span key={badge} className="rounded-full bg-blush px-2.5 py-1 text-[10px] text-primary">
@@ -60,14 +60,14 @@ export default function OfferCard({ kind, product }) {
 
         <div>
           <h3 className="font-serif text-2xl text-ink">{name}</h3>
-          <p className="mt-1 text-sm leading-relaxed text-muted">{desc}</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted">{description}</p>
         </div>
 
         {hasChoice ? (
           <div className="flex flex-wrap gap-2">
             {product.options.map((item, index) => (
               <button
-                key={item.key}
+                key={item.id}
                 type="button"
                 onClick={() => setOptionIndex(index)}
                 aria-pressed={optionIndex === index}
@@ -79,7 +79,7 @@ export default function OfferCard({ kind, product }) {
               >
                 <span className="block font-semibold">{t(`Products.options.${item.key}`)}</span>
                 <span className="block text-[11px]">
-                  {item.note ? `${t(`Products.notes.${item.note}`)} · ` : ""}
+                  {item.servings ? `${t("Products.servings", { count: item.servings })} · ` : ""}
                   {item.price === null ? t("Cart.optionOnRequest") : formatPrice(item.price, locale)}
                 </span>
               </button>
@@ -88,7 +88,7 @@ export default function OfferCard({ kind, product }) {
         ) : (
           <p className="text-sm text-muted">
             {optionLabel}
-            {option.note ? ` · ${t(`Products.notes.${option.note}`)}` : ""}
+            {option.servings ? ` · ${t("Products.servings", { count: option.servings })}` : ""}
           </p>
         )}
 

@@ -52,27 +52,7 @@
     "subtitle": "Mali izbor velikih uživanja, svakog dana svježe.",
     "seeAll": "Pogledaj cijelu ponudu",
     "priceFrom": "od {price}",
-    "pricePiece": "{price} / kom",
-    "tagPopular": "Popular",
-    "tagNew": "New",
-    "products": {
-      "cokoladna": {
-        "name": "Čokoladna torta",
-        "desc": "Bogat čokoladni biskvit, svilenkasta krema i malo magije."
-      },
-      "vocna": {
-        "name": "Voćna torta",
-        "desc": "Lagana vanilija krema sa sezonskim voćem i svježom radošću."
-      },
-      "trilece": {
-        "name": "Trileće",
-        "desc": "Mekano, mliječno i nevjerovatno nežno — pravi favorit."
-      },
-      "rafaelo": {
-        "name": "Rafaelo",
-        "desc": "Kokos, bijela čokolada i krema od prženog badema."
-      }
-    }
+    "pricePiece": "{price} / kom"
   },
   "About": {
     "eyebrow": "02 · O nama",
@@ -127,46 +107,6 @@
     }
   },
   "Products": {
-    "cakes": {
-      "cokoladna": {
-        "name": "Čokoladna torta",
-        "desc": "Bogata čokolada, kremasta tekstura i poznati ukus."
-      },
-      "vocna": {
-        "name": "Voćna torta",
-        "desc": "Lagani krem, svježe voće i nježan biskvit."
-      },
-      "rafaelo-torta": {
-        "name": "Rafaelo torta",
-        "desc": "Kokos, bijela čokolada i badem u raskošnom sloju."
-      },
-      "pistachio": {
-        "name": "Pistachio dream",
-        "desc": "Pistaći, bijela čokolada i svilenkasti krem."
-      },
-      "svadbena": {
-        "name": "Svadbena torta",
-        "desc": "Torta po mjeri za vaš najvažniji dan."
-      },
-      "po-zamisli": {
-        "name": "Torta po zamisli",
-        "desc": "Vaša ideja, naši ukusi i pažljiva izrada."
-      }
-    },
-    "pastries": {
-      "trilece": {
-        "name": "Trileće",
-        "desc": "Meko, mliječno i nježno."
-      },
-      "rafaelo": {
-        "name": "Rafaelo",
-        "desc": "Kokos, bijela čokolada i badem."
-      },
-      "baklava": {
-        "name": "Baklava",
-        "desc": "Hrskavi listovi i domaći sirup."
-      }
-    },
     "options": {
       "komad": "Komad",
       "tepsija": "Tepsija",
@@ -176,10 +116,7 @@
       "cijela": "Cijela torta",
       "poDogovoru": "Po dogovoru"
     },
-    "notes": {
-      "people15": "oko 15 osoba",
-      "people20": "oko 20 osoba"
-    },
+    "servings": "oko {count} osoba",
     "badges": {
       "glutenFree": "Bez glutena",
       "fasting": "Posna"

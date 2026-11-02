@@ -20,7 +20,10 @@ async function HomeContent({ params }) {
   return (
     <>
       <Hero />
-      <Offer />
+      {/* Ponuda se čita iz baze, pa ima svoju Suspense granicu da ostatak strane ne čeka. */}
+      <Suspense fallback={null}>
+        <Offer />
+      </Suspense>
       <About />
       <Gallery />
       <Contact />

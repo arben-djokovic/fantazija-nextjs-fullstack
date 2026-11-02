@@ -52,27 +52,7 @@
     "subtitle": "A small selection of big pleasures, fresh every day.",
     "seeAll": "View the full offer",
     "priceFrom": "from {price}",
-    "pricePiece": "{price} / pc",
-    "tagPopular": "Popular",
-    "tagNew": "New",
-    "products": {
-      "cokoladna": {
-        "name": "Chocolate cake",
-        "desc": "Rich chocolate sponge, silky cream and a little magic."
-      },
-      "vocna": {
-        "name": "Fruit cake",
-        "desc": "Light vanilla cream with seasonal fruit and fresh joy."
-      },
-      "trilece": {
-        "name": "Trileće",
-        "desc": "Soft, milky and impossibly delicate — a true favourite."
-      },
-      "rafaelo": {
-        "name": "Rafaelo",
-        "desc": "Coconut, white chocolate and toasted almond cream."
-      }
-    }
+    "pricePiece": "{price} / pc"
   },
   "About": {
     "eyebrow": "02 · About us",
@@ -127,46 +107,6 @@
     }
   },
   "Products": {
-    "cakes": {
-      "cokoladna": {
-        "name": "Chocolate cake",
-        "desc": "Rich chocolate, silky cream and a familiar taste."
-      },
-      "vocna": {
-        "name": "Fruit cake",
-        "desc": "Light cream, fresh fruit and a soft sponge."
-      },
-      "rafaelo-torta": {
-        "name": "Rafaelo cake",
-        "desc": "Coconut, white chocolate and almond in a luxurious layer."
-      },
-      "pistachio": {
-        "name": "Pistachio dream",
-        "desc": "Pistachio, white chocolate and silky cream."
-      },
-      "svadbena": {
-        "name": "Wedding cake",
-        "desc": "A cake made to measure for your most important day."
-      },
-      "po-zamisli": {
-        "name": "Cake by your idea",
-        "desc": "Your idea, our flavours and careful craftsmanship."
-      }
-    },
-    "pastries": {
-      "trilece": {
-        "name": "Trileće",
-        "desc": "Soft, milky and gentle."
-      },
-      "rafaelo": {
-        "name": "Rafaelo",
-        "desc": "Coconut, white chocolate and almond."
-      },
-      "baklava": {
-        "name": "Baklava",
-        "desc": "Crispy layers and homemade syrup."
-      }
-    },
     "options": {
       "komad": "Piece",
       "tepsija": "Tray",
@@ -176,10 +116,7 @@
       "cijela": "Whole cake",
       "poDogovoru": "On request"
     },
-    "notes": {
-      "people15": "about 15 people",
-      "people20": "about 20 people"
-    },
+    "servings": "about {count} people",
     "badges": {
       "glutenFree": "Gluten-free",
       "fasting": "Fasting"

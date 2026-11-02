@@ -3,17 +3,18 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
-import { cakeCategories, cakes, pastries } from "@/data/offer";
 import OfferCard from "@/components/OfferCard";
 import { eyebrow, linkBtn, sectionTitle } from "@/components/styles";
 import { Link } from "@/i18n/navigation";
+
+const cakeCategories = ["all", "classic", "premium", "special"];
 
 const tabs = [
   { value: "cakes", labelKey: "tabCakes" },
   { value: "pastries", labelKey: "tabPastries" },
 ];
 
-export default function OfferCatalog() {
+export default function OfferCatalog({ cakes, pastries }) {
   const t = useTranslations("Offer");
   const [tab, setTab] = useState("cakes");
   const [category, setCategory] = useState("all");
@@ -64,32 +65,32 @@ export default function OfferCatalog() {
           </div>
 
           <div className="mb-8 flex flex-wrap gap-2">
-            {cakeCategories.map((item) => (
+            {cakeCategories.map((value) => (
               <button
-                key={item.value}
+                key={value}
                 type="button"
-                onClick={() => setCategory(item.value)}
+                onClick={() => setCategory(value)}
                 className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
-                  category === item.value
+                  category === value
                     ? "border-primary bg-primary text-white"
                     : "border-line text-muted hover:border-primary hover:text-primary"
                 }`}
               >
-                {t(`categories.${item.value}`)}
+                {t(`categories.${value}`)}
               </button>
             ))}
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {visibleCakes.map((cake) => (
-              <OfferCard key={cake.id} kind="cake" product={cake} />
+              <OfferCard key={cake.id} product={cake} />
             ))}
           </div>
         </>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {pastries.map((pastry) => (
-            <OfferCard key={pastry.id} kind="pastry" product={pastry} />
+            <OfferCard key={pastry.id} product={pastry} />
           ))}
         </div>
       )}
