@@ -14,9 +14,18 @@ function formatOption(option) {
   return `${OPTION_KEYS[option.key]} ${price}`;
 }
 
-async function ItemsList() {
+const TABS = [
+  { value: "cake", label: "Torte" },
+  { value: "pastry", label: "Kolači" },
+];
+
+async function ItemsList({ searchParams }) {
   const user = await requirePageUser(["admin"]);
-  const items = await listAllItems();
+  const { type: requested } = await searchParams;
+  const type = TABS.some((tab) => tab.value === requested) ? requested : "cake";
+
+  const allItems = await listAllItems();
+  const items = allItems.filter((item) => item.type === type);
 
   return (
     <>
@@ -27,10 +36,25 @@ async function ItemsList() {
             <h1 className="font-serif text-4xl text-ink">Proizvodi</h1>
             <p className="text-sm text-muted">Sakriveni proizvodi se ne vide na sajtu, ali ostaju u starim narudžbama.</p>
           </div>
-          <Link href="/admin/items/new" className={linkBtn}>
+          <Link href={`/admin/items/new?type=${type}`} className={linkBtn}>
             Novi proizvod
           </Link>
         </div>
+
+        <nav className="flex gap-2">
+          {TABS.map((tab) => (
+            <Link
+              key={tab.value}
+              href={`/admin/items?type=${tab.value}`}
+              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                type === tab.value ? "border-primary bg-primary text-white" : "border-line text-muted hover:border-primary hover:text-primary"
+              }`}
+            >
+              {tab.label}
+              <span className="opacity-70">{allItems.filter((item) => item.type === tab.value).length}</span>
+            </Link>
+          ))}
+        </nav>
 
         <div className="flex flex-col gap-3">
           {items.map((item) => (
@@ -56,18 +80,18 @@ async function ItemsList() {
               </div>
             </Link>
           ))}
-          {items.length === 0 && <p className="rounded-xl border border-line bg-card p-6 text-sm text-muted">Još nema proizvoda.</p>}
+          {items.length === 0 && <p className="rounded-xl border border-line bg-card p-6 text-sm text-muted">Još nema proizvoda u ovoj grupi.</p>}
         </div>
       </div>
     </>
   );
 }
 
-export default function AdminItemsPage() {
+export default function AdminItemsPage({ searchParams }) {
   return (
     <main>
       <Suspense fallback={null}>
-        <ItemsList />
+        <ItemsList searchParams={searchParams} />
       </Suspense>
     </main>
   );

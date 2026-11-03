@@ -38,10 +38,10 @@ function slugify(value) {
 }
 
 // item: postojeći proizvod (izmjena) ili undefined (novi proizvod).
-export default function ItemForm({ item }) {
+export default function ItemForm({ item, defaultType = "cake" }) {
   const router = useRouter();
   const isNew = !item;
-  const [form, setForm] = useState(item ?? EMPTY_ITEM);
+  const [form, setForm] = useState(item ?? { ...EMPTY_ITEM, type: defaultType });
   const [slugTouched, setSlugTouched] = useState(!isNew);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -77,7 +77,7 @@ export default function ItemForm({ item }) {
         setError(data.error ?? "Akcija nije uspjela");
         return;
       }
-      router.push("/admin/items");
+      router.push(`/admin/items?type=${form.type}`);
       router.refresh();
     } catch {
       setError("Akcija nije uspjela");
@@ -294,7 +294,7 @@ export default function ItemForm({ item }) {
         </button>
         <button
           type="button"
-          onClick={() => router.push("/admin/items")}
+          onClick={() => router.push(`/admin/items?type=${item?.type ?? defaultType}`)}
           className="inline-flex h-12 items-center rounded-full border border-line px-6 text-sm font-semibold text-ink hover:border-primary"
         >
           Odustani

@@ -34,3 +34,19 @@ export function customCakePrice(cake) {
 export function needsPhonePricing({ cakeType, wishes }) {
   return cakeType === "special" || Boolean(wishes?.trim());
 }
+
+// Za zbir u adminu: ukus iz buildera koji je ista torta kao proizvod iz ponude (slug), da se broje zajedno.
+// Ukusi kojih nema u ponudi (Kinder, Plazma, Ferrero, Red velvet) dobijaju svoj red.
+export const FLAVOUR_ITEM_SLUGS = {
+  cokolada: "cokoladna",
+  voca: "vocna",
+  rafaelo: "rafaelo-torta",
+  pistachio: "pistachio",
+};
+
+// Opcija iz ponude koja odgovara veličini torte iz buildera: classic mala/velika, premium cijela.
+export function customCakeOptionKey({ cakeType, size }) {
+  if (cakeType === "classic") return size === "large" ? "velika" : "mala";
+  if (cakeType === "premium") return "cijela";
+  return "poDogovoru";
+}

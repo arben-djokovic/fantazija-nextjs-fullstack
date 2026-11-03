@@ -17,15 +17,15 @@ export class OrderError extends Error {
   }
 }
 
-const text = (value) => (typeof value === "string" ? value.trim() : "");
+export const text = (value) => (typeof value === "string" ? value.trim() : "");
 
-function isRealDate(value) {
+export function isRealDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00Z`);
   return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(value);
 }
 
-function parseQuantity(value) {
+export function parseQuantity(value) {
   const quantity = Number(value);
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY) {
     throw new OrderError("INVALID", "Neispravna količina");
@@ -70,7 +70,7 @@ function buildCustomItem(raw) {
 }
 
 // Stavka iz ponude: naziv i cijena se uzimaju iz baze, ne iz browsera.
-function buildCatalogItem(raw, itemsById) {
+export function buildCatalogItem(raw, itemsById) {
   const item = itemsById.get(String(raw.itemId));
   const option = item?.options.find((entry) => entry._id.toString() === String(raw.optionId));
   if (!option) throw new OrderError("ITEM_UNAVAILABLE", "Proizvod ili opcija više nije dostupna");

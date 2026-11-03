@@ -47,6 +47,7 @@ const orderItemSchema = new mongoose.Schema({
   custom: { type: customCakeSchema, required: isCustomCake },
   quantity: { type: Number, required: true, min: 1, max: 100 },
   unitPrice: { type: Number, min: 0, default: null }, // null = cijena po dogovoru
+  priceAgreed: { type: Boolean, default: false }, // cijenu je radnik upisao nakon dogovora sa kupcem
 });
 
 const orderSchema = new mongoose.Schema(
@@ -66,11 +67,20 @@ const orderSchema = new mongoose.Schema(
     total: { type: Number, required: true, min: 0 }, // zbir stavki sa poznatom cijenom
     hasPhonePrice: { type: Boolean, default: false }, // bar jedna stavka se dogovara telefonom
     status: { type: String, enum: Object.keys(ORDER_STATUSES), default: "new" },
-    // Ko je i kada mijenjao status; ime se kopira da ostane i ako se nalog kasnije obriše.
+    note: { type: String, trim: true, maxlength: 1000 }, // interna napomena, kupac je ne vidi
+    // Ko je i kada mijenjao status ili izmijenio narudžbu; ime se kopira da ostane i ako se nalog kasnije obriše.
     history: [
       {
         _id: false,
-        status: { type: String, enum: Object.keys(ORDER_STATUSES), required: true },
+        action: { type: String, enum: ["status", "edit"], default: "status" },
+        status: {
+          type: String,
+          enum: Object.keys(ORDER_STATUSES),
+          required: function () {
+            return this.action !== "edit";
+          },
+        },
+        summary: { type: String }, // šta je izmijenjeno, samo za "edit"
         by: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         byName: { type: String },
         at: { type: Date, default: Date.now },
