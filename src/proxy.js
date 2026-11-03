@@ -7,8 +7,9 @@ const handleI18n = createMiddleware(routing);
 export default function proxy(request) {
   const { pathname } = request.nextUrl;
 
-  // Next.js interni fajlovi, API i fajlovi sa ekstenzijom (slike, css...) ne idu kroz prevođenje.
-  if (pathname.startsWith("/_next") || pathname.startsWith("/api") || /\.[^/]+$/.test(pathname)) {
+  // Next.js interni fajlovi, API, admin dio i fajlovi sa ekstenzijom (slike, css...) ne idu kroz prevođenje.
+  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  if (pathname.startsWith("/_next") || pathname.startsWith("/api") || isAdmin || /\.[^/]+$/.test(pathname)) {
     return NextResponse.next();
   }
 

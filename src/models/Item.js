@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { BADGES, CAKE_CATEGORIES, ITEM_TYPES, OPTION_KEYS } from "../data/items.js";
 
 // Naziv i opis proizvoda se unose na sva tri jezika (me, sq, en).
 const localized = {
@@ -8,20 +9,26 @@ const localized = {
 };
 
 const optionSchema = new mongoose.Schema({
-  key: { type: String, enum: ["komad", "tepsija", "kilogram", "mala", "velika", "cijela", "poDogovoru"], required: true },
+  key: { type: String, enum: Object.keys(OPTION_KEYS), required: true },
   servings: { type: Number, min: 1 }, // broj osoba, tekst "oko {count} osoba" je u messages
   price: { type: Number, min: 0, default: null }, // null = cijena po dogovoru
 });
 
 const itemSchema = new mongoose.Schema(
   {
-    slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    type: { type: String, enum: ["cake", "pastry"], required: true },
-    category: { type: String, enum: ["classic", "premium", "special"] }, // samo za torte
+    slug: { type: String, required: true, unique: true, lowercase: true, trim: true, match: /^[a-z0-9]+(-[a-z0-9]+)*$/ },
+    type: { type: String, enum: Object.keys(ITEM_TYPES), required: true },
+    category: {
+      type: String,
+      enum: Object.keys(CAKE_CATEGORIES),
+      required: function () {
+        return this.type === "cake";
+      },
+    }, // samo za torte
     name: localized,
     description: localized,
-    image: { type: String, required: true },
-    badges: [{ type: String, enum: ["glutenFree", "fasting"] }],
+    image: { type: String, required: true, trim: true },
+    badges: [{ type: String, enum: Object.keys(BADGES) }],
     options: {
       type: [optionSchema],
       validate: { validator: (options) => options.length > 0, message: "Proizvod mora imati bar jednu opciju" },

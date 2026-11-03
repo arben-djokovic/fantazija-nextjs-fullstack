@@ -8,3 +8,15 @@ export function tomorrowISO() {
   const day = String(date.getDate()).padStart(2, "0");
   return `${date.getFullYear()}-${month}-${day}`;
 }
+
+// Današnji datum u Crnoj Gori kao "YYYY-MM-DD", bez obzira na vremensku zonu servera.
+export function todayInPodgorica() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Podgorica" }).format(new Date());
+}
+
+// "2026-11-03" + 1 -> "2026-11-04"
+export function addDays(isoDate, days) {
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}

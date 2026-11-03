@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { pickupTimes } from "@/lib/date";
+import { pickupTimes } from "../lib/date.js";
+import { ORDER_STATUSES } from "../data/orders.js";
 
 const isCatalogItem = function () {
   return this.kind === "item";
@@ -64,11 +65,17 @@ const orderSchema = new mongoose.Schema(
     },
     total: { type: Number, required: true, min: 0 }, // zbir stavki sa poznatom cijenom
     hasPhonePrice: { type: Boolean, default: false }, // bar jedna stavka se dogovara telefonom
-    status: {
-      type: String,
-      enum: ["new", "confirmed", "ready", "completed", "cancelled"],
-      default: "new",
-    },
+    status: { type: String, enum: Object.keys(ORDER_STATUSES), default: "new" },
+    // Ko je i kada mijenjao status; ime se kopira da ostane i ako se nalog kasnije obriše.
+    history: [
+      {
+        _id: false,
+        status: { type: String, enum: Object.keys(ORDER_STATUSES), required: true },
+        by: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        byName: { type: String },
+        at: { type: Date, default: Date.now },
+      },
+    ],
     locale: { type: String, enum: ["me", "sq", "en"], default: "me" }, // jezik na kojem je kupac naručio
   },
   { timestamps: true }

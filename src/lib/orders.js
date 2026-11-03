@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/db";
-import { pickupTimes } from "@/lib/date";
+import { pickupTimes, todayInPodgorica } from "@/lib/date";
 import { CAKE_TYPES, FLAVOURS, SIZE_PRICES, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
 import { routing } from "@/i18n/routing";
 import Item from "@/models/Item";
@@ -18,11 +18,6 @@ export class OrderError extends Error {
 }
 
 const text = (value) => (typeof value === "string" ? value.trim() : "");
-
-// Današnji datum u Crnoj Gori kao "YYYY-MM-DD", bez obzira na vremensku zonu servera.
-function todayInPodgorica() {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Podgorica" }).format(new Date());
-}
 
 function isRealDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
