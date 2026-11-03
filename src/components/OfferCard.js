@@ -121,7 +121,9 @@ export default function OfferCard({ product }) {
           <button
             type="button"
             onClick={handleAdd}
-            className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className={`inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold text-white transition-[background-color,opacity] duration-300 hover:opacity-90 ${
+              added ? "bg-emerald-600" : "bg-primary"
+            }`}
           >
             {added ? t("Cart.added") : t("Cart.addToCart")}
           </button>

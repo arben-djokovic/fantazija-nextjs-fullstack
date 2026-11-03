@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "seed": "node --env-file=.env.local scripts/seed-items.mjs",
-    "create-user": "node --env-file=.env.local scripts/create-user.mjs",
-    "seed:orders": "node --env-file=.env.local scripts/seed-orders.mjs"
+    "lint": "eslint"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",

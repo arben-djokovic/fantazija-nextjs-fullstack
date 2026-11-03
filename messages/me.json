@@ -37,7 +37,7 @@
     }
   },
   "Hero": {
-    "eyebrow": "Poslastičarnica u Tuzima · od 2012.",
+    "eyebrow": "Poslastičarnica u Tuzima · od {year}.",
     "titleLine1": "Slatki trenuci",
     "titleLine2": "za pamćenje.",
     "text": "Domaće torte, kolači i miris kafe — napravljeno s ljubavlju za važne i sasvim obične dane.",
@@ -59,16 +59,15 @@
     "titleLine1": "Porodica, tradicija",
     "titleLine2": "i mnogo",
     "titleAccent": "ljubavi.",
-    "text": "Fantazija je mala porodična poslastičarnica u srcu Tuzi. Od 2012. godine pravimo torte i kolače koji okupljaju ljude oko stola — od prvog zalogaja do posljednje mrvice.",
+    "text": "Fantazija je mala porodična poslastičarnica u srcu Tuzi. Od {year}. godine pravimo torte i kolače koji okupljaju ljude oko stola — od prvog zalogaja do posljednje mrvice.",
     "quote": "„Najljepše uspomene počinju nečim slatkim.”",
     "cta": "Posjetite nas",
-    "badgeNumber": "12",
     "badgeLine1": "godina",
     "badgeLine2": "slatkih priča",
     "imageAlt": "Topla i ugodna slastičarnica"
   },
   "Gallery": {
-    "eyebrow": "05 · Galerija",
+    "eyebrow": "03 · Galerija",
     "title": "Trenuci iz Fantazije",
     "subtitle": "Zapratite nas za još malo slatke inspiracije.",
     "photos": {
@@ -80,7 +79,7 @@
     }
   },
   "Contact": {
-    "eyebrow": "06 · Kontakt",
+    "eyebrow": "04 · Kontakt",
     "title": "Posjetite nas",
     "text": "Dođite da se upoznamo — vrata su vam uvijek otvorena.",
     "address": "Tuzi, Montenegro",
@@ -97,7 +96,7 @@
     "contactTitle": "Kontakt",
     "address": "Tuzi, Montenegro",
     "hours": "09:00 – 22:00 · svaki dan",
-    "copyright": "© 2024 Fantazija",
+    "copyright": "© {year} Fantazija",
     "madeIn": "Sa ljubavlju iz Tuzi",
     "social": {
       "phone": "Telefon",
@@ -250,10 +249,6 @@
     "gluten": "Bez glutena",
     "onRequestAvailable": "(dostupno na zahtjev)",
     "finalPrice": "Konačna cijena se potvrđuje kada vas pozovemo.",
-    "successTitle": "Hvala vam!",
-    "successText": "Vaša torta je dodata u korpu. U korpi izaberite termin preuzimanja i ostavite kontakt da završite porudžbinu.",
-    "viewCart": "Pogledaj korpu",
-    "callUs": "Pozovite nas",
     "summaryTitle": "Pregled porudžbine",
     "estimated": "Procijenjena cijena",
     "phonePricing": "Cijena se dogovara telefonom",

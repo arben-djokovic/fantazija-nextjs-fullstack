@@ -37,7 +37,7 @@
     }
   },
   "Hero": {
-    "eyebrow": "Pasticeri në Tuz · që nga viti 2012",
+    "eyebrow": "Pasticeri në Tuz · që nga viti {year}",
     "titleLine1": "Momente të ëmbla",
     "titleLine2": "për t’u kujtuar.",
     "text": "Torta shtëpiake, ëmbëlsira dhe aroma e kafesë — të përgatitura me dashuri për ditët e rëndësishme dhe për ato krejt të zakonshme.",
@@ -59,16 +59,15 @@
     "titleLine1": "Familje, traditë",
     "titleLine2": "dhe shumë",
     "titleAccent": "dashuri.",
-    "text": "Fantazija është një pasticeri e vogël familjare në zemër të Tuzit. Që nga viti 2012 përgatisim torta dhe ëmbëlsira që i mbledhin njerëzit rreth tryezës — nga kafshata e parë deri te thërrimja e fundit.",
+    "text": "Fantazija është një pasticeri e vogël familjare në zemër të Tuzit. Që nga viti {year} përgatisim torta dhe ëmbëlsira që i mbledhin njerëzit rreth tryezës — nga kafshata e parë deri te thërrimja e fundit.",
     "quote": "„Kujtimet më të bukura fillojnë me diçka të ëmbël.”",
     "cta": "Na vizitoni",
-    "badgeNumber": "12",
     "badgeLine1": "vjet",
     "badgeLine2": "histori të ëmbla",
     "imageAlt": "Pasticeri e ngrohtë dhe e këndshme"
   },
   "Gallery": {
-    "eyebrow": "05 · Galeria",
+    "eyebrow": "03 · Galeria",
     "title": "Momente nga Fantazija",
     "subtitle": "Na ndiqni për pak më shumë frymëzim të ëmbël.",
     "photos": {
@@ -80,7 +79,7 @@
     }
   },
   "Contact": {
-    "eyebrow": "06 · Kontakti",
+    "eyebrow": "04 · Kontakti",
     "title": "Na vizitoni",
     "text": "Ejani të njihemi — dyert tona janë gjithmonë të hapura për ju.",
     "address": "Tuz, Mali i Zi",
@@ -97,7 +96,7 @@
     "contactTitle": "Kontakti",
     "address": "Tuz, Mali i Zi",
     "hours": "09:00 – 22:00 · çdo ditë",
-    "copyright": "© 2024 Fantazija",
+    "copyright": "© {year} Fantazija",
     "madeIn": "Me dashuri nga Tuzi",
     "social": {
       "phone": "Telefoni",
@@ -250,10 +249,6 @@
     "gluten": "Pa gluten",
     "onRequestAvailable": "(e disponueshme me kërkesë)",
     "finalPrice": "Çmimi përfundimtar konfirmohet kur t’ju telefonojmë.",
-    "successTitle": "Faleminderit!",
-    "successText": "Torta juaj u shtua në shportë. Në shportë zgjidhni orarin e marrjes dhe lini kontaktin për të përfunduar porosinë.",
-    "viewCart": "Shiko shportën",
-    "callUs": "Na telefononi",
     "summaryTitle": "Përmbledhja e porosisë",
     "estimated": "Çmimi i përafërt",
     "phonePricing": "Çmimi caktohet me telefon",

@@ -4,10 +4,12 @@ import { FaInstagram, FaViber } from "react-icons/fa6";
 import { SiGooglemaps } from "react-icons/si";
 import { Link } from "@/i18n/navigation";
 import { INSTAGRAM_URL, MAPS_URL } from "@/data/contact";
+import { currentYear } from "@/lib/year";
 
 export default async function Footer() {
   const t = await getTranslations("Footer");
   const tHeader = await getTranslations("Header");
+  const year = await currentYear();
 
   const socials = [
     { href: "tel:+38268210652", label: t("social.phone"), icon: Phone, color: "bg-[#0c024e]" },
@@ -57,7 +59,7 @@ export default async function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-[#5e4c44] pt-4 text-[10px] text-[#8e7b72] md:flex-row md:justify-between">
-          <span>{t("copyright")}</span>
+          <span>{t("copyright", { year })}</span>
           <span className="hidden items-center gap-1.5 md:flex">
             {t("madeIn")} <Heart className="size-3 text-[#e8b3c4]" fill="currentColor" />
           </span>

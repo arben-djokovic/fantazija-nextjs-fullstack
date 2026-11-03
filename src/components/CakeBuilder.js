@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Heart, Phone, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { useCart } from "@/components/cart-context";
-import { eyebrow, fieldInput, linkBtn, section } from "@/components/styles";
+import { eyebrow, fieldInput, section } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import {
   CAKE_TYPES,
   FLAVOURS,
@@ -79,8 +79,8 @@ function Toggle({ label, hint, checked, onChange }) {
 
 export default function CakeBuilder() {
   const t = useTranslations("CakeBuilder");
-  const tCheckout = useTranslations("Checkout");
   const locale = useLocale();
+  const router = useRouter();
   const { addItem } = useCart();
   const [step, setStep] = useState(1);
   const [cakeType, setCakeType] = useState("classic");
@@ -93,7 +93,28 @@ export default function CakeBuilder() {
   const [idea, setIdea] = useState("");
   const [fasting, setFasting] = useState(false);
   const [gluten, setGluten] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const addedRef = useRef(false);
+
+  // Next čuva stranicu sakrivenu nakon navigacije (Activity). Ako je torta dodata, builder se vraća na početak
+  // tek kad se stranica sakrije, da se prije prelaska na korpu ne vidi prazan prvi korak.
+  useLayoutEffect(
+    () => () => {
+      if (!addedRef.current) return;
+      addedRef.current = false;
+      setStep(1);
+      setCakeType("classic");
+      setFlavour(FLAVOURS.classic[0]);
+      setSize("small");
+      setPhoto(false);
+      setPhotoFiles([]);
+      setInscription("");
+      setWishes("");
+      setIdea("");
+      setFasting(false);
+      setGluten(false);
+    },
+    [],
+  );
 
   const basePrice = customCakeBasePrice({ cakeType, size });
   const total = customCakePrice({ cakeType, size, photo });
@@ -143,31 +164,9 @@ export default function CakeBuilder() {
           .filter(Boolean)
           .join(" · ") || undefined,
     });
-    setSubmitted(true);
+    addedRef.current = true;
+    router.push("/order/checkout");
   };
-
-  if (submitted) {
-    return (
-      <section className={`${section} text-center`}>
-        <div className="mx-auto max-w-xl rounded-2xl border border-line bg-card p-10">
-          <div className="mx-auto mb-7 grid size-22 place-items-center rounded-full bg-blush text-primary">
-            <Heart className="size-9" fill="currentColor" />
-          </div>
-          <p className={`${eyebrow} justify-center`}>{tCheckout("eyebrowText")}</p>
-          <h1 className="mb-5 font-serif text-5xl text-ink">{t("successTitle")}</h1>
-          <p className="leading-relaxed text-muted">{t("successText")}</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/order/checkout" className={linkBtn}>
-              {t("viewCart")}
-            </Link>
-            <a href="tel:+38268210652" className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 text-sm font-semibold text-ink transition-colors hover:border-primary">
-              <Phone className="size-4" /> {t("callUs")}
-            </a>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   const next = () => setStep((current) => Math.min(current + 1, STEP_KEYS.length));
   const previous = () => setStep((current) => Math.max(current - 1, 1));

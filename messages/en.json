@@ -37,7 +37,7 @@
     }
   },
   "Hero": {
-    "eyebrow": "Patisserie in Tuzi · since 2012",
+    "eyebrow": "Patisserie in Tuzi · since {year}",
     "titleLine1": "Sweet moments",
     "titleLine2": "worth remembering.",
     "text": "Homemade cakes, pastries and the smell of coffee — made with love for important days and ordinary ones alike.",
@@ -59,16 +59,15 @@
     "titleLine1": "Family, tradition",
     "titleLine2": "and lots of",
     "titleAccent": "love.",
-    "text": "Fantazija is a small family patisserie in the heart of Tuzi. Since 2012 we have been making cakes and pastries that bring people together around the table — from the first bite to the last crumb.",
+    "text": "Fantazija is a small family patisserie in the heart of Tuzi. Since {year} we have been making cakes and pastries that bring people together around the table — from the first bite to the last crumb.",
     "quote": "“The sweetest memories start with something sweet.”",
     "cta": "Visit us",
-    "badgeNumber": "12",
     "badgeLine1": "years of",
     "badgeLine2": "sweet stories",
     "imageAlt": "Warm and cosy patisserie"
   },
   "Gallery": {
-    "eyebrow": "05 · Gallery",
+    "eyebrow": "03 · Gallery",
     "title": "Moments from Fantazija",
     "subtitle": "Follow us for a little more sweet inspiration.",
     "photos": {
@@ -80,7 +79,7 @@
     }
   },
   "Contact": {
-    "eyebrow": "06 · Contact",
+    "eyebrow": "04 · Contact",
     "title": "Visit us",
     "text": "Come and say hello — our doors are always open.",
     "address": "Tuzi, Montenegro",
@@ -97,7 +96,7 @@
     "contactTitle": "Contact",
     "address": "Tuzi, Montenegro",
     "hours": "09:00 – 22:00 · every day",
-    "copyright": "© 2024 Fantazija",
+    "copyright": "© {year} Fantazija",
     "madeIn": "Made with love in Tuzi",
     "social": {
       "phone": "Phone",
@@ -250,10 +249,6 @@
     "gluten": "Gluten-free",
     "onRequestAvailable": "(available on request)",
     "finalPrice": "The final price is confirmed when we call you.",
-    "successTitle": "Thank you!",
-    "successText": "Your cake has been added to the cart. In the cart, choose a pickup time and leave your contact details to finish the order.",
-    "viewCart": "View cart",
-    "callUs": "Call us",
     "summaryTitle": "Order summary",
     "estimated": "Estimated price",
     "phonePricing": "Price agreed by phone",

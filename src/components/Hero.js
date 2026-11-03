@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { ArrowRight, Heart } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { eyebrow, linkBtn, textLink } from "@/components/styles";
+import { FOUNDED_YEAR } from "@/data/contact";
 
 const heroImage = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=85";
 
@@ -12,7 +13,7 @@ export default async function Hero() {
     <section id="top" className="mx-auto grid max-w-[1240px] items-center gap-[70px] px-8 pt-9 pb-10 md:min-h-[620px] md:pb-18 max-lg:flex max-md:flex-col max-md:gap-11 max-md:px-5 lg:grid-cols-[0.92fr_1.08fr]">
       <div className="max-md:order-2 w-full">
         <p className={eyebrow}>
-          <Heart className="size-3.25" fill="currentColor" /> {t("eyebrow")}
+          <Heart className="size-3.25" fill="currentColor" /> {t("eyebrow", { year: FOUNDED_YEAR })}
         </p>
         <h1 className="mb-7 font-serif text-[clamp(55px,6.3vw,90px)] leading-[0.94] font-normal tracking-[-4px] text-ink">
           {t("titleLine1")}

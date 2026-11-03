@@ -1,7 +1,7 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Minus, Phone, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/components/cart-context";
@@ -23,6 +23,11 @@ export default function CheckoutView() {
   const [phone, setPhone] = useState("");
   const [viber, setViber] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sentPhone, setSentPhone] = useState("");
+
+  // Next čuva stranicu sakrivenu nakon navigacije (Activity), pa bi se "Hvala" ekran vratio sa sljedećom korpom.
+  // Kad se stranica sakrije, poruka se gasi, a korpa je ionako već prazna.
+  useLayoutEffect(() => () => setSent(false), []);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,7 +37,7 @@ export default function CheckoutView() {
         <div className="mx-auto max-w-xl rounded-2xl border border-line bg-card p-10">
           <p className={`${eyebrow} justify-center`}>{t("sentEyebrow")}</p>
           <h1 className="mb-5 font-serif text-5xl text-ink">{t("sentTitle")}</h1>
-          <p className="leading-relaxed text-muted">{t("sentText", { phone })}</p>
+          <p className="leading-relaxed text-muted">{t("sentText", { phone: sentPhone })}</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/" className={linkBtn}>
               {t("backHome")}
@@ -98,7 +103,14 @@ export default function CheckoutView() {
         return;
       }
 
+      // Sljedeća narudžba počinje od prazne forme (stranica ostaje sačuvana nakon navigacije).
+      setSentPhone(phone);
       clear();
+      setDate("");
+      setTime("");
+      setName("");
+      setPhone("");
+      setViber(false);
       setSent(true);
     } catch {
       setError(t("errorGeneric"));
