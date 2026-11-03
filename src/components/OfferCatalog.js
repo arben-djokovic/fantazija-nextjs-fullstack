@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import OfferCard from "@/components/OfferCard";
-import { eyebrow, linkBtn, sectionTitle } from "@/components/styles";
+import { eyebrow, linkBtn, page, sectionTitle } from "@/components/styles";
 import { Link } from "@/i18n/navigation";
 
 const cakeCategories = ["all", "classic", "premium", "special"];
@@ -22,7 +22,7 @@ export default function OfferCatalog({ cakes, pastries }) {
   const visibleCakes = category === "all" ? cakes : cakes.filter((cake) => cake.category === category);
 
   return (
-    <section className="mx-auto max-w-7xl px-5 pt-8 pb-20 md:px-8 md:pt-12 md:pb-28">
+    <section className={page}>
       <div className="mb-12 text-center">
         <p className={`${eyebrow} justify-center`}>{t("eyebrow")}</p>
         <h1 className={sectionTitle}>{t("title")}</h1>

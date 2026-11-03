@@ -9,5 +9,8 @@ export const sectionTitle = "mb-4 font-serif text-4xl leading-none tracking-tigh
 
 export const section = "mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28";
 
+// Podstranice (ponuda, napravi sam, korpa): isti razmak ispod headera na svima.
+export const page = "mx-auto w-full max-w-7xl px-5 pt-8 pb-20 md:px-8 md:pt-12 md:pb-28";
+
 export const fieldInput =
   "w-full rounded-lg border border-line bg-cream px-3 py-2.5 text-sm font-normal text-ink outline-none transition-colors focus:border-primary";

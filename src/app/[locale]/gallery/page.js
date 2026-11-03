@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { page } from "@/components/styles";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
@@ -17,7 +18,7 @@ async function GalleryContent({ params }) {
 
 export default function GalleryPage({ params }) {
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 py-16">
+    <main className={page}>
       <Suspense fallback={null}>
         <GalleryContent params={params} />
       </Suspense>

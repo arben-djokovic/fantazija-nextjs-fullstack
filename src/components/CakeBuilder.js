@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { useCart } from "@/components/cart-context";
-import { eyebrow, fieldInput, section } from "@/components/styles";
+import { eyebrow, fieldInput, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { Link, useRouter } from "@/i18n/navigation";
 import {
@@ -172,14 +172,14 @@ export default function CakeBuilder() {
   const previous = () => setStep((current) => Math.max(current - 1, 1));
 
   return (
-    <section className={section}>
+    <section className={page}>
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-14">
         <div>
           <Link href="/offer" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-ink">
             <ArrowLeft className="size-4" /> {t("backToOffer")}
           </Link>
 
-          <div className="mt-12 mb-10">
+          <div className="mt-8 mb-10">
             <p className={eyebrow}>{t("eyebrow")}</p>
             <h1 className="mb-4 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">{t("title")}</h1>
             <p className="max-w-xl leading-relaxed text-muted">{t("intro")}</p>

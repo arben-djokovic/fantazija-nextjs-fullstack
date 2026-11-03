@@ -5,7 +5,7 @@ import { useLayoutEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Minus, Phone, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/components/cart-context";
-import { eyebrow, fieldInput, linkBtn, section } from "@/components/styles";
+import { eyebrow, fieldInput, linkBtn, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { pickupTimes, tomorrowISO } from "@/lib/date";
 import { Link } from "@/i18n/navigation";
@@ -33,7 +33,7 @@ export default function CheckoutView() {
 
   if (sent) {
     return (
-      <section className={`${section} text-center`}>
+      <section className={`${page} text-center`}>
         <div className="mx-auto max-w-xl rounded-2xl border border-line bg-card p-10">
           <p className={`${eyebrow} justify-center`}>{t("sentEyebrow")}</p>
           <h1 className="mb-5 font-serif text-5xl text-ink">{t("sentTitle")}</h1>
@@ -53,7 +53,7 @@ export default function CheckoutView() {
 
   if (items.length === 0) {
     return (
-      <section className={section}>
+      <section className={page}>
         <p className={eyebrow}>{t("eyebrowText")}</p>
         <h1 className="mb-8 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">{t("title")}</h1>
         <div className="rounded-2xl border border-line bg-card p-8">
@@ -120,7 +120,7 @@ export default function CheckoutView() {
   };
 
   return (
-    <section className={section}>
+    <section className={page}>
       <Link href="/offer" className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-ink">
         <ArrowLeft className="size-4" /> {t("backToOffer")}
       </Link>

@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/cart-context";
 import FloatingCart from "@/components/FloatingCart";
 import SmoothAnchors from "@/components/SmoothAnchors";
+import ScrollToTop from "@/components/ScrollToTop";
 import PageLoader from "@/components/PageLoader";
 
 // Layout čita jezik iz URL-a za <html lang>, pa navigacija na drugi jezik čeka ovaj layout.
@@ -41,8 +42,9 @@ export default async function LocaleLayout({ children, params }) {
           <CartProvider>
             <PageLoader label={tLoader("loading")} />
             <SmoothAnchors />
+            <ScrollToTop />
             <Header />
-            <div className="flex-1 min-h-[calc(100vh-200px)] w-full flex flex-col justify-center">
+            <div className="flex-1 min-h-[calc(100vh-200px)] w-full">
             {children}
             </div>
             <Footer />
