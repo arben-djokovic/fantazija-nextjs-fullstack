@@ -41,7 +41,7 @@ export default async function Offer() {
             : t(cheapest.key === "komad" ? "pricePiece" : "priceFrom", { price: formatPrice(cheapest.price, locale) });
 
           return (
-            <Link key={product.id} href="/offer" className="group">
+            <Link key={product.id} href={`/offer#${product.slug}`} className="group">
               <div className="relative overflow-hidden rounded-xl bg-line">
                 <img src={product.image} alt={product.name} className="aspect-[0.91] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>

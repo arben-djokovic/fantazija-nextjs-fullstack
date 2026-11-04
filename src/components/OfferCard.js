@@ -7,7 +7,7 @@ import { Minus, Plus } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { formatPrice } from "@/lib/format";
 
-export default function OfferCard({ product }) {
+export default function OfferCard({ product, highlighted = false }) {
   const t = useTranslations();
   const locale = useLocale();
   const { addItem } = useCart();
@@ -45,7 +45,12 @@ export default function OfferCard({ product }) {
   };
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-line bg-card">
+    <article
+      id={product.slug}
+      className={`flex scroll-mt-28 flex-col overflow-hidden rounded-xl border bg-card transition-[border-color,box-shadow] duration-700 ${
+        highlighted ? "border-primary ring-4 ring-primary/25" : "border-line"
+      }`}
+    >
       <img src={product.image} alt={name} className="aspect-4/3 w-full object-cover" />
       <div className="flex flex-1 flex-col gap-4 p-5">
         {product.badges.length > 0 && (

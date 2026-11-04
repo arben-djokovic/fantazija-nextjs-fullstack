@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import OfferCard from "@/components/OfferCard";
@@ -14,10 +15,41 @@ const tabs = [
   { value: "pastries", labelKey: "tabPastries" },
 ];
 
-export default function OfferCatalog({ cakes, pastries }) {
+// Hash iz adrese (/offer#slug), na serveru prazan.
+const subscribeHash = (onChange) => {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+};
+const getHash = () => decodeURIComponent(window.location.hash.slice(1));
+const getServerHash = () => "";
+
+// Next čuva stanje stranice između navigacija (Activity), pa bi se pri ponovnom dolasku linkom
+// zadržali stari tab i već završeno isticanje. Ključ bfcacheId se mijenja pri svakom kliku na link,
+// pa katalog kreće ispočetka, a na nazad/naprijed ostaje isti i stanje se vraća.
+export default function OfferCatalog(props) {
+  const { bfcacheId } = useRouter();
+  return <Catalog key={bfcacheId} {...props} />;
+}
+
+function Catalog({ cakes, pastries }) {
   const t = useTranslations("Offer");
-  const [tab, setTab] = useState("cakes");
+  const [chosenTab, setTab] = useState(null);
   const [category, setCategory] = useState("all");
+  const [highlightDone, setHighlightDone] = useState(false);
+
+  // Link sa početne (/offer#slug) otvara tab u kojem je proizvod, skroluje do njega i kratko ga istakne.
+  // Kategorija je na početku "Sve", pa je proizvod sigurno prikazan.
+  const hash = useSyncExternalStore(subscribeHash, getHash, getServerHash);
+  const target = hash && [...cakes, ...pastries].find((item) => item.slug === hash);
+  const tab = chosenTab ?? (target?.type === "pastry" ? "pastries" : "cakes");
+  const highlighted = !highlightDone && target ? target.slug : null;
+
+  useEffect(() => {
+    if (!highlighted) return;
+    document.getElementById(highlighted)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const timer = window.setTimeout(() => setHighlightDone(true), 2000);
+    return () => window.clearTimeout(timer);
+  }, [highlighted]);
 
   const visibleCakes = category === "all" ? cakes : cakes.filter((cake) => cake.category === category);
 
@@ -83,14 +115,14 @@ export default function OfferCatalog({ cakes, pastries }) {
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {visibleCakes.map((cake) => (
-              <OfferCard key={cake.id} product={cake} />
+              <OfferCard key={cake.id} product={cake} highlighted={highlighted === cake.slug} />
             ))}
           </div>
         </>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {pastries.map((pastry) => (
-            <OfferCard key={pastry.id} product={pastry} />
+            <OfferCard key={pastry.id} product={pastry} highlighted={highlighted === pastry.slug} />
           ))}
         </div>
       )}
