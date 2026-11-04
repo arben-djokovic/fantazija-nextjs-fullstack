@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, LoaderCircle, Upload, X } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
@@ -10,6 +10,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import {
   CAKE_TYPES,
   FLAVOURS,
+  MAX_CAKE_PHOTOS,
   PHOTO_EXTRA,
   SIZE_PRICES,
   customCakeBasePrice,
@@ -46,21 +47,51 @@ function StepBadge({ index, step }) {
   );
 }
 
-function FileDrop({ label, files, onFiles }) {
+// Slike se šalju na server čim ih kupac izabere, a u korpu ide samo njihov link.
+function PhotoUpload({ t, photos, uploading, error, onFiles, onRemove }) {
+  const full = photos.length >= MAX_CAKE_PHOTOS;
   return (
-    <label className="relative mb-5 flex min-h-20 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-primary/40 bg-blush/40 text-xs text-primary">
-      <span className="flex items-center gap-2 font-semibold">
-        <Upload className="size-4" /> {label}
-      </span>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={(event) => onFiles(event.target.files)}
-        className="absolute inset-0 cursor-pointer opacity-0"
-      />
-      {files.length > 0 && <span className="text-[11px] text-muted">{files.join(", ")}</span>}
-    </label>
+    <div className="mb-5 flex flex-col gap-3">
+      {!full && (
+        <label className="relative flex min-h-20 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-primary/40 bg-blush/40 text-xs text-primary">
+          <span className="flex items-center gap-2 font-semibold">
+            {uploading ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />}
+            {uploading ? t("photoUploading") : t("addPhoto")}
+          </span>
+          <span className="text-[11px] text-muted">{t("photoLimit", { count: MAX_CAKE_PHOTOS })}</span>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+            multiple
+            disabled={uploading}
+            onChange={(event) => {
+              onFiles(event.target.files);
+              event.target.value = "";
+            }}
+            className="absolute inset-0 cursor-pointer opacity-0"
+          />
+        </label>
+      )}
+      {error && <p className="text-xs text-primary">{error}</p>}
+      {photos.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {photos.map((url) => (
+            <div key={url} className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={url} alt="" className="size-20 rounded-lg border border-line object-cover" />
+              <button
+                type="button"
+                aria-label={t("removePhoto")}
+                onClick={() => onRemove(url)}
+                className="absolute -top-2 -right-2 grid size-6 place-items-center rounded-full bg-ink text-white hover:bg-primary"
+              >
+                <X className="size-3.5" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -87,7 +118,9 @@ export default function CakeBuilder() {
   const [flavour, setFlavour] = useState(FLAVOURS.classic[0]);
   const [size, setSize] = useState("small");
   const [photo, setPhoto] = useState(false);
-  const [photoFiles, setPhotoFiles] = useState([]);
+  const [photos, setPhotos] = useState([]); // linkovi poslatih slika
+  const [uploading, setUploading] = useState(false);
+  const [photoError, setPhotoError] = useState("");
   const [inscription, setInscription] = useState("");
   const [wishes, setWishes] = useState("");
   const [idea, setIdea] = useState("");
@@ -106,7 +139,8 @@ export default function CakeBuilder() {
       setFlavour(FLAVOURS.classic[0]);
       setSize("small");
       setPhoto(false);
-      setPhotoFiles([]);
+      setPhotos([]);
+      setPhotoError("");
       setInscription("");
       setWishes("");
       setIdea("");
@@ -128,8 +162,28 @@ export default function CakeBuilder() {
     setFlavour(type === "special" ? "" : FLAVOURS[type][0]);
   };
 
-  const addFiles = (incoming) => {
-    if (incoming) setPhotoFiles(Array.from(incoming).map((file) => file.name));
+  const addFiles = async (incoming) => {
+    const files = Array.from(incoming ?? []).slice(0, MAX_CAKE_PHOTOS - photos.length);
+    if (files.length === 0) return;
+    setUploading(true);
+    setPhotoError("");
+    for (const file of files) {
+      try {
+        const data = new FormData();
+        data.append("file", file);
+        const response = await fetch("/api/uploads", { method: "POST", body: data });
+        const result = await response.json().catch(() => ({}));
+        if (response.ok) {
+          setPhotos((current) => (current.length < MAX_CAKE_PHOTOS ? [...current, result.url] : current));
+        } else {
+          // Loš fajl (format, veličina) ili greška na serveru, da kupac zna da li treba druga slika.
+          setPhotoError(t(response.status === 400 ? "photoError" : "photoServerError"));
+        }
+      } catch {
+        setPhotoError(t("photoServerError"));
+      }
+    }
+    setUploading(false);
   };
 
   const handleAdd = () => {
@@ -138,6 +192,7 @@ export default function CakeBuilder() {
       kind: "cake",
       name: cakeName,
       option: optionLabel,
+      image: photo ? photos[0] : undefined, // prva slika kupca se vidi u korpi
       quantity: 1,
       unitPrice: total ?? undefined,
       phonePrice: phonePricing,
@@ -147,6 +202,7 @@ export default function CakeBuilder() {
         flavour: cakeType === "special" ? undefined : flavour,
         size: cakeType === "classic" ? size : undefined,
         photo,
+        photos: photo ? photos : [],
         inscription: inscription.trim() || undefined,
         wishes: wishes.trim() || undefined,
         idea: cakeType === "special" ? idea.trim() || undefined : undefined,
@@ -292,7 +348,16 @@ export default function CakeBuilder() {
                   checked={photo}
                   onChange={setPhoto}
                 />
-                {photo && <FileDrop label={t("addPhoto")} files={photoFiles} onFiles={addFiles} />}
+                {photo && (
+                  <PhotoUpload
+                    t={t}
+                    photos={photos}
+                    uploading={uploading}
+                    error={photoError}
+                    onFiles={addFiles}
+                    onRemove={(url) => setPhotos((current) => current.filter((entry) => entry !== url))}
+                  />
+                )}
 
                 <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
                   {t("inscription")} <small className="font-normal text-muted">{t("optional")}</small>
@@ -348,7 +413,8 @@ export default function CakeBuilder() {
                 <button
                   type="button"
                   onClick={handleAdd}
-                  className="ml-auto inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  disabled={uploading}
+                  className="ml-auto inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
                 >
                   {t("addToCart")} <ArrowRight className="size-4" />
                 </button>

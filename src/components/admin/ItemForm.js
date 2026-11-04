@@ -45,6 +45,18 @@ export default function ItemForm({ item, defaultType = "cake" }) {
   const [slugTouched, setSlugTouched] = useState(!isNew);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  // Slika se zadaje linkom ili fajlom; fajl se šalje na S3 tek pri čuvanju, pa se u proizvod upisuje link sa S3.
+  const [imageMode, setImageMode] = useState("url");
+  const [imageFile, setImageFile] = useState(null);
+  const [filePreview, setFilePreview] = useState("");
+
+  const chooseFile = (file) => {
+    if (filePreview) URL.revokeObjectURL(filePreview);
+    setImageFile(file);
+    setFilePreview(file ? URL.createObjectURL(file) : "");
+  };
+
+  const preview = imageMode === "file" ? filePreview || form.image : form.image;
 
   const update = (changes) => setForm((current) => ({ ...current, ...changes }));
 
@@ -86,10 +98,41 @@ export default function ItemForm({ item, defaultType = "cake" }) {
     }
   };
 
-  const handleSubmit = (event) => {
+  // Šalje izabrani fajl na S3 i vraća njegov link, ili null ako nije uspjelo.
+  const uploadImage = async () => {
+    setSaving(true);
+    setError("");
+    try {
+      const data = new FormData();
+      data.append("file", imageFile);
+      const response = await fetch("/api/admin/uploads", { method: "POST", body: data });
+      const result = await response.json().catch(() => ({}));
+      if (response.ok) return result.url;
+      setError(result.error ?? "Slika nije sačuvana");
+    } catch {
+      setError("Slika nije sačuvana");
+    }
+    setSaving(false);
+    return null;
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    let image = form.image;
+    if (imageMode === "file") {
+      if (imageFile) {
+        image = await uploadImage();
+        if (!image) return;
+        update({ image });
+        chooseFile(null);
+      } else if (!form.image) {
+        setError("Izaberite sliku");
+        return;
+      }
+    }
     const body = {
       ...form,
+      image,
       category: form.type === "cake" ? form.category : undefined,
       options: form.options.map((option) => ({
         id: option.id,
@@ -176,12 +219,41 @@ export default function ItemForm({ item, defaultType = "cake" }) {
 
       <section className={card}>
         <h2 className="font-serif text-2xl text-ink">Slika</h2>
+        <div className="flex gap-2">
+          {[
+            ["url", "Link"],
+            ["file", "Fajl sa računara"],
+          ].map(([mode, text]) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setImageMode(mode)}
+              className={`inline-flex h-9 items-center rounded-full border px-4 text-sm font-semibold transition-colors ${
+                imageMode === mode ? "border-primary bg-primary text-white" : "border-line text-ink hover:border-primary"
+              }`}
+            >
+              {text}
+            </button>
+          ))}
+        </div>
         <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[1fr_160px]">
-          <label className={label}>
-            Link do slike (https://...)
-            <input type="url" value={form.image} onChange={(e) => update({ image: e.target.value })} className={fieldInput} required />
-          </label>
-          {form.image && <img src={form.image} alt="" className="aspect-4/3 w-full rounded-lg bg-line object-cover" />}
+          {imageMode === "url" ? (
+            <label className={label}>
+              Link do slike (https://...)
+              <input type="url" value={form.image} onChange={(e) => update({ image: e.target.value })} className={fieldInput} required />
+            </label>
+          ) : (
+            <label className={label}>
+              Slika (JPG, PNG, WEBP, AVIF ili GIF, najviše 5 MB){form.image && !imageFile && " · ako ne izaberete novu, ostaje trenutna"}
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                onChange={(e) => chooseFile(e.target.files?.[0] ?? null)}
+                className={`${fieldInput} file:mr-3 file:rounded-full file:border-0 file:bg-blush file:px-3 file:py-1 file:text-sm file:font-semibold file:text-primary`}
+              />
+            </label>
+          )}
+          {preview && <img src={preview} alt="" className="aspect-4/3 w-full rounded-lg bg-line object-cover" />}
         </div>
       </section>
 

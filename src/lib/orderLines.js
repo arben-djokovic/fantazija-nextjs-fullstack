@@ -6,7 +6,7 @@ const cakeText = messages.CakeBuilder;
 // Naziv stavke, opcija i detalji custom torte, na crnogorskom (za admin).
 export function describeItem(line) {
   if (line.kind === "item") {
-    return { title: line.name.me, option: OPTION_KEYS[line.optionKey], details: [] };
+    return { title: line.name.me, option: OPTION_KEYS[line.optionKey], details: [], photos: [] };
   }
 
   const cake = line.custom;
@@ -23,5 +23,6 @@ export function describeItem(line) {
     title: cake.cakeType === "special" ? cakeText.specialCake : cakeText.flavours[cake.flavour],
     option: cake.size ? `${cakeText.sizes[cake.size].label}, po želji` : "po želji",
     details,
+    photos: cake.photos ?? [], // slike koje je kupac poslao za tortu
   };
 }

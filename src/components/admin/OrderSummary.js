@@ -1,4 +1,5 @@
 import { getFlavourItemIds, summarizeOrders } from "@/lib/adminOrders";
+import OrderPhotos from "@/components/admin/OrderPhotos";
 
 // Zbir proizvoda za izabrane narudžbe (npr. "U izradi" za danas): koliko čega treba ili je napravljeno.
 export default async function OrderSummary({ orders, showDate }) {
@@ -37,6 +38,7 @@ export default async function OrderSummary({ orders, showDate }) {
                 {cake.quantity > 1 && <strong>{cake.quantity}× </strong>}
                 <strong className="text-ink">{cake.title}</strong> <span className="text-muted">· {cake.option}</span>
                 {cake.details.length > 0 && <span className="block text-xs text-muted">{cake.details.join(" · ")}</span>}
+                {cake.photos.length > 0 && <OrderPhotos photos={cake.photos} />}
                 <span className="block text-xs text-muted">za: {cake.customer}</span>
               </li>
             ))}

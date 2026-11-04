@@ -4,6 +4,7 @@ import { EDITABLE_STATUSES } from "@/lib/adminOrders";
 import { formatPrice } from "@/lib/format";
 import { describeItem } from "@/lib/orderLines";
 import OrderActions from "@/components/admin/OrderActions";
+import OrderPhotos from "@/components/admin/OrderPhotos";
 
 // Boja oznake statusa i kartice: traka lijevo i blaga pozadina, da se status vidi i bez čitanja.
 const STATUS_STYLES = {
@@ -54,13 +55,14 @@ export default function OrderCard({ order, backHref }) {
 
       <ul className="mt-2 flex flex-col gap-1">
         {order.items.map((line, index) => {
-          const { title, option, details } = describeItem(line);
+          const { title, option, details, photos } = describeItem(line);
           return (
             <li key={index} className="flex justify-between gap-3">
               <span className="min-w-0">
                 <strong>{line.quantity}×</strong> {title} <span className="text-muted">· {option}</span>
                 {line.priceAgreed && <span className="ml-1 text-[11px] text-primary">dogovoreno</span>}
                 {details.length > 0 && <span className="block text-xs text-muted">{details.join(" · ")}</span>}
+                {photos.length > 0 && <OrderPhotos photos={photos} />}
               </span>
               <span className="whitespace-nowrap tabular-nums">
                 {line.unitPrice === null ? <span className="text-muted">po dogovoru</span> : formatPrice(line.unitPrice * line.quantity)}

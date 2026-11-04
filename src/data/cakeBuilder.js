@@ -18,6 +18,7 @@ export const SIZE_PRICES = {
 };
 
 export const PHOTO_EXTRA = 5;
+export const MAX_CAKE_PHOTOS = 3; // koliko slika kupac može poslati za tortu
 
 // Osnovna cijena: classic po veličini, premium fiksno, special po dogovoru.
 export function customCakeBasePrice({ cakeType, size }) {

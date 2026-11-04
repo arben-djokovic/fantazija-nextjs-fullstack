@@ -6,6 +6,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { fieldInput } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { pickupTimes } from "@/lib/date";
+import OrderPhotos from "@/components/admin/OrderPhotos";
 
 const card = "flex flex-col gap-3 rounded-xl border border-line bg-card p-4";
 const label = "flex flex-col gap-1 text-xs font-semibold text-muted";
@@ -137,6 +138,7 @@ export default function OrderEditForm({ order, catalog, backHref }) {
               <div className="col-span-2 md:col-span-1">
                 <strong className="text-ink">{line.title}</strong> <span className="text-muted">· {line.option}</span>
                 {line.details.length > 0 && <span className="block text-xs text-muted">{line.details.join(" · ")}</span>}
+                {line.photos?.length > 0 && <OrderPhotos photos={line.photos} />}
                 {line.priceAgreed && <span className="text-[11px] text-primary">cijena dogovorena</span>}
               </div>
               <input

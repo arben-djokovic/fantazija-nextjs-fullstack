@@ -1,13 +1,21 @@
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/db";
 import { pickupTimes, todayInPodgorica } from "@/lib/date";
-import { CAKE_TYPES, FLAVOURS, SIZE_PRICES, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
+import { CAKE_TYPES, FLAVOURS, MAX_CAKE_PHOTOS, SIZE_PRICES, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
 import { routing } from "@/i18n/routing";
 import Item from "@/models/Item";
 import Order from "@/models/Order";
+import { ORDER_PHOTO_FOLDER, publicFolderUrl } from "@/lib/s3";
 
 const MAX_ITEMS = 50;
 const MAX_QUANTITY = 100;
+
+// Prihvataju se samo linkovi slika koje je kupac poslao na naš S3 (/api/uploads), ne bilo koji link.
+function parsePhotos(value) {
+  const prefix = publicFolderUrl(ORDER_PHOTO_FOLDER);
+  const photos = Array.isArray(value) ? value.filter((url) => typeof url === "string" && url.startsWith(prefix) && !url.slice(prefix.length).includes("/")) : [];
+  return [...new Set(photos)].slice(0, MAX_CAKE_PHOTOS);
+}
 
 // Greška koju kupac može ispraviti (pogrešni podaci, proizvod više ne postoji), vraća se kao 400.
 export class OrderError extends Error {
@@ -42,6 +50,7 @@ function buildCustomItem(raw) {
   const cake = {
     cakeType,
     photo: custom.photo === true,
+    photos: custom.photo === true ? parsePhotos(custom.photos) : [],
     inscription: text(custom.inscription) || undefined,
     wishes: text(custom.wishes) || undefined,
     fasting: custom.fasting === true,

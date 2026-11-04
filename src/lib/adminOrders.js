@@ -78,14 +78,14 @@ export function summarizeOrders(orders, flavourByItemId = new Map()) {
 
   for (const order of orders) {
     for (const line of order.items) {
-      const { title, option, details } = describeItem(line);
+      const { title, option, details, photos } = describeItem(line);
 
       if (line.kind === "custom") {
         const cake = line.custom;
         const optionKey = customCakeOptionKey(cake);
         const key = cake.cakeType === "special" ? "special" : `flavour:${cake.flavour}|${optionKey}`;
         add(key, title, cake.cakeType === "special" ? "po dogovoru" : OPTION_KEYS[optionKey], line.quantity, true);
-        customCakes.push({ time: order.pickupTime, date: order.pickupDate, customer: order.customer.name, quantity: line.quantity, title, option, details });
+        customCakes.push({ time: order.pickupTime, date: order.pickupDate, customer: order.customer.name, quantity: line.quantity, title, option, details, photos });
         continue;
       }
 
