@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { LANGUAGE_TAGS, SITE_NAME, SITE_URL } from "@/lib/seo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/cart-context";
@@ -22,8 +23,12 @@ export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata.home" });
   return {
-    title: t("title"),
+    metadataBase: new URL(SITE_URL),
+    // Podstranice dobijaju "Ponuda · Fantazija", početna ima svoj puni naslov.
+    title: { default: t("title"), template: `%s · ${SITE_NAME}` },
     description: t("description"),
+    applicationName: SITE_NAME,
+    formatDetection: { telephone: false },
   };
 }
 
@@ -36,7 +41,7 @@ export default async function LocaleLayout({ children, params }) {
   const tLoader = await getTranslations("Loader");
 
   return (
-    <html lang={locale} data-scroll-behavior="smooth">
+    <html lang={LANGUAGE_TAGS[locale]} data-scroll-behavior="smooth">
       <body className="min-h-full w-full flex flex-col bg-white">
         <NextIntlClientProvider messages={messages}>
           <CartProvider>

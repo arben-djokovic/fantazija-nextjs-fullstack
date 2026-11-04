@@ -1,12 +1,12 @@
 import { Suspense } from "react";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
 import OfferCatalog from "@/components/OfferCatalog";
 import { getActiveItems, toLocalizedItem } from "@/lib/items";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata.offer" });
-  return { title: t("title"), description: t("description") };
+  return pageMetadata({ locale, href: "/offer", namespace: "offer" });
 }
 
 async function OfferContent({ params }) {

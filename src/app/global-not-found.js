@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { getPathname } from "@/i18n/navigation";
 import { languages } from "@/data/languages";
+import { LANGUAGE_TAGS } from "@/lib/seo";
 import "./globals.css";
 
 // Jezik i adresa dolaze iz headera zahtjeva, pa se stranica renderuje pri svakom zahtjevu umjesto pri buildu.
@@ -38,7 +39,7 @@ export default async function GlobalNotFound() {
   const tHeader = await getTranslations({ locale, namespace: "Header" });
 
   return (
-    <html lang={locale}>
+    <html lang={LANGUAGE_TAGS[locale]}>
       <body className="flex min-h-screen w-full flex-col items-center justify-center gap-4 bg-cream text-ink">
         <div className="absolute top-4 right-4 flex items-center gap-2">
           {languages.map((language) => (

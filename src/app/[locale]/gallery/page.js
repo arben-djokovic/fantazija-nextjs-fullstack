@@ -1,11 +1,11 @@
 import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
 import { page } from "@/components/styles";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata.gallery" });
-  return { title: t("title") };
+  return pageMetadata({ locale, href: "/gallery", namespace: "gallery", index: false });
 }
 
 async function GalleryContent({ params }) {

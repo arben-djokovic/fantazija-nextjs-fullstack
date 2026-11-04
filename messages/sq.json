@@ -1,23 +1,27 @@
 {
   "Metadata": {
     "home": {
-      "title": "Pasticeria Fantazija",
-      "description": "Torta shtëpiake, ëmbëlsira dhe kafshata të ëmbla nga Pasticeria Fantazija në Tuz."
+      "title": "Pasticeria Fantazija Tuz – torta dhe ëmbëlsira shtëpiake",
+      "description": "Pasticeria Fantazija në Tuz: torta shtëpiake, ëmbëlsira dhe kafshata të ëmbla, torta me porosi për ditëlindje dhe festa. Hapur çdo ditë 09–22.",
+      "keywords": "pasticeri Tuz, torta Tuz, ëmbëlsira Tuz, torta me porosi, torta ditëlindjeje, Fantazija Tuz, pasticeri Mali i Zi"
     },
     "offer": {
-      "title": "Oferta",
-      "description": "Torta, ëmbëlsira dhe kafshata të ëmbla nga pasticeria jonë."
+      "title": "Oferta e tortave dhe ëmbëlsirave",
+      "description": "Shikoni ofertën e tortave, ëmbëlsirave dhe kafshatave të ëmbla të Pasticerisë Fantazija në Tuz, me çmime. Porositni online dhe merrni në pasticeri.",
+      "keywords": "oferta torta, çmimet e tortave, ëmbëlsira, torta Tuz, Pasticeria Fantazija"
     },
     "gallery": {
-      "title": "Galeria"
+      "title": "Galeria",
+      "description": "Fotografi të tortave dhe ëmbëlsirave nga Pasticeria Fantazija në Tuz."
     },
     "cakeBuilder": {
       "title": "Krijo tortën tënde",
-      "description": "Zgjidhni shijen, madhësinë, dekorimin dhe marrjen për tortën tuaj."
+      "description": "Krijoni tortën sipas dëshirës: zgjidhni shijen, madhësinë dhe dekorimin dhe dërgoni porosinë te Pasticeria Fantazija në Tuz.",
+      "keywords": "torta me porosi, krijo tortë, torta ditëlindjeje, torta për festë, porosit tortë Tuz"
     },
     "checkout": {
       "title": "Porosia juaj",
-      "description": "Shqyrtimi i shportës dhe dërgimi i kërkesës për marrje në Tuz."
+      "description": "Shqyrtimi i shportës dhe dërgimi i kërkesës për marrje në Pasticerinë Fantazija në Tuz."
     }
   },
   "Header": {

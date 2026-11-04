@@ -1,23 +1,27 @@
 {
   "Metadata": {
     "home": {
-      "title": "Poslastičarnica Fantazija",
-      "description": "Domaće torte, kolači i slatki zalogaji iz poslastičarnice Fantazija u Tuzima."
+      "title": "Poslastičarnica Fantazija Tuzi – domaće torte i kolači",
+      "description": "Poslastičarnica Fantazija u Tuzima: domaće torte, kolači i slatki zalogaji, torte po narudžbi za rođendane i proslave. Otvoreno svaki dan 09–22h.",
+      "keywords": "poslastičarnica Tuzi, torte Tuzi, kolači Tuzi, torte po narudžbi, rođendanske torte, slatkiši Tuzi, Fantazija Tuzi, poslastičarnica Crna Gora, Podgorica torte"
     },
     "offer": {
-      "title": "Ponuda",
-      "description": "Torte, kolači i slatki zalogaji iz naše poslastičarnice."
+      "title": "Ponuda torti i kolača",
+      "description": "Pogledajte ponudu torti, kolača i slatkih zalogaja poslastičarnice Fantazija u Tuzima, sa cijenama. Naručite online i preuzmite u poslastičarnici.",
+      "keywords": "ponuda torti, cijene torti, kolači, sitni kolači, torte Tuzi, poslastičarnica Fantazija"
     },
     "gallery": {
-      "title": "Galerija"
+      "title": "Galerija",
+      "description": "Fotografije torti i kolača iz poslastičarnice Fantazija u Tuzima."
     },
     "cakeBuilder": {
       "title": "Napravi svoju tortu",
-      "description": "Izaberite ukus, veličinu, dekoraciju i preuzimanje za vašu tortu."
+      "description": "Napravite tortu po svojoj želji: izaberite ukus, veličinu i dekoraciju i pošaljite narudžbu poslastičarnici Fantazija u Tuzima.",
+      "keywords": "torta po narudžbi, napravi tortu, rođendanska torta, torta za proslavu, naručiti tortu Tuzi"
     },
     "checkout": {
       "title": "Vaša porudžbina",
-      "description": "Pregled korpe i slanje zahtjeva za preuzimanje u Tuzima."
+      "description": "Pregled korpe i slanje zahtjeva za preuzimanje u poslastičarnici Fantazija u Tuzima."
     }
   },
   "Header": {

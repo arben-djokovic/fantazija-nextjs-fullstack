@@ -1,23 +1,27 @@
 {
   "Metadata": {
     "home": {
-      "title": "Fantazija Patisserie",
-      "description": "Homemade cakes, pastries and sweet treats from Fantazija patisserie in Tuzi."
+      "title": "Fantazija Patisserie Tuzi – homemade cakes & pastries",
+      "description": "Fantazija patisserie in Tuzi, Montenegro: homemade cakes, pastries and sweet treats, custom cakes for birthdays and celebrations. Open daily 9am–10pm.",
+      "keywords": "patisserie Tuzi, cake shop Tuzi, cakes Montenegro, custom cakes, birthday cakes, pastries Tuzi, Fantazija Tuzi, bakery Podgorica"
     },
     "offer": {
-      "title": "Offer",
-      "description": "Cakes, pastries and sweet treats from our patisserie."
+      "title": "Cakes & pastries menu",
+      "description": "Browse the cakes, pastries and sweet treats of Fantazija patisserie in Tuzi, with prices. Order online and pick up at the patisserie.",
+      "keywords": "cake menu, cake prices, pastries, cakes Tuzi, Fantazija patisserie"
     },
     "gallery": {
-      "title": "Gallery"
+      "title": "Gallery",
+      "description": "Photos of cakes and pastries from Fantazija patisserie in Tuzi."
     },
     "cakeBuilder": {
       "title": "Create your own cake",
-      "description": "Choose flavour, size, decoration and pickup for your cake."
+      "description": "Design your own cake: choose flavour, size and decoration and send your order to Fantazija patisserie in Tuzi, Montenegro.",
+      "keywords": "custom cake, design your cake, birthday cake, celebration cake, order cake Tuzi"
     },
     "checkout": {
       "title": "Your order",
-      "description": "Review your cart and send a pickup request for Tuzi."
+      "description": "Review your cart and send a pickup request to Fantazija patisserie in Tuzi."
     }
   },
   "Header": {

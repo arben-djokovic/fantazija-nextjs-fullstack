@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
 import CheckoutView from "@/components/CheckoutView";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata.checkout" });
-  return { title: t("title"), description: t("description") };
+  return pageMetadata({ locale, href: "/order/checkout", namespace: "checkout", index: false });
 }
 
 async function CheckoutContent({ params }) {

@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { pageMetadata } from "@/lib/seo";
 import CakeBuilder from "@/components/CakeBuilder";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata.cakeBuilder" });
-  return { title: t("title"), description: t("description") };
+  return pageMetadata({ locale, href: "/cake-builder", namespace: "cakeBuilder" });
 }
 
 async function CakeBuilderContent({ params }) {
