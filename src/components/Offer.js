@@ -33,7 +33,7 @@ export default async function Offer() {
       </div>
 
       <div className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-4 md:gap-5">
-        {products.map((product) => {
+        {products.map((product, i) => {
           const cheapest = cheapestOption(product);
           // Ako je najjeftinije po komadu, piše "1,50 € / kom", inače "od 15,00 €".
           const price = !cheapest
@@ -41,7 +41,7 @@ export default async function Offer() {
             : t(cheapest.key === "komad" ? "pricePiece" : "priceFrom", { price: formatPrice(cheapest.price, locale) });
 
           return (
-            <Link key={product.id} href={`/offer#${product.slug}`} className="group">
+            <Link key={product.id} href={`/offer#${product.slug}`} className={`group ${i > 5 ? "hidden md:block" : ""}`}>
               <div className="relative overflow-hidden rounded-xl bg-line">
                 <img src={product.image} alt={product.name} className="aspect-[0.91] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
