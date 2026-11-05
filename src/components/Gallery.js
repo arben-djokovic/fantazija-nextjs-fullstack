@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { eyebrow, section, sectionTitle, textLink } from "@/components/styles";
@@ -49,7 +49,9 @@ export default async function Gallery() {
 
       <div className="grid grid-cols-2 grid-rows-[180px_130px_130px] gap-2 md:grid-cols-[1.2fr_0.8fr_0.9fr] md:grid-rows-[170px_170px] md:gap-3">
         {photos.map((photo) => (
-          <img key={photo.key} src={photo.src} alt={t(`photos.${photo.key}`)} className={`h-full w-full rounded-xl object-cover ${photo.place}`} />
+          <div key={photo.key} className={`relative overflow-hidden rounded-xl ${photo.place}`}>
+            <Image src={photo.src} alt={t(`photos.${photo.key}`)} fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
+          </div>
         ))}
       </div>
     </section>

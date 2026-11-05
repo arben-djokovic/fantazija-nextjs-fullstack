@@ -2,11 +2,13 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useLayoutEffect, useState } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, Minus, Phone, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, linkBtn, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
+import { canOptimize } from "@/lib/images";
 import { pickupTimes, tomorrowISO } from "@/lib/date";
 import { PHOTO_EXTRA } from "@/data/cakeBuilder";
 import { Link } from "@/i18n/navigation";
@@ -133,7 +135,9 @@ export default function CheckoutView() {
         <div className="flex flex-col gap-3">
           {items.map((item) => (
             <article key={item.id} className="grid grid-cols-[72px_1fr_auto] items-center gap-4 rounded-xl border border-line bg-card p-3 md:grid-cols-[88px_1fr_auto] md:gap-5 md:p-4">
-              {item.image && <img src={item.image} alt={item.name} className="size-18 rounded-lg object-cover md:size-22" />}
+              {item.image && (
+                <Image src={item.image} alt={item.name} width={88} height={88} unoptimized={!canOptimize(item.image)} className="size-18 rounded-lg object-cover md:size-22" />
+              )}
               <div className="flex flex-col gap-2">
                 <div>
                   <h2 className="font-serif text-xl text-ink">{item.name}</h2>

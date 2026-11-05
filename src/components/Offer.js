@@ -1,10 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { eyebrow, sectionTitle, textLink } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { getActiveItems, toLocalizedItem } from "@/lib/items";
+import { canOptimize } from "@/lib/images";
 
 // Najjeftinija opcija sa poznatom cijenom; null ako se sve opcije dogovaraju telefonom.
 function cheapestOption(item) {
@@ -43,7 +44,15 @@ export default async function Offer() {
           return (
             <Link key={product.id} href={`/offer#${product.slug}`} className={`group ${i > 5 ? "hidden md:block" : ""}`}>
               <div className="relative overflow-hidden rounded-xl bg-line">
-                <img src={product.image} alt={product.name} className="aspect-[0.91] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={600}
+                  height={660}
+                  sizes="(min-width: 1280px) 300px, (min-width: 768px) 25vw, 50vw"
+                  unoptimized={!canOptimize(product.image)}
+                  className="aspect-[0.91] h-auto w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
               </div>
               <div className="mt-4 flex flex-col gap-1 md:flex-row md:justify-between md:gap-3">
                 <div>

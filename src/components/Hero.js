@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { ArrowRight, Heart } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -36,8 +37,16 @@ export default async function Hero() {
       </div>
 
       <div className="hidden md:block relative w-full lg:max-w-[410px] justify-self-center max-md:order-1">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={heroImage} alt={t("imageAlt")} className="block h-[350px] w-full rounded-t-[130px] rounded-b-2xl object-cover max-md:h-[380px] md:max-w-[300px] lg:max-w-[5100px]" />
+        {/* Vidi se samo od md naviše; lazy da je telefon ne skida, a fetchPriority da je desktop dobije prvu. */}
+        <Image
+          src={heroImage}
+          alt={t("imageAlt")}
+          width={820}
+          height={700}
+          sizes="(min-width: 1024px) 410px, 300px"
+          fetchPriority="high"
+          className="block h-[350px] w-full rounded-t-[130px] rounded-b-2xl object-cover max-md:h-[380px] md:max-w-[300px] lg:max-w-[5100px]"
+        />
         <div className="absolute -left-8 bottom-7 flex size-27 rotate-[-10deg] flex-col items-center justify-center rounded-full bg-blush text-primary max-md:-right-2 max-md:-bottom-6 max-md:left-auto">
           <span className="text-[10px]">made with</span>
           <strong className="font-serif text-[25px] font-normal italic">love</strong>

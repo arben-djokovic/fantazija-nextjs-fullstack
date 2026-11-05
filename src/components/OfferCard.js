@@ -1,11 +1,12 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Minus, Plus } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { formatPrice } from "@/lib/format";
+import { canOptimize } from "@/lib/images";
 
 export default function OfferCard({ product, highlighted = false }) {
   const t = useTranslations();
@@ -51,7 +52,15 @@ export default function OfferCard({ product, highlighted = false }) {
         highlighted ? "border-primary ring-4 ring-primary/25" : "border-line"
       }`}
     >
-      <img src={product.image} alt={name} className="aspect-4/3 w-full object-cover" />
+      <Image
+        src={product.image}
+        alt={name}
+        width={800}
+        height={600}
+        sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+        unoptimized={!canOptimize(product.image)}
+        className="aspect-4/3 h-auto w-full object-cover"
+      />
       <div className="flex flex-1 flex-col gap-4 p-5">
         {product.badges.length > 0 && (
           <div className="flex flex-wrap gap-2">

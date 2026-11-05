@@ -10,7 +10,6 @@ import { CartProvider } from "@/components/cart-context";
 import FloatingCart from "@/components/FloatingCart";
 import SmoothAnchors from "@/components/SmoothAnchors";
 import ScrollToTop from "@/components/ScrollToTop";
-import PageLoader from "@/components/PageLoader";
 
 // Layout čita jezik iz URL-a za <html lang>, pa navigacija na drugi jezik čeka ovaj layout.
 export const instant = false;
@@ -38,14 +37,12 @@ export default async function LocaleLayout({ children, params }) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const tLoader = await getTranslations("Loader");
 
   return (
     <html lang={LANGUAGE_TAGS[locale]} data-scroll-behavior="smooth">
       <body className="min-h-full w-full flex flex-col bg-white">
         <NextIntlClientProvider messages={messages}>
           <CartProvider>
-            <PageLoader label={tLoader("loading")} />
             <SmoothAnchors />
             <ScrollToTop />
             <Header />

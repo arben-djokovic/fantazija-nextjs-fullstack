@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -14,9 +14,12 @@ export default async function About() {
     <section id="about" className="scroll-mt-24 bg-blush px-5 py-20 md:px-8 md:py-28">
       <div className="mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-2 lg:gap-24">
         <div className="relative">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1200&q=85"
             alt={t("imageAlt")}
+            width={1200}
+            height={1000}
+            sizes="(min-width: 1152px) 528px, (min-width: 1024px) 45vw, 100vw"
             className="h-[370px] w-full rounded-xl object-cover md:h-[500px]"
           />
           <div className="absolute -right-2 -bottom-6 flex size-28 rotate-6 flex-col items-center justify-center rounded-full bg-[#fffaf5] text-primary md:-right-9">
