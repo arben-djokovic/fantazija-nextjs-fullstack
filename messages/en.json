@@ -68,18 +68,17 @@
     "cta": "Visit us",
     "badgeLine1": "years of",
     "badgeLine2": "sweet stories",
-    "imageAlt": "Warm and cosy patisserie"
+    "imageAlt": "Display case with cakes and pastries at Fantazija"
   },
   "Gallery": {
     "eyebrow": "03 · Gallery",
     "title": "Moments from Fantazija",
     "subtitle": "Follow us for a little more sweet inspiration.",
     "photos": {
-      "cake": "Chocolate cake for a celebration",
-      "fruit": "Fruit cake",
-      "pastries": "Freshly baked pastries",
-      "cream": "Creamy pastry",
-      "wedding": "Wedding cake"
+      "pastries": "Homemade small pastries on trays",
+      "counter": "Counter with cakes under glass domes",
+      "interior": "Fantazija's café with seating",
+      "wedding": "“Just Married” wedding cake"
     }
   },
   "Contact": {

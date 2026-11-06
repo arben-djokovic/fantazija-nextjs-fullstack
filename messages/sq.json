@@ -68,18 +68,17 @@
     "cta": "Na vizitoni",
     "badgeLine1": "vjet",
     "badgeLine2": "histori të ëmbla",
-    "imageAlt": "Pasticeri e ngrohtë dhe e këndshme"
+    "imageAlt": "Vitrina me torta dhe ëmbëlsira në Fantazija"
   },
   "Gallery": {
     "eyebrow": "03 · Galeria",
     "title": "Momente nga Fantazija",
     "subtitle": "Na ndiqni për pak më shumë frymëzim të ëmbël.",
     "photos": {
-      "cake": "Tortë me çokollatë për festë",
-      "fruit": "Tortë me fruta",
-      "pastries": "Ëmbëlsira të sapopjekura",
-      "cream": "Ëmbëlsirë kremoze",
-      "wedding": "Tortë dasme"
+      "pastries": "Ëmbëlsira të vogla shtëpie në tabaka",
+      "counter": "Banaku me ëmbëlsira nën kambana qelqi",
+      "interior": "Lokali i Fantazijës me vende për t'u ulur",
+      "wedding": "Tortë dasme „Just Married”"
     }
   },
   "Contact": {

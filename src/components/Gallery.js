@@ -3,32 +3,18 @@ import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { eyebrow, section, sectionTitle, textLink } from "@/components/styles";
 
+// Slike iz lokala (public/assets). Dvije su uspravne i zauzimaju po dva reda, a dvije položene stoje jedna ispod druge.
+// position: koji dio slike ostaje vidljiv kad se isječe.
 const photos = [
+  { key: "pastries", src: "/assets/kolaci.jpeg", place: "row-span-2", position: "object-[center_60%]" },
   {
-    key: "cake",
-    src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85",
-    place: "row-span-2",
+    key: "counter",
+    src: "/assets/sank.jpeg",
+    place: "col-start-2 row-start-1 row-span-2 md:col-start-3",
+    position: "object-[center_70%]",
   },
-  {
-    key: "fruit",
-    src: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=85",
-    place: "col-start-2",
-  },
-  {
-    key: "pastries",
-    src: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=85",
-    place: "col-start-2 row-start-2 md:col-start-3 md:row-start-1",
-  },
-  {
-    key: "cream",
-    src: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85",
-    place: "col-start-1 row-start-3 md:col-start-2 md:row-start-2",
-  },
-  {
-    key: "wedding",
-    src: "https://images.unsplash.com/photo-1519657337289-077653f724ed?auto=format&fit=crop&w=900&q=85",
-    place: "col-start-2 row-start-3 md:col-start-3 md:row-start-2",
-  },
+  { key: "interior", src: "/assets/lokal.jpeg", place: "col-start-1 row-start-3 md:col-start-2 md:row-start-1", position: "object-center" },
+  { key: "wedding", src: "/assets/torta.png", place: "col-start-2 row-start-3 md:col-start-2 md:row-start-2", position: "object-[center_70%]" },
 ];
 
 export default async function Gallery() {
@@ -47,10 +33,10 @@ export default async function Gallery() {
         </a>
       </div>
 
-      <div className="grid grid-cols-2 grid-rows-[180px_130px_130px] gap-2 md:grid-cols-[1.2fr_0.8fr_0.9fr] md:grid-rows-[170px_170px] md:gap-3">
+      <div className="grid grid-cols-2 grid-rows-[150px_150px_160px] gap-2 md:grid-cols-[0.9fr_1.3fr_0.9fr] md:grid-rows-[190px_190px] md:gap-3">
         {photos.map((photo) => (
           <div key={photo.key} className={`relative overflow-hidden rounded-xl ${photo.place}`}>
-            <Image src={photo.src} alt={t(`photos.${photo.key}`)} fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover" />
+            <Image src={photo.src} alt={t(`photos.${photo.key}`)} fill sizes="(min-width: 768px) 40vw, 50vw" className={`object-cover ${photo.position}`} />
           </div>
         ))}
       </div>

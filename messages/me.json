@@ -68,18 +68,17 @@
     "cta": "Posjetite nas",
     "badgeLine1": "godina",
     "badgeLine2": "slatkih priča",
-    "imageAlt": "Topla i ugodna slastičarnica"
+    "imageAlt": "Vitrina sa tortama i kolačima u Fantaziji"
   },
   "Gallery": {
     "eyebrow": "03 · Galerija",
     "title": "Trenuci iz Fantazije",
     "subtitle": "Zapratite nas za još malo slatke inspiracije.",
     "photos": {
-      "cake": "Čokoladna torta za slavlje",
-      "fruit": "Voćna torta",
-      "pastries": "Svježe pečeni kolači",
-      "cream": "Kremasti kolač",
-      "wedding": "Svadbena torta"
+      "pastries": "Domaći sitni kolači na tacnama",
+      "counter": "Šank sa kolačima pod staklenim zvonima",
+      "interior": "Lokal Fantazije sa mjestima za sjedenje",
+      "wedding": "Svadbena torta „Just Married”"
     }
   },
   "Contact": {
