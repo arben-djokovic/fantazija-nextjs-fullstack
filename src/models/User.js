@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { defineModel } from "./model.js";
 
 // Nalozi za admin dio: vlasnik (admin) i radnici (staff). Kupci nemaju naloge.
 const userSchema = new mongoose.Schema(
@@ -12,4 +13,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default defineModel("User", userSchema);

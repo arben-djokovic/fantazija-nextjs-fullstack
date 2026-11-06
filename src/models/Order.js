@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { defineModel } from "./model.js";
 import { pickupTimes } from "../lib/date.js";
 import { ORDER_STATUSES } from "../data/orders.js";
 
@@ -94,4 +95,4 @@ const orderSchema = new mongoose.Schema(
 orderSchema.index({ pickupDate: 1, pickupTime: 1 });
 orderSchema.index({ status: 1, createdAt: -1 });
 
-export default mongoose.models.Order || mongoose.model("Order", orderSchema);
+export default defineModel("Order", orderSchema);
