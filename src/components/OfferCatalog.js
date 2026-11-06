@@ -31,7 +31,7 @@ export default function OfferCatalog(props) {
   return <Catalog key={bfcacheId} {...props} />;
 }
 
-function Catalog({ cakes, pastries }) {
+function Catalog({ cakes, pastries, initialTab }) {
   const t = useTranslations("Offer");
   const [chosenTab, setTab] = useState(null);
   const [category, setCategory] = useState("all");
@@ -41,7 +41,18 @@ function Catalog({ cakes, pastries }) {
   // Kategorija je na početku "Sve", pa je proizvod sigurno prikazan.
   const hash = useSyncExternalStore(subscribeHash, getHash, getServerHash);
   const target = hash && [...cakes, ...pastries].find((item) => item.slug === hash);
-  const tab = chosenTab ?? (target?.type === "pastry" ? "pastries" : "cakes");
+  const tab = chosenTab ?? (target ? (target.type === "pastry" ? "pastries" : "cakes") : initialTab);
+
+  // Izabrani tab ide u adresu (bez ponovnog učitavanja); torte su bez parametra, kolači ?tab=pastries.
+  // Hash proizvoda se briše, jer je link sa početne već obavio svoje.
+  const chooseTab = (value) => {
+    setTab(value);
+    const url = new URL(window.location.href);
+    if (value === "pastries") url.searchParams.set("tab", "pastries");
+    else url.searchParams.delete("tab");
+    url.hash = "";
+    window.history.replaceState(null, "", url);
+  };
   const highlighted = !highlightDone && target ? target.slug : null;
 
   useEffect(() => {
@@ -69,7 +80,7 @@ function Catalog({ cakes, pastries }) {
               type="button"
               role="tab"
               aria-selected={tab === item.value}
-              onClick={() => setTab(item.value)}
+              onClick={() => chooseTab(item.value)}
               className={`rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
                 tab === item.value ? "bg-primary text-white" : "text-muted hover:text-ink"
               }`}
