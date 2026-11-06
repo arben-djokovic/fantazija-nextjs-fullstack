@@ -11,7 +11,7 @@ export const OPTION_KEYS = {
   kilogram: "Kilogram",
   mala: "Mala",
   velika: "Velika",
-  cijela: "Cijela torta",
+  cijela: "Cijela",
   poDogovoru: "Po dogovoru",
 };
 

@@ -4,6 +4,7 @@ import { requirePageUser } from "@/lib/auth";
 import { findItem } from "@/lib/adminItems";
 import AdminHeader from "@/components/admin/AdminHeader";
 import ItemForm from "@/components/admin/ItemForm";
+import { itemImages } from "@/lib/images";
 
 // Proizvod iz baze u običan objekat za formu (ID-jevi kao tekst).
 function toFormItem(item) {
@@ -14,13 +15,14 @@ function toFormItem(item) {
     category: item.category ?? "classic",
     name: item.name,
     description: item.description,
-    image: item.image,
+    images: itemImages(item),
     badges: item.badges,
     options: item.options.map((option) => ({
       id: option._id.toString(),
       key: option.key,
       servings: option.servings ?? "",
       price: option.price,
+      image: option.image ?? "",
     })),
     featured: item.featured,
     active: item.active,

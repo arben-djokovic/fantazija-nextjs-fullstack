@@ -116,10 +116,13 @@
       "kilogram": "Kilogram",
       "mala": "Small",
       "velika": "Large",
-      "cijela": "Whole cake",
+      "cijela": "Whole",
       "poDogovoru": "On request"
     },
     "servings": "about {count} people",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "showImage": "Image {number}",
     "badges": {
       "glutenFree": "Gluten-free",
       "fasting": "Fasting"

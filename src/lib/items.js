@@ -1,5 +1,6 @@
 import { connection } from "next/server";
 import { connectDB } from "@/lib/db";
+import { itemImages } from "@/lib/images";
 import Item from "@/models/Item";
 
 // Aktivni proizvodi iz baze, torte pa kolači, po redoslijedu iz admina.
@@ -20,12 +21,14 @@ export function toLocalizedItem(item, locale) {
     name: item.name[locale] ?? item.name.me,
     description: item.description[locale] ?? item.description.me,
     image: item.image,
+    images: itemImages(item),
     badges: item.badges,
     options: item.options.map((option) => ({
       id: option._id.toString(),
       key: option.key,
       servings: option.servings ?? null,
       price: option.price,
+      image: option.image ?? null,
     })),
   };
 }

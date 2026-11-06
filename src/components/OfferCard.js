@@ -1,18 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Minus, Plus } from "lucide-react";
 import { useCart } from "@/components/cart-context";
+import ImageSlider from "@/components/ImageSlider";
 import { formatPrice } from "@/lib/format";
-import { canOptimize } from "@/lib/images";
 
 export default function OfferCard({ product, highlighted = false }) {
   const t = useTranslations();
   const locale = useLocale();
   const { addItem } = useCart();
+  const sliderRef = useRef(null);
   const [optionIndex, setOptionIndex] = useState(0);
+
+  // Opcija koja ima svoju sliku pomjera slider na nju.
+  const chooseOption = (index) => {
+    setOptionIndex(index);
+    const image = product.options[index].image;
+    if (image) sliderRef.current?.show(product.images.indexOf(image));
+  };
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
@@ -35,7 +42,7 @@ export default function OfferCard({ product, highlighted = false }) {
       itemId: product.id,
       optionId: option.id,
       name,
-      image: product.image,
+      image: option.image ?? product.image,
       option: optionLabel,
       quantity,
       unitPrice: onRequest ? undefined : option.price,
@@ -52,15 +59,7 @@ export default function OfferCard({ product, highlighted = false }) {
         highlighted ? "border-primary ring-4 ring-primary/25" : "border-line"
       }`}
     >
-      <Image
-        src={product.image}
-        alt={name}
-        width={800}
-        height={600}
-        sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
-        unoptimized={!canOptimize(product.image)}
-        className="aspect-4/3 h-auto w-full object-cover"
-      />
+      <ImageSlider ref={sliderRef} images={product.images} alt={name} />
       <div className="flex flex-1 flex-col gap-4 p-5">
         {product.badges.length > 0 && (
           <div className="flex flex-wrap gap-2">
@@ -83,7 +82,7 @@ export default function OfferCard({ product, highlighted = false }) {
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setOptionIndex(index)}
+                onClick={() => chooseOption(index)}
                 aria-pressed={optionIndex === index}
                 className={`rounded-lg border px-3 py-2 text-left text-xs transition-colors ${
                   optionIndex === index

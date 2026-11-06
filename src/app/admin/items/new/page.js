@@ -12,7 +12,8 @@ async function NewItem({ searchParams }) {
       <AdminHeader user={user} />
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10">
         <h1 className="font-serif text-4xl text-ink">Novi proizvod</h1>
-        <ItemForm defaultType={type === "pastry" ? "pastry" : "cake"} />
+        {/* key: prelaz sa "nova torta" na "novi kolač" počinje od prazne forme. */}
+        <ItemForm key={type} defaultType={type === "pastry" ? "pastry" : "cake"} />
       </div>
     </>
   );

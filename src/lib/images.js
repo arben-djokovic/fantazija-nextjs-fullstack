@@ -12,3 +12,10 @@ export function canOptimize(src) {
     return false;
   }
 }
+
+export const MAX_ITEM_IMAGES = 10;
+
+// Galerija proizvoda; stari proizvodi imaju samo glavnu sliku (image), bez liste images.
+export function itemImages(item) {
+  return item.images?.length ? item.images : item.image ? [item.image] : [];
+}

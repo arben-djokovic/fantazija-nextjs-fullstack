@@ -116,10 +116,13 @@
       "kilogram": "Kilogram",
       "mala": "Mala",
       "velika": "Velika",
-      "cijela": "Cijela torta",
+      "cijela": "Cijela",
       "poDogovoru": "Po dogovoru"
     },
     "servings": "oko {count} osoba",
+    "previousImage": "Prethodna slika",
+    "nextImage": "Sljedeća slika",
+    "showImage": "Slika {number}",
     "badges": {
       "glutenFree": "Bez glutena",
       "fasting": "Posna"

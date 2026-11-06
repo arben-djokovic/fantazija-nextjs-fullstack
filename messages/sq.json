@@ -116,10 +116,13 @@
       "kilogram": "Kilogram",
       "mala": "E vogël",
       "velika": "E madhe",
-      "cijela": "Tortë e plotë",
+      "cijela": "E plotë",
       "poDogovoru": "Sipas marrëveshjes"
     },
     "servings": "rreth {count} persona",
+    "previousImage": "Fotoja e mëparshme",
+    "nextImage": "Fotoja tjetër",
+    "showImage": "Fotoja {number}",
     "badges": {
       "glutenFree": "Pa gluten",
       "fasting": "Pa produkte shtazore"

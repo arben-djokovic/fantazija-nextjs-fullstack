@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { defineModel } from "./model.js";
 import { BADGES, CAKE_CATEGORIES, ITEM_TYPES, OPTION_KEYS } from "../data/items.js";
 
 // Naziv i opis proizvoda se unose na sva tri jezika (me, sq, en).
@@ -12,6 +13,7 @@ const optionSchema = new mongoose.Schema({
   key: { type: String, enum: Object.keys(OPTION_KEYS), required: true },
   servings: { type: Number, min: 1 }, // broj osoba, tekst "oko {count} osoba" je u messages
   price: { type: Number, min: 0, default: null }, // null = cijena po dogovoru
+  image: { type: String, trim: true }, // slika iz galerije proizvoda koja prikazuje ovu opciju (nije obavezno)
 });
 
 const itemSchema = new mongoose.Schema(
@@ -27,7 +29,8 @@ const itemSchema = new mongoose.Schema(
     }, // samo za torte
     name: localized,
     description: localized,
-    image: { type: String, required: true, trim: true },
+    image: { type: String, required: true, trim: true }, // glavna slika, uvijek prva iz images
+    images: [{ type: String, trim: true }], // galerija (slider); stari proizvodi je nemaju, pa se koristi samo image
     badges: [{ type: String, enum: Object.keys(BADGES) }],
     options: {
       type: [optionSchema],
@@ -42,5 +45,4 @@ const itemSchema = new mongoose.Schema(
 
 itemSchema.index({ type: 1, active: 1, sortOrder: 1 });
 
-// U dev modu se fajl učitava više puta, pa koristimo već registrovan model ako postoji.
-export default mongoose.models.Item || mongoose.model("Item", itemSchema);
+export default defineModel("Item", itemSchema);

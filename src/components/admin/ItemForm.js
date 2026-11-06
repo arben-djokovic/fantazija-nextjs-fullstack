@@ -3,9 +3,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { BADGES, CAKE_CATEGORIES, ITEM_TYPES, LOCALES, OPTION_KEYS } from "@/data/items";
 import { fieldInput } from "@/components/styles";
+import { MAX_ITEM_IMAGES } from "@/lib/images";
 
 const card = "flex flex-col gap-4 rounded-2xl border border-line bg-card p-6";
 const label = "flex flex-col gap-1.5 text-xs font-semibold text-muted";
@@ -18,9 +19,8 @@ const EMPTY_ITEM = {
   category: "classic",
   name: emptyLocalized,
   description: emptyLocalized,
-  image: "",
   badges: [],
-  options: [{ key: "komad", servings: "", price: "" }],
+  options: [{ key: "komad", servings: "", price: "", image: "" }],
   featured: false,
   active: true,
   sortOrder: 0,
@@ -42,21 +42,63 @@ export default function ItemForm({ item, defaultType = "cake" }) {
   const router = useRouter();
   const isNew = !item;
   const [form, setForm] = useState(item ?? { ...EMPTY_ITEM, type: defaultType });
+  // Galerija: { src } za sliku koja već ima link, { src, file } za fajl koji se šalje na S3 tek pri čuvanju
+  // (src je tada privremeni blob: link za pregled). Opcije pamte src slike koju prikazuju.
+  const [images, setImages] = useState(() => (item?.images ?? []).map((src) => ({ src })));
+  const [imageUrl, setImageUrl] = useState("");
   const [slugTouched, setSlugTouched] = useState(!isNew);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
-  // Slika se zadaje linkom ili fajlom; fajl se šalje na S3 tek pri čuvanju, pa se u proizvod upisuje link sa S3.
-  const [imageMode, setImageMode] = useState("url");
-  const [imageFile, setImageFile] = useState(null);
-  const [filePreview, setFilePreview] = useState("");
 
-  const chooseFile = (file) => {
-    if (filePreview) URL.revokeObjectURL(filePreview);
-    setImageFile(file);
-    setFilePreview(file ? URL.createObjectURL(file) : "");
+  // Next sakriva stranicu pri odlasku umjesto da je ugasi, pa bi forma za novi proizvod ostala popunjena.
+  // Zato se prazni kad se proizvod doda ili kad admin odustane.
+  const resetNewForm = () => {
+    if (!isNew) return;
+    images.forEach((image) => image.file && URL.revokeObjectURL(image.src));
+    setForm({ ...EMPTY_ITEM, type: defaultType });
+    setImages([]);
+    setImageUrl("");
+    setSlugTouched(false);
+    setError("");
   };
 
-  const preview = imageMode === "file" ? filePreview || form.image : form.image;
+  const addImages = (entries) => {
+    const fresh = entries.filter((entry) => !images.some((image) => image.src === entry.src));
+    const free = MAX_ITEM_IMAGES - images.length;
+    if (fresh.length > free) setError(`Proizvod može imati najviše ${MAX_ITEM_IMAGES} slika`);
+    fresh.slice(free).forEach((entry) => entry.file && URL.revokeObjectURL(entry.src));
+    setImages([...images, ...fresh.slice(0, free)]);
+  };
+
+  const addImageUrl = () => {
+    const src = imageUrl.trim();
+    if (!/^https?:\/\//.test(src)) {
+      setError("Link do slike mora počinjati sa http:// ili https://");
+      return;
+    }
+    setError("");
+    addImages([{ src }]);
+    setImageUrl("");
+  };
+
+  const addImageFiles = (files) => {
+    setError("");
+    addImages([...files].map((file) => ({ src: URL.createObjectURL(file), file })));
+  };
+
+  const moveImage = (index, step) => {
+    const next = [...images];
+    [next[index], next[index + step]] = [next[index + step], next[index]];
+    setImages(next);
+  };
+
+  // Uklonjena slika se skida i sa opcija koje su je prikazivale.
+  const removeImage = (index) => {
+    const { src, file } = images[index];
+    if (file) URL.revokeObjectURL(src);
+    setImages(images.filter((_, i) => i !== index));
+    update({ options: form.options.map((option) => (option.image === src ? { ...option, image: "" } : option)) });
+  };
 
   const update = (changes) => setForm((current) => ({ ...current, ...changes }));
 
@@ -89,6 +131,7 @@ export default function ItemForm({ item, defaultType = "cake" }) {
         setError(data.error ?? "Akcija nije uspjela");
         return;
       }
+      resetNewForm();
       router.push(`/admin/items?type=${form.type}`);
       router.refresh();
     } catch {
@@ -98,13 +141,13 @@ export default function ItemForm({ item, defaultType = "cake" }) {
     }
   };
 
-  // Šalje izabrani fajl na S3 i vraća njegov link, ili null ako nije uspjelo.
-  const uploadImage = async () => {
+  // Šalje fajl na S3 i vraća njegov link, ili null ako nije uspjelo.
+  const uploadImage = async (file) => {
     setSaving(true);
     setError("");
     try {
       const data = new FormData();
-      data.append("file", imageFile);
+      data.append("file", file);
       const response = await fetch("/api/admin/uploads", { method: "POST", body: data });
       const result = await response.json().catch(() => ({}));
       if (response.ok) return result.url;
@@ -118,27 +161,36 @@ export default function ItemForm({ item, defaultType = "cake" }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let image = form.image;
-    if (imageMode === "file") {
-      if (imageFile) {
-        image = await uploadImage();
-        if (!image) return;
-        update({ image });
-        chooseFile(null);
-      } else if (!form.image) {
-        setError("Izaberite sliku");
-        return;
-      }
+    if (images.length === 0) {
+      setError("Dodajte bar jednu sliku");
+      return;
     }
+    // Fajlovi idu na S3 jedan po jedan. Poslata slika odmah dobija pravi link (i u opcijama),
+    // pa se ne šalje ponovo ako neka sljedeća ili samo čuvanje ne uspije.
+    let gallery = images;
+    let options = form.options;
+    for (const image of images) {
+      if (!image.file) continue;
+      const url = await uploadImage(image.file);
+      if (!url) break;
+      URL.revokeObjectURL(image.src);
+      gallery = gallery.map((entry) => (entry.src === image.src ? { src: url } : entry));
+      options = options.map((option) => (option.image === image.src ? { ...option, image: url } : option));
+    }
+    setImages(gallery);
+    update({ options });
+    if (gallery.some((image) => image.file)) return;
+
     const body = {
       ...form,
-      image,
+      images: gallery.map((image) => image.src),
       category: form.type === "cake" ? form.category : undefined,
-      options: form.options.map((option) => ({
+      options: options.map((option) => ({
         id: option.id,
         key: option.key,
         servings: option.servings === "" ? null : option.servings,
         price: option.price === "" || option.price === null ? null : option.price,
+        image: option.image || null,
       })),
     };
     if (isNew) send("POST", "/api/admin/items", body);
@@ -218,43 +270,104 @@ export default function ItemForm({ item, defaultType = "cake" }) {
       </section>
 
       <section className={card}>
-        <h2 className="font-serif text-2xl text-ink">Slika</h2>
-        <div className="flex gap-2">
-          {[
-            ["url", "Link"],
-            ["file", "Fajl sa računara"],
-          ].map(([mode, text]) => (
-            <button
-              key={mode}
-              type="button"
-              onClick={() => setImageMode(mode)}
-              className={`inline-flex h-9 items-center rounded-full border px-4 text-sm font-semibold transition-colors ${
-                imageMode === mode ? "border-primary bg-primary text-white" : "border-line text-ink hover:border-primary"
-              }`}
-            >
-              {text}
-            </button>
-          ))}
+        <div>
+          <h2 className="font-serif text-2xl text-ink">Slike</h2>
+          <p className="mt-1 text-xs text-muted">
+            Prva slika je glavna (početna strana, lista proizvoda, korpa). Na sajtu se sve slike vide u slideru. Najviše{" "}
+            {MAX_ITEM_IMAGES} slika.
+          </p>
         </div>
-        <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[1fr_160px]">
-          {imageMode === "url" ? (
+
+        {images.length > 0 && (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+            {images.map((image, index) => (
+              <div key={image.src} className="flex flex-col gap-1.5">
+                <div className="relative">
+                  <img src={image.src} alt="" className="aspect-4/3 w-full rounded-lg bg-line object-cover" />
+                  {index === 0 && (
+                    <span className="absolute top-1.5 left-1.5 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">Glavna</span>
+                  )}
+                  {image.file && (
+                    <span className="absolute right-1.5 bottom-1.5 rounded-full bg-card/90 px-2 py-0.5 text-[10px] text-muted">šalje se pri čuvanju</span>
+                  )}
+                </div>
+                <div className="flex items-center justify-between gap-1">
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      aria-label="Pomjeri lijevo"
+                      disabled={index === 0}
+                      onClick={() => moveImage(index, -1)}
+                      className="grid size-8 place-items-center rounded-full border border-line text-ink hover:border-primary disabled:opacity-30"
+                    >
+                      <ChevronLeft className="size-4" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Pomjeri desno"
+                      disabled={index === images.length - 1}
+                      onClick={() => moveImage(index, 1)}
+                      className="grid size-8 place-items-center rounded-full border border-line text-ink hover:border-primary disabled:opacity-30"
+                    >
+                      <ChevronRight className="size-4" />
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="Ukloni sliku"
+                    onClick={() => removeImage(index)}
+                    className="grid size-8 place-items-center rounded-full border border-line text-primary hover:border-primary"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {images.length < MAX_ITEM_IMAGES && (
+          <div className="grid grid-cols-1 items-end gap-4 md:grid-cols-2">
             <label className={label}>
-              Link do slike (https://...)
-              <input type="url" value={form.image} onChange={(e) => update({ image: e.target.value })} className={fieldInput} required />
-            </label>
-          ) : (
-            <label className={label}>
-              Slika (JPG, PNG, WEBP, AVIF ili GIF, najviše 5 MB){form.image && !imageFile && " · ako ne izaberete novu, ostaje trenutna"}
+              Dodaj sa računara (JPG, PNG, WEBP, AVIF ili GIF, najviše 5 MB, može više odjednom)
               <input
                 type="file"
+                multiple
                 accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
-                onChange={(e) => chooseFile(e.target.files?.[0] ?? null)}
+                onChange={(e) => {
+                  addImageFiles(e.target.files ?? []);
+                  e.target.value = "";
+                }}
                 className={`${fieldInput} file:mr-3 file:rounded-full file:border-0 file:bg-blush file:px-3 file:py-1 file:text-sm file:font-semibold file:text-primary`}
               />
             </label>
-          )}
-          {preview && <img src={preview} alt="" className="aspect-4/3 w-full rounded-lg bg-line object-cover" />}
-        </div>
+            <div className="flex items-end gap-2">
+              <label className={`${label} flex-1`}>
+                Ili dodaj link (https://...)
+                <input
+                  type="url"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addImageUrl();
+                    }
+                  }}
+                  className={fieldInput}
+                />
+              </label>
+              <button
+                type="button"
+                onClick={addImageUrl}
+                disabled={!imageUrl.trim()}
+                className="inline-flex h-11 items-center rounded-full border border-line px-4 text-sm font-semibold text-ink hover:border-primary disabled:opacity-40"
+              >
+                Dodaj
+              </button>
+            </div>
+          </div>
+        )}
       </section>
 
       <section className={card}>
@@ -314,12 +427,43 @@ export default function ItemForm({ item, defaultType = "cake" }) {
               >
                 <Trash2 className="size-4" />
               </button>
+              {images.length > 1 && (
+                <div className="col-span-full flex flex-col gap-1.5 text-xs font-semibold text-muted">
+                  Slika za ovu opciju (na sajtu slider pređe na nju kad kupac izabere opciju)
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => updateOption(index, { image: "" })}
+                      aria-pressed={!option.image}
+                      className={`h-12 rounded-lg border px-3 text-xs ${
+                        !option.image ? "border-primary bg-blush text-ink" : "border-line text-muted hover:border-primary"
+                      }`}
+                    >
+                      Bez posebne
+                    </button>
+                    {images.map((image, imageIndex) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        aria-label={`Slika ${imageIndex + 1}`}
+                        aria-pressed={option.image === image.src}
+                        onClick={() => updateOption(index, { image: image.src })}
+                        className={`overflow-hidden rounded-lg border-2 ${
+                          option.image === image.src ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        <img src={image.src} alt="" className="h-11 w-14 object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
         <button
           type="button"
-          onClick={() => update({ options: [...form.options, { key: "komad", servings: "", price: "" }] })}
+          onClick={() => update({ options: [...form.options, { key: "komad", servings: "", price: "", image: "" }] })}
           className="inline-flex items-center gap-2 self-start text-sm font-semibold text-primary hover:text-ink"
         >
           <Plus className="size-4" /> Dodaj opciju
@@ -366,7 +510,10 @@ export default function ItemForm({ item, defaultType = "cake" }) {
         </button>
         <button
           type="button"
-          onClick={() => router.push(`/admin/items?type=${item?.type ?? defaultType}`)}
+          onClick={() => {
+            resetNewForm();
+            router.push(`/admin/items?type=${item?.type ?? defaultType}`);
+          }}
           className="inline-flex h-12 items-center rounded-full border border-line px-6 text-sm font-semibold text-ink hover:border-primary"
         >
           Odustani

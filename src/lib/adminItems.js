@@ -2,6 +2,7 @@ import "server-only";
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/db";
 import { LOCALES } from "@/data/items";
+import { MAX_ITEM_IMAGES, itemImages } from "@/lib/images";
 import Item from "@/models/Item";
 import Order from "@/models/Order";
 
@@ -18,6 +19,7 @@ const FIELD_LABELS = {
   type: "Vrsta",
   category: "Kategorija",
   image: "Slika",
+  images: "Slike",
   options: "Opcije",
   sortOrder: "Redoslijed",
 };
@@ -68,9 +70,14 @@ function pickItemFields(body, existing) {
   if ("type" in body) data.type = text(body.type);
   if ("name" in body) data.name = localized(body.name);
   if ("description" in body) data.description = localized(body.description);
-  if ("image" in body) {
-    data.image = text(body.image);
-    if (data.image && !/^https?:\/\//.test(data.image)) throw new ItemError(400, "Slika mora biti link (http/https)");
+  // Galerija: prva slika je glavna (image), koja se vidi na početnoj, u adminu i u korpi.
+  if ("images" in body) {
+    const images = Array.isArray(body.images) ? [...new Set(body.images.map(text).filter(Boolean))] : [];
+    if (images.length === 0) throw new ItemError(400, "Dodajte bar jednu sliku");
+    if (images.length > MAX_ITEM_IMAGES) throw new ItemError(400, `Proizvod može imati najviše ${MAX_ITEM_IMAGES} slika`);
+    if (images.some((image) => !/^https?:\/\//.test(image))) throw new ItemError(400, "Slika mora biti link (http/https)");
+    data.images = images;
+    data.image = images[0];
   }
   if ("badges" in body) data.badges = Array.isArray(body.badges) ? [...new Set(body.badges)] : [];
   if ("featured" in body) data.featured = body.featured === true;
@@ -79,14 +86,25 @@ function pickItemFields(body, existing) {
 
   if ("options" in body) {
     const options = Array.isArray(body.options) ? body.options : [];
+    const gallery = data.images ?? (existing ? itemImages(existing) : []);
     data.options = options.map((option) => {
       const old = existing?.options.find((entry) => entry._id.toString() === option?.id);
+      const image = text(option?.image) || undefined;
+      if (image && !gallery.includes(image)) throw new ItemError(400, "Slika opcije mora biti jedna od slika proizvoda");
       return {
         ...(old && { _id: old._id }),
         key: text(option?.key),
         servings: optionalNumber(option?.servings) ?? undefined,
         price: optionalNumber(option?.price),
+        image,
       };
+    });
+  } else if (data.images && existing) {
+    // Promijenjena galerija bez opcija: opcija čija slika više nije u galeriji ostaje bez slike.
+    data.options = existing.options.map((option) => {
+      const plain = option.toObject();
+      if (plain.image && !data.images.includes(plain.image)) delete plain.image;
+      return plain;
     });
   }
 
