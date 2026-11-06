@@ -2,6 +2,7 @@ import "../globals.css";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { LANGUAGE_TAGS, SITE_NAME, SITE_URL } from "@/lib/seo";
 import Header from "@/components/Header";
@@ -53,6 +54,8 @@ export default async function LocaleLayout({ children, params }) {
             <FloatingCart />
           </CartProvider>
         </NextIntlClientProvider>
+        {/* Vercel Analytics samo na javnom sajtu; admin ima svoj layout, pa ne kvari statistiku posjeta. */}
+        <Analytics />
       </body>
     </html>
   );
