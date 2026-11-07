@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import OfferCard from "@/components/OfferCard";
-import { eyebrow, linkBtn, page, sectionTitle } from "@/components/styles";
+import { eyebrow, page, sectionTitle } from "@/components/styles";
 import { Link } from "@/i18n/navigation";
 
 const cakeCategories = ["all", "classic", "premium", "special"];
@@ -93,16 +93,16 @@ function Catalog({ cakes, pastries, initialTab }) {
 
       {tab === "cakes" ? (
         <>
-          <div className="relative isolate mb-10 grid grid-cols-1 items-center gap-6 overflow-hidden rounded-[20px] border border-primary/30 bg-[linear-gradient(115deg,color-mix(in_srgb,var(--color-primary)_12%,var(--color-card)),var(--color-card)_60%)] px-6 py-8 shadow-[0_18px_50px_color-mix(in_srgb,var(--color-primary)_9%,transparent)] md:grid-cols-[minmax(0,1fr)_auto] md:gap-8 md:rounded-[24px] md:px-12 md:py-[42px]">
-            <span aria-hidden="true" className="absolute -top-28 -right-17 -z-10 size-[300px] rounded-full bg-primary/20 blur-[2px]" />
+          <div className="relative isolate mb-8 grid grid-cols-1 items-center gap-4 overflow-hidden rounded-2xl border border-primary/30 bg-[linear-gradient(115deg,color-mix(in_srgb,var(--color-primary)_12%,var(--color-card)),var(--color-card)_60%)] px-5 py-5 shadow-[0_12px_32px_color-mix(in_srgb,var(--color-primary)_9%,transparent)] md:grid-cols-[minmax(0,1fr)_auto] md:gap-6 md:rounded-[20px] md:px-8 md:py-6">
+            <span aria-hidden="true" className="absolute -top-20 -right-12 -z-10 size-[200px] rounded-full bg-primary/20 blur-[2px]" />
             <div>
-              <p className="mb-3 text-[11px] font-bold tracking-[0.2em] text-primary">{t("bannerEyebrow")}</p>
-              <h2 className="max-w-[520px] font-serif text-[clamp(34px,5vw,58px)] leading-[0.98] tracking-[-2px] text-ink">
+              <p className="mb-2 text-[10px] font-bold tracking-[0.2em] text-primary">{t("bannerEyebrow")}</p>
+              <h2 className="max-w-[520px] font-serif text-[clamp(24px,3.2vw,36px)] leading-[1.05] tracking-[-1px] text-ink">
                 {t("bannerTitle")}
               </h2>
-              <p className="mt-4 max-w-[510px] text-[15px] leading-[1.65] text-muted">{t("bannerText")}</p>
+              <p className="mt-2 max-w-[510px] text-sm leading-[1.55] text-muted">{t("bannerText")}</p>
             </div>
-            <Link href="/cake-builder" className={`${linkBtn} h-12 whitespace-nowrap px-[22px] md:justify-self-end`}>
+            <Link href="/cake-builder" className="inline-flex h-10 items-center gap-2 justify-self-start whitespace-nowrap rounded-full bg-primary px-5 text-sm font-semibold text-white transition-opacity hover:opacity-90 md:justify-self-end">
               {t("bannerCta")} <ArrowRight className="size-4" />
             </Link>
           </div>
