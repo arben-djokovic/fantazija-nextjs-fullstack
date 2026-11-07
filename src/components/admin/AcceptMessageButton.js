@@ -20,11 +20,11 @@ const VIBER_TIMEOUT = 2500;
 // iPhone/iPad (i iPad koji se predstavlja kao Mac).
 const isIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-// Viber na iPhone-u ne prihvata draft u linku i javlja "Requested page is unavailable" (i sa "+" i bez njega u broju),
-// pa se tamo otvara samo chat, a poruka se zalijepi iz clipboarda. Android i kompjuter upisuju poruku sami.
+// Viber na iPhone-u javlja "Requested page is unavailable" za broj sa "+" (sa i bez drafta) i za draft u linku,
+// pa tamo ide samo cifre (382...) bez drafta, a poruka se zalijepi iz clipboarda. Android i kompjuter upisuju poruku sami.
 const viberLink = (phone, text) => {
-  const chat = `viber://chat?number=${encodeURIComponent(phone)}`;
-  return isIOS() ? chat : `${chat}&draft=${encodeURIComponent(text)}`;
+  if (isIOS()) return `viber://chat?number=${encodeURIComponent(phone.replace(/^\+/, ""))}`;
+  return `viber://chat?number=${encodeURIComponent(phone)}&draft=${encodeURIComponent(text)}`;
 };
 // U sms: je broj dio adrese, ne parametar, i neki telefoni ne prepoznaju "%2B" umjesto "+".
 // normalizePhone ionako vraća samo "+" i cifre, pa je bezbjedan i bez enkodovanja.
