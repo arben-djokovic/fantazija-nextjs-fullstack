@@ -101,7 +101,12 @@ export default function OrderCard({ order, backHref }) {
               Izmijeni
             </Link>
           )}
-          <OrderActions orderId={order._id.toString()} status={order.status} />
+          <OrderActions
+            orderId={order._id.toString()}
+            status={order.status}
+            customer={{ phone: order.customer.phone, viber: order.customer.viber }}
+            locale={order.locale}
+          />
         </div>
       </div>
     </article>

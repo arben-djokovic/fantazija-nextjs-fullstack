@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { STATUS_ACTIONS, STATUS_TRANSITIONS } from "@/data/orders";
+import AcceptMessageButton from "@/components/admin/AcceptMessageButton";
 
 // Koraci naprijed su glavna dugmad, a otkazivanje i vraćanje unazad su sporedna.
 const PRIMARY = { new: "confirmed", confirmed: "ready", ready: "completed" };
 
-export default function OrderActions({ orderId, status }) {
+// customer i locale služe za "Prihvati porukom" kod nove narudžbe.
+export default function OrderActions({ orderId, status, customer, locale }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -51,6 +53,7 @@ export default function OrderActions({ orderId, status }) {
             {STATUS_ACTIONS[next]}
           </button>
         ))}
+        {status === "new" && customer && <AcceptMessageButton phone={customer.phone} viber={customer.viber} locale={locale} />}
         {primary && (
           <button
             type="button"
