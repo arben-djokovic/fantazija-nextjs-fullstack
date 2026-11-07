@@ -190,31 +190,16 @@
   },
   "CakeBuilder": {
     "steps": {
-      "type": "Lloji i tortës",
-      "flavour": "Shija",
+      "flavour": "Shija dhe madhësia",
       "decoration": "Dekorimi"
     },
     "eyebrow": "Një moment i ëmbël sipas dëshirës suaj",
     "title": "Krijo tortën tënde",
-    "intro": "Zgjidhni shijen, madhësinë, dekorimin dhe detajet hap pas hapi.",
+    "intro": "Zgjidhni shijen dhe madhësinë, pastaj dekorimin dhe detajet.",
     "backToOffer": "Kthehu te oferta",
     "next": "Vazhdo",
     "back": "Prapa",
     "addToCart": "Shto tortën në shportë",
-    "types": {
-      "classic": {
-        "label": "Torta klasike",
-        "hint": "Shije të provuara për çdo rast."
-      },
-      "premium": {
-        "label": "Torta premium",
-        "hint": "Shije të pasura dhe përbërës të veçantë."
-      },
-      "special": {
-        "label": "Torta speciale",
-        "hint": "Torta dasme, torta me kate dhe torta sipas idesë suaj."
-      }
-    },
     "priceFrom": "nga {price}",
     "onRequest": "sipas marrëveshjes",
     "flavours": {
@@ -239,9 +224,6 @@
         "people": "rreth 20 persona"
       }
     },
-    "ideaTitle": "Përshkruani idenë tuaj",
-    "idea": "Ideja juaj",
-    "ideaPlaceholder": "Numri i kateve, numri i përafërt i të ftuarve, stili...",
     "decorationTitle": "Dekorimi dhe detajet",
     "photoLabel": "Fotografi në tortë",
     "photoHint": "Shtoni fotografinë që dëshironi në tortë (+{price})",
@@ -264,7 +246,8 @@
     "estimated": "Çmimi i përafërt",
     "phonePricing": "Çmimi caktohet me telefon",
     "photo": "Fotografia",
-    "specialCake": "Tortë speciale"
+    "specialCake": "Tortë speciale",
+    "noCakes": "Për momentin nuk ka torta për të zgjedhur. Na telefononi dhe do të dakordohemi për tortën sipas dëshirës suaj."
   },
   "Loader": {
     "loading": "Duke u ngarkuar..."

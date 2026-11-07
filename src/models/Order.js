@@ -11,23 +11,19 @@ const isCustomCake = function () {
   return this.kind === "custom";
 };
 
-// Torta iz "Napravi sam" postoji samo u ovoj narudžbi, pa se njen sastav čuva ovdje, a ne kao Item.
+// Torta iz "Napravi sam": ukus i veličina su torta i opcija iz ponude (item, optionId na stavci),
+// a dekoracija i detalji postoje samo u ovoj narudžbi, pa se čuvaju ovdje.
 const customCakeSchema = new mongoose.Schema(
   {
-    cakeType: { type: String, enum: ["classic", "premium", "special"], required: true },
-    flavour: {
-      type: String,
-      trim: true,
-      required: function () {
-        return this.cakeType !== "special";
-      },
-    },
-    size: { type: String, enum: ["small", "large"] }, // samo za classic
+    // Stare narudžbe (prije nego što su ukusi došli iz baze) nemaju item na stavci, nego tip, ukus i veličinu.
+    cakeType: { type: String, enum: ["classic", "premium", "special"] },
+    flavour: { type: String, trim: true },
+    size: { type: String, enum: ["small", "large"] },
     photo: { type: Boolean, default: false }, // jestiva slika na torti
     photos: [{ type: String }], // linkovi slika koje je kupac poslao
     inscription: { type: String, trim: true, maxlength: 100 },
     wishes: { type: String, trim: true, maxlength: 1000 },
-    idea: { type: String, trim: true, maxlength: 1000 }, // samo za special
+    idea: { type: String, trim: true, maxlength: 1000 }, // samo stare specijalne torte
     fasting: { type: Boolean, default: false },
     glutenFree: { type: Boolean, default: false },
   },

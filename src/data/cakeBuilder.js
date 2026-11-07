@@ -1,51 +1,29 @@
 // Pravila za tortu iz "Napravi sam". Koriste ih i builder (prikaz) i server (provjera i cijena narudžbe).
-// price: broj u eurima, null znači cijena po dogovoru (telefonom)
-
-export const CAKE_TYPES = {
-  classic: { icon: "01", price: 15 },
-  premium: { icon: "02", price: 27 },
-  special: { icon: "03", price: null },
-};
-
-export const FLAVOURS = {
-  classic: ["cokolada", "voca", "plazma", "kinder"],
-  premium: ["rafaelo", "ferrero", "pistachio", "redVelvet"],
-};
-
-export const SIZE_PRICES = {
-  small: 15,
-  large: 20,
-};
+// Ukusi i veličine sa cijenama su torte iz baze (Item, type "cake") i njihove opcije.
 
 export const PHOTO_EXTRA = 5;
 export const MAX_CAKE_PHOTOS = 3; // koliko slika kupac može poslati za tortu
 
-// Osnovna cijena: classic po veličini, premium fiksno, special po dogovoru.
-export function customCakeBasePrice({ cakeType, size }) {
-  if (cakeType === "classic") return SIZE_PRICES[size];
-  return CAKE_TYPES[cakeType].price;
+// Cijena opcije + doplata za sliku. null (cijena po dogovoru) ostaje null.
+export function customCakePrice(optionPrice, photo) {
+  return optionPrice === null || optionPrice === undefined ? null : optionPrice + (photo ? PHOTO_EXTRA : 0);
 }
 
-export function customCakePrice(cake) {
-  const base = customCakeBasePrice(cake);
-  return base === null ? null : base + (cake.photo ? PHOTO_EXTRA : 0);
-}
-
-// Posebni zahtjevi i specijalne torte se ne mogu odmah cijeniti, pa cijenu dogovaramo telefonom.
+// Posebni zahtjevi se ne mogu odmah cijeniti, pa cijenu dogovaramo telefonom.
+// cakeType "special" postoji samo u starim narudžbama, iz vremena kad je builder imao tipove torti.
 export function needsPhonePricing({ cakeType, wishes }) {
   return cakeType === "special" || Boolean(wishes?.trim());
 }
 
-// Za zbir u adminu: ukus iz buildera koji je ista torta kao proizvod iz ponude (slug), da se broje zajedno.
-// Ukusi kojih nema u ponudi (Plazma, Ferrero, Pistachio, Red velvet) dobijaju svoj red.
-// Kinder iz buildera je klasična torta (mala/velika), a Kinder iz ponude premium (cijela), pa se ne spajaju.
+// Samo za stare narudžbe (prije nego što su ukusi došli iz baze): ukus iz buildera -> slug proizvoda iz ponude,
+// da se u zbiru u adminu broje zajedno sa istom tortom iz ponude.
 export const FLAVOUR_ITEM_SLUGS = {
   cokolada: "cokoladna",
   voca: "vocna",
   rafaelo: "rafaelo-torta",
 };
 
-// Opcija iz ponude koja odgovara veličini torte iz buildera: classic mala/velika, premium cijela.
+// Samo za stare narudžbe: opcija iz ponude koja odgovara veličini stare torte iz buildera.
 export function customCakeOptionKey({ cakeType, size }) {
   if (cakeType === "classic") return size === "large" ? "velika" : "mala";
   if (cakeType === "premium") return "cijela";

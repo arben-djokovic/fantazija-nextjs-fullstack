@@ -80,6 +80,15 @@ export function summarizeOrders(orders, flavourByItemId = new Map()) {
     for (const line of order.items) {
       const { title, option, details, photos } = describeItem(line);
 
+      // Nova torta po želji je torta iz ponude, pa se broji zajedno sa njom (isti proizvod i opcija).
+      if (line.kind === "custom" && line.item) {
+        const flavour = flavourByItemId.get(String(line.item));
+        const key = flavour ? `flavour:${flavour}|${line.optionKey}` : `item:${line.item}|${line.optionKey}`;
+        add(key, title, OPTION_KEYS[line.optionKey], line.quantity, true);
+        customCakes.push({ time: order.pickupTime, date: order.pickupDate, customer: order.customer.name, quantity: line.quantity, title, option, details, photos });
+        continue;
+      }
+
       if (line.kind === "custom") {
         const cake = line.custom;
         const optionKey = customCakeOptionKey(cake);

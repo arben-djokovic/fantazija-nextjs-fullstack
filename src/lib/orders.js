@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/db";
 import { pickupTimes, todayInPodgorica } from "@/lib/date";
-import { CAKE_TYPES, FLAVOURS, MAX_CAKE_PHOTOS, SIZE_PRICES, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
+import { MAX_CAKE_PHOTOS, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
 import { routing } from "@/i18n/routing";
 import Item from "@/models/Item";
 import Order from "@/models/Order";
@@ -41,14 +41,16 @@ export function parseQuantity(value) {
   return quantity;
 }
 
-// Torta iz buildera: prihvataju se samo poznate vrijednosti, a cijenu računa server.
-function buildCustomItem(raw) {
+// Torta iz buildera: ukus je torta iz ponude, a veličina njena opcija. Naziv i cijena se uzimaju iz baze,
+// a doplatu za sliku računa server.
+function buildCustomItem(raw, itemsById) {
   const custom = raw.custom ?? {};
-  const cakeType = custom.cakeType;
-  if (!Object.hasOwn(CAKE_TYPES, cakeType)) throw new OrderError("INVALID", "Nepoznat tip torte");
+  const item = itemsById.get(String(custom.itemId));
+  const option = item?.type === "cake" ? item.options.find((entry) => entry._id.toString() === String(custom.optionId)) : null;
+  // I stara korpa (torta iz vremena prije ukusa iz baze, bez itemId) završava ovdje, pa kupac vidi da je ukloni.
+  if (!option) throw new OrderError("ITEM_UNAVAILABLE", "Torta ili veličina više nije dostupna");
 
   const cake = {
-    cakeType,
     photo: custom.photo === true,
     photos: custom.photo === true ? parsePhotos(custom.photos) : [],
     inscription: text(custom.inscription) || undefined,
@@ -57,24 +59,17 @@ function buildCustomItem(raw) {
     glutenFree: custom.glutenFree === true,
   };
 
-  if (cakeType === "special") {
-    cake.idea = text(custom.idea) || undefined;
-  } else {
-    if (!FLAVOURS[cakeType].includes(custom.flavour)) throw new OrderError("INVALID", "Nepoznat ukus torte");
-    cake.flavour = custom.flavour;
-  }
-
-  if (cakeType === "classic") {
-    if (!Object.hasOwn(SIZE_PRICES, custom.size)) throw new OrderError("INVALID", "Nepoznata veličina torte");
-    cake.size = custom.size;
-  }
-
+  const unitPrice = customCakePrice(option.price, cake.photo);
   return {
     kind: "custom",
+    item: item._id,
+    optionId: option._id,
+    optionKey: option.key,
+    name: item.name,
     custom: cake,
     quantity: parseQuantity(raw.quantity),
-    unitPrice: customCakePrice(cake),
-    phonePrice: needsPhonePricing(cake),
+    unitPrice,
+    phonePrice: unitPrice === null || needsPhonePricing(cake),
   };
 }
 
@@ -117,13 +112,13 @@ export async function createOrder(body) {
   await connectDB();
 
   const itemIds = rawItems
-    .filter((raw) => raw?.kind === "item" && mongoose.isValidObjectId(raw.itemId))
-    .map((raw) => raw.itemId);
+    .map((raw) => (raw?.kind === "custom" ? raw.custom?.itemId : raw?.itemId))
+    .filter((id) => mongoose.isValidObjectId(id));
   const catalogItems = await Item.find({ _id: { $in: itemIds }, active: true }).lean();
   const itemsById = new Map(catalogItems.map((item) => [item._id.toString(), item]));
 
   const lines = rawItems.map((raw) => {
-    if (raw?.kind === "custom") return buildCustomItem(raw);
+    if (raw?.kind === "custom") return buildCustomItem(raw, itemsById);
     if (raw?.kind === "item") return buildCatalogItem(raw, itemsById);
     throw new OrderError("INVALID", "Nepoznata vrsta stavke");
   });

@@ -190,31 +190,16 @@
   },
   "CakeBuilder": {
     "steps": {
-      "type": "Cake type",
-      "flavour": "Flavour",
+      "flavour": "Flavour and size",
       "decoration": "Decoration"
     },
     "eyebrow": "A sweet moment, made your way",
     "title": "Create your own cake",
-    "intro": "Choose flavour, size, decoration and details step by step.",
+    "intro": "Choose a flavour and size, then decoration and details.",
     "backToOffer": "Back to offer",
     "next": "Continue",
     "back": "Back",
     "addToCart": "Add cake to cart",
-    "types": {
-      "classic": {
-        "label": "Classic cakes",
-        "hint": "Tried-and-loved flavours for every occasion."
-      },
-      "premium": {
-        "label": "Premium cakes",
-        "hint": "Rich flavours and special ingredients."
-      },
-      "special": {
-        "label": "Special cakes",
-        "hint": "Wedding, tiered and custom-designed cakes."
-      }
-    },
     "priceFrom": "from {price}",
     "onRequest": "on request",
     "flavours": {
@@ -239,9 +224,6 @@
         "people": "about 20 people"
       }
     },
-    "ideaTitle": "Describe your idea",
-    "idea": "Your idea",
-    "ideaPlaceholder": "Number of tiers, approximate guests, style...",
     "decorationTitle": "Decoration & details",
     "photoLabel": "Photo on the cake",
     "photoHint": "Add the photo you want on the cake (+{price})",
@@ -264,7 +246,8 @@
     "estimated": "Estimated price",
     "phonePricing": "Price agreed by phone",
     "photo": "Photo",
-    "specialCake": "Special cake"
+    "specialCake": "Special cake",
+    "noCakes": "There are no cakes to choose from right now. Call us and we will arrange a cake to your wishes."
   },
   "Loader": {
     "loading": "Loading..."

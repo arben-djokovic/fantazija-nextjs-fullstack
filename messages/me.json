@@ -190,31 +190,16 @@
   },
   "CakeBuilder": {
     "steps": {
-      "type": "Tip torte",
-      "flavour": "Ukus",
+      "flavour": "Ukus i veličina",
       "decoration": "Dekoracija"
     },
     "eyebrow": "Slatki trenutak po vašoj želji",
     "title": "Napravi svoju tortu",
-    "intro": "Izaberite ukus, veličinu, dekoraciju i detalje korak po korak.",
+    "intro": "Izaberite ukus i veličinu, pa dekoraciju i detalje.",
     "backToOffer": "Nazad na ponudu",
     "next": "Nastavi",
     "back": "Nazad",
     "addToCart": "Dodaj tortu u korpu",
-    "types": {
-      "classic": {
-        "label": "Klasične torte",
-        "hint": "Provjereni ukusi za svaku priliku."
-      },
-      "premium": {
-        "label": "Premium torte",
-        "hint": "Bogati ukusi i posebni sastojci."
-      },
-      "special": {
-        "label": "Specijalne torte",
-        "hint": "Vjenčane, spratne i torte po vašoj zamisli."
-      }
-    },
     "priceFrom": "od {price}",
     "onRequest": "po dogovoru",
     "flavours": {
@@ -239,9 +224,6 @@
         "people": "oko 20 osoba"
       }
     },
-    "ideaTitle": "Opišite vašu ideju",
-    "idea": "Vaša ideja",
-    "ideaPlaceholder": "Broj spratova, približan broj gostiju, stil...",
     "decorationTitle": "Dekoracija i detalji",
     "photoLabel": "Fotografija na torti",
     "photoHint": "Dodajte fotografiju koju želite na torti (+{price})",
@@ -264,7 +246,8 @@
     "estimated": "Procijenjena cijena",
     "phonePricing": "Cijena se dogovara telefonom",
     "photo": "Fotografija",
-    "specialCake": "Specijalna torta"
+    "specialCake": "Specijalna torta",
+    "noCakes": "Trenutno nema torti za izbor. Pozovite nas i dogovorićemo tortu po vašoj želji."
   },
   "Loader": {
     "loading": "Učitavanje..."

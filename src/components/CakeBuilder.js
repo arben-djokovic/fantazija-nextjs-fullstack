@@ -1,33 +1,19 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, LoaderCircle, Upload, X } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { eyebrow, fieldInput, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
+import { canOptimize } from "@/lib/images";
 import { Link, useRouter } from "@/i18n/navigation";
-import {
-  CAKE_TYPES,
-  FLAVOURS,
-  MAX_CAKE_PHOTOS,
-  PHOTO_EXTRA,
-  SIZE_PRICES,
-  customCakeBasePrice,
-  customCakePrice,
-  needsPhonePricing,
-} from "@/data/cakeBuilder";
+import { MAX_CAKE_PHOTOS, PHOTO_EXTRA, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
 
 // Termin preuzimanja i podatke kupca unosi checkout, pa se torta ovdje samo sastavi i doda u korpu.
-const STEP_KEYS = ["type", "flavour", "decoration"];
-
-// Gradijenti služe kao uzorci ukusa dok nemamo fotografije.
-const SWATCHES = [
-  "from-[#e9b5a4] to-[#6a271c]",
-  "from-[#f2dbd5] to-[#b72f5d]",
-  "from-[#d9b394] to-[#65351f]",
-  "from-[#eee1c7] to-[#d5a06c]",
-];
+// Ukusi su torte iz ponude (baza), a veličine njihove opcije, pa se veličine mijenjaju sa ukusom.
+const STEP_KEYS = ["flavour", "decoration"];
 
 const cardBase = "flex flex-col items-start rounded-xl border border-line bg-cream p-4 text-left transition-colors hover:border-primary md:p-5";
 const selectedRing = "border-primary ring-2 ring-blush";
@@ -108,22 +94,27 @@ function Toggle({ label, hint, checked, onChange }) {
   );
 }
 
-export default function CakeBuilder() {
+// Najniža poznata cijena torte, za "od 15 €" na kartici ukusa. null kad su sve opcije po dogovoru.
+function lowestPrice(cake) {
+  const prices = cake.options.map((option) => option.price).filter((price) => price !== null);
+  return prices.length > 0 ? Math.min(...prices) : null;
+}
+
+export default function CakeBuilder({ cakes }) {
   const t = useTranslations("CakeBuilder");
+  const tProducts = useTranslations("Products");
   const locale = useLocale();
   const router = useRouter();
   const { addItem } = useCart();
   const [step, setStep] = useState(1);
-  const [cakeType, setCakeType] = useState("classic");
-  const [flavour, setFlavour] = useState(FLAVOURS.classic[0]);
-  const [size, setSize] = useState("small");
+  const [cakeId, setCakeId] = useState(cakes[0]?.id);
+  const [optionId, setOptionId] = useState(cakes[0]?.options[0]?.id);
   const [photo, setPhoto] = useState(false);
   const [photos, setPhotos] = useState([]); // linkovi poslatih slika
   const [uploading, setUploading] = useState(false);
   const [photoError, setPhotoError] = useState("");
   const [inscription, setInscription] = useState("");
   const [wishes, setWishes] = useState("");
-  const [idea, setIdea] = useState("");
   const [fasting, setFasting] = useState(false);
   const [gluten, setGluten] = useState(false);
   const addedRef = useRef(false);
@@ -135,31 +126,44 @@ export default function CakeBuilder() {
       if (!addedRef.current) return;
       addedRef.current = false;
       setStep(1);
-      setCakeType("classic");
-      setFlavour(FLAVOURS.classic[0]);
-      setSize("small");
+      setCakeId(cakes[0]?.id);
+      setOptionId(cakes[0]?.options[0]?.id);
       setPhoto(false);
       setPhotos([]);
       setPhotoError("");
       setInscription("");
       setWishes("");
-      setIdea("");
       setFasting(false);
       setGluten(false);
     },
-    [],
+    [cakes],
   );
 
-  const basePrice = customCakeBasePrice({ cakeType, size });
-  const total = customCakePrice({ cakeType, size, photo });
-  const phonePricing = needsPhonePricing({ cakeType, wishes });
-  const cakeName = cakeType === "special" ? t("specialCake") : t(`flavours.${flavour}`);
-  const optionLabel = cakeType === "classic" ? t(`sizes.${size}.label`) : t(`types.${cakeType}.label`);
+  const cake = cakes.find((entry) => entry.id === cakeId) ?? cakes[0];
+  const option = cake?.options.find((entry) => entry.id === optionId) ?? cake?.options[0];
   const money = (value) => formatPrice(value, locale);
 
-  const selectType = (type) => {
-    setCakeType(type);
-    setFlavour(type === "special" ? "" : FLAVOURS[type][0]);
+  if (!cake || !option) {
+    return (
+      <section className={page}>
+        <Link href="/offer" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-ink">
+          <ArrowLeft className="size-4" /> {t("backToOffer")}
+        </Link>
+        <h1 className="mt-8 mb-4 font-serif text-5xl leading-none tracking-tight text-ink md:text-6xl">{t("title")}</h1>
+        <p className="text-muted">{t("noCakes")}</p>
+      </section>
+    );
+  }
+
+  const total = customCakePrice(option.price, photo);
+  const phonePricing = total === null || needsPhonePricing({ wishes });
+  const optionLabel = tProducts(`options.${option.key}`);
+  const servings = (entry) => (entry.servings ? tProducts("servings", { count: entry.servings }) : "");
+
+  // Kod promjene ukusa ostaje ista veličina ako je nova torta ima (npr. "Velika"), inače prva.
+  const selectCake = (next) => {
+    setCakeId(next.id);
+    setOptionId((next.options.find((entry) => entry.key === option.key) ?? next.options[0]).id);
   };
 
   const addFiles = async (incoming) => {
@@ -190,28 +194,25 @@ export default function CakeBuilder() {
     addItem({
       id: `cake-custom-${Date.now()}`,
       kind: "cake",
-      name: cakeName,
+      name: cake.name,
       option: optionLabel,
-      image: photo ? photos[0] : undefined, // prva slika kupca se vidi u korpi
+      image: photo && photos[0] ? photos[0] : cake.image, // prva slika kupca se vidi u korpi, inače slika torte
       quantity: 1,
       unitPrice: total ?? undefined,
       phonePrice: phonePricing,
-      // Izbori idu serveru, koji sam provjerava tortu i računa cijenu.
+      // Izbori idu serveru, koji sam provjerava tortu i veličinu u bazi i računa cijenu.
       custom: {
-        cakeType,
-        flavour: cakeType === "special" ? undefined : flavour,
-        size: cakeType === "classic" ? size : undefined,
+        itemId: cake.id,
+        optionId: option.id,
         photo,
         photos: photo ? photos : [],
         inscription: inscription.trim() || undefined,
         wishes: wishes.trim() || undefined,
-        idea: cakeType === "special" ? idea.trim() || undefined : undefined,
         fasting,
         glutenFree: gluten,
       },
       summary:
         [
-          cakeType === "special" && idea.trim(),
           wishes.trim(),
           inscription.trim() && `${t("inscription")}: ${inscription.trim()}`,
           fasting && t("fasting"),
@@ -245,8 +246,8 @@ export default function CakeBuilder() {
             {STEP_KEYS.map((key, index) => (
               <li key={key} className={`flex items-center gap-2 ${index < STEP_KEYS.length - 1 ? "flex-1" : ""} ${step >= index + 1 ? "text-primary" : "text-muted/70"}`}>
                 <StepBadge index={index} step={step} />
-                <span className="hidden text-[11px] whitespace-nowrap md:inline">{t(`steps.${key}`)}</span>
-                {index < STEP_KEYS.length - 1 && <span className="mx-2 hidden h-px flex-1 bg-line md:block" />}
+                <span className="text-[11px] whitespace-nowrap">{t(`steps.${key}`)}</span>
+                {index < STEP_KEYS.length - 1 && <span className="mx-2 h-px flex-1 bg-line" />}
               </li>
             ))}
           </ol>
@@ -254,25 +255,58 @@ export default function CakeBuilder() {
           <div className="flex min-h-[460px] flex-col rounded-2xl border border-line bg-card p-6 md:p-8">
             {step === 1 && (
               <>
-                <h2 className="mb-6 font-serif text-3xl text-ink">{t("steps.type")}</h2>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  {Object.entries(CAKE_TYPES).map(([type, info]) => (
+                <h2 className="mb-6 font-serif text-3xl text-ink">{t("chooseFlavour")}</h2>
+                <div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {cakes.map((entry) => {
+                    const from = lowestPrice(entry);
+                    const selected = entry.id === cake.id;
+                    return (
+                      <button
+                        key={entry.id}
+                        type="button"
+                        onClick={() => selectCake(entry)}
+                        className={`flex items-center gap-4 rounded-xl border border-line bg-cream p-2.5 text-left transition-colors hover:border-primary ${
+                          selected ? selectedRing : ""
+                        }`}
+                      >
+                        <Image
+                          src={entry.image}
+                          alt=""
+                          width={72}
+                          height={64}
+                          unoptimized={!canOptimize(entry.image)}
+                          className="h-16 w-18 flex-none rounded-lg object-cover"
+                        />
+                        <span className="flex flex-1 flex-col gap-1">
+                          <strong className="font-serif text-base text-ink">{entry.name}</strong>
+                          <span className="text-xs text-primary">
+                            {from === null
+                              ? t("onRequest")
+                              : entry.options.length > 1
+                                ? t("priceFrom", { price: money(from) })
+                                : money(from)}
+                          </span>
+                        </span>
+                        <Check className={`size-4 flex-none text-primary ${selected ? "opacity-100" : "opacity-0"}`} />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <h3 className="mb-3 font-serif text-lg text-ink">{t("size")}</h3>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {cake.options.map((entry) => (
                     <button
-                      key={type}
+                      key={entry.id}
                       type="button"
-                      onClick={() => selectType(type)}
-                      className={`${cardBase} md:min-h-52 ${cakeType === type ? selectedRing : ""}`}
+                      onClick={() => setOptionId(entry.id)}
+                      className={`${cardBase} gap-1 ${entry.id === option.id ? selectedRing : ""}`}
                     >
-                      <span className="mb-2 font-serif text-xl text-primary italic md:mb-6 md:text-2xl">{info.icon}</span>
-                      <strong className="font-serif text-lg text-ink md:text-xl">{t(`types.${type}.label`)}</strong>
-                      <p className="mt-1 mb-3 text-xs leading-relaxed text-muted md:mt-2 md:mb-4">{t(`types.${type}.hint`)}</p>
-                      <em className="mt-auto text-xs text-primary not-italic">
-                        {info.price === null
-                          ? t("onRequest")
-                          : type === "classic"
-                            ? t("priceFrom", { price: money(info.price) })
-                            : money(info.price)}
-                      </em>
+                      <strong className="font-serif text-lg text-ink">{tProducts(`options.${entry.key}`)}</strong>
+                      <span className="text-xs text-muted">
+                        {servings(entry) && `${servings(entry)} · `}
+                        {entry.price === null ? t("onRequest") : money(entry.price)}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -280,66 +314,6 @@ export default function CakeBuilder() {
             )}
 
             {step === 2 && (
-              <>
-                {cakeType === "special" ? (
-                  <>
-                    <h2 className="mb-6 font-serif text-3xl text-ink">{t("ideaTitle")}</h2>
-                    <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
-                      {t("idea")}
-                      <textarea
-                        value={idea}
-                        onChange={(event) => setIdea(event.target.value)}
-                        placeholder={t("ideaPlaceholder")}
-                        className={`${fieldInput} min-h-28 resize-y`}
-                      />
-                    </label>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="mb-6 font-serif text-3xl text-ink">{t("chooseFlavour")}</h2>
-                    <div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2">
-                      {FLAVOURS[cakeType].map((item, index) => (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() => setFlavour(item)}
-                          className={`flex items-center gap-4 rounded-xl border border-line bg-cream p-2.5 text-left transition-colors hover:border-primary ${
-                            flavour === item ? selectedRing : ""
-                          }`}
-                        >
-                          <span className={`h-16 w-18 flex-none rounded-lg bg-linear-to-br ${SWATCHES[index]}`} />
-                          <strong className="flex-1 font-serif text-base text-ink">{t(`flavours.${item}`)}</strong>
-                          <Check className={`size-4 text-primary ${flavour === item ? "opacity-100" : "opacity-0"}`} />
-                        </button>
-                      ))}
-                    </div>
-
-                    {cakeType === "classic" && (
-                      <>
-                        <h3 className="mb-3 font-serif text-lg text-ink">{t("size")}</h3>
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {Object.keys(SIZE_PRICES).map((key) => (
-                            <button
-                              key={key}
-                              type="button"
-                              onClick={() => setSize(key)}
-                              className={`${cardBase} gap-1 ${size === key ? selectedRing : ""}`}
-                            >
-                              <strong className="font-serif text-lg text-ink">{t(`sizes.${key}.label`)}</strong>
-                              <span className="text-xs text-muted">
-                                {t(`sizes.${key}.people`)} · {money(SIZE_PRICES[key])}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </>
-                )}
-              </>
-            )}
-
-            {step === 3 && (
               <>
                 <h2 className="mb-6 font-serif text-3xl text-ink">{t("decorationTitle")}</h2>
                 <Toggle
@@ -425,18 +399,15 @@ export default function CakeBuilder() {
 
         <aside className="self-start rounded-2xl bg-ink p-6 text-white lg:sticky lg:top-24">
           <p className="mb-4 text-xs font-semibold tracking-widest text-blush uppercase">{t("summaryTitle")}</p>
-          <h3 className="mb-6 font-serif text-2xl">{cakeName || t(`types.${cakeType}.label`)}</h3>
+          <h3 className="mb-6 font-serif text-2xl">{cake.name}</h3>
 
           <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
-            <span>{t(`types.${cakeType}.label`)}</span>
-            <strong className="font-medium text-white">{basePrice === null ? t("onRequest") : money(basePrice)}</strong>
+            <span>
+              {optionLabel}
+              {servings(option) && ` · ${servings(option)}`}
+            </span>
+            <strong className="font-medium text-white">{option.price === null ? t("onRequest") : money(option.price)}</strong>
           </div>
-          {cakeType === "classic" && (
-            <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
-              <span>{t(`sizes.${size}.label`)}</span>
-              <span>{t(`sizes.${size}.people`)}</span>
-            </div>
-          )}
           {photo && (
             <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
               <span>{t("photo")}</span>

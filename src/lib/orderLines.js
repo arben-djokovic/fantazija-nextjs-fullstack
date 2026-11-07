@@ -19,6 +19,11 @@ export function describeItem(line) {
     cake.idea && `ideja: ${cake.idea}`,
   ].filter(Boolean);
 
+  // Nove torte su torta i opcija iz ponude, stare imaju tip, ukus i veličinu iz starog buildera.
+  if (line.name?.me) {
+    return { title: line.name.me, option: `${OPTION_KEYS[line.optionKey]}, po želji`, details, photos: cake.photos ?? [] };
+  }
+
   return {
     title: cake.cakeType === "special" ? cakeText.specialCake : cakeText.flavours[cake.flavour],
     option: cake.size ? `${cakeText.sizes[cake.size].label}, po želji` : "po želji",
