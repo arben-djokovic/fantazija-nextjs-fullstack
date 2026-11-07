@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/db";
 import { pickupTimes, todayInPodgorica } from "@/lib/date";
-import { MAX_CAKE_PHOTOS, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
+import { MAX_CAKE_PHOTOS, needsPhonePricing } from "@/data/cakeBuilder";
 import { routing } from "@/i18n/routing";
 import Item from "@/models/Item";
 import Order from "@/models/Order";
@@ -41,8 +41,8 @@ export function parseQuantity(value) {
   return quantity;
 }
 
-// Torta iz buildera: ukus je torta iz ponude, a veličina njena opcija. Naziv i cijena se uzimaju iz baze,
-// a doplatu za sliku računa server.
+// Torta iz buildera: ukus je torta iz ponude, a veličina njena opcija. Naziv i cijena se uzimaju iz baze.
+// Fotografije (za tortu ili primjer dekoracije) nemaju doplatu, nego se cijena tada dogovara telefonom.
 function buildCustomItem(raw, itemsById) {
   const custom = raw.custom ?? {};
   const item = itemsById.get(String(custom.itemId));
@@ -51,15 +51,13 @@ function buildCustomItem(raw, itemsById) {
   if (!option) throw new OrderError("ITEM_UNAVAILABLE", "Torta ili veličina više nije dostupna");
 
   const cake = {
-    photo: custom.photo === true,
-    photos: custom.photo === true ? parsePhotos(custom.photos) : [],
+    photos: parsePhotos(custom.photos),
     inscription: text(custom.inscription) || undefined,
     wishes: text(custom.wishes) || undefined,
     fasting: custom.fasting === true,
     glutenFree: custom.glutenFree === true,
   };
 
-  const unitPrice = customCakePrice(option.price, cake.photo);
   return {
     kind: "custom",
     item: item._id,
@@ -68,8 +66,8 @@ function buildCustomItem(raw, itemsById) {
     name: item.name,
     custom: cake,
     quantity: parseQuantity(raw.quantity),
-    unitPrice,
-    phonePrice: unitPrice === null || needsPhonePricing(cake),
+    unitPrice: option.price,
+    phonePrice: option.price === null || needsPhonePricing(cake),
   };
 }
 

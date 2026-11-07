@@ -225,8 +225,8 @@
       }
     },
     "decorationTitle": "Dekorimi dhe detajet",
-    "photoLabel": "Fotografi në tortë",
-    "photoHint": "Shtoni fotografinë që dëshironi në tortë (+{price})",
+    "photoLabel": "Fotografi",
+    "photoHint": "Fotografia që dëshironi në tortë ose një shembull dekorimi. Çmimin atëherë e dakordojmë me telefon.",
     "addPhoto": "Shtoni fotografi",
     "photoUploading": "Duke dërguar fotografinë...",
     "photoError": "Fotografia nuk u dërgua. Sigurohuni që është imazh (JPG, PNG, WEBP) deri në 5 MB dhe provoni përsëri.",
@@ -245,7 +245,7 @@
     "summaryTitle": "Përmbledhja e porosisë",
     "estimated": "Çmimi i përafërt",
     "phonePricing": "Çmimi caktohet me telefon",
-    "photo": "Fotografia",
+    "photo": "Fotografi",
     "specialCake": "Tortë speciale",
     "noCakes": "Për momentin nuk ka torta për të zgjedhur. Na telefononi dhe do të dakordohemi për tortën sipas dëshirës suaj."
   },

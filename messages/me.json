@@ -225,8 +225,8 @@
       }
     },
     "decorationTitle": "Dekoracija i detalji",
-    "photoLabel": "Fotografija na torti",
-    "photoHint": "Dodajte fotografiju koju želite na torti (+{price})",
+    "photoLabel": "Fotografije",
+    "photoHint": "Slika koju želite na torti ili primjer dekoracije. Cijenu tada dogovaramo telefonom.",
     "addPhoto": "Dodajte fotografiju",
     "photoUploading": "Slanje fotografije...",
     "photoError": "Fotografija nije poslata. Provjerite da je slika (JPG, PNG, WEBP) do 5 MB i pokušajte ponovo.",
@@ -245,7 +245,7 @@
     "summaryTitle": "Pregled porudžbine",
     "estimated": "Procijenjena cijena",
     "phonePricing": "Cijena se dogovara telefonom",
-    "photo": "Fotografija",
+    "photo": "Fotografije",
     "specialCake": "Specijalna torta",
     "noCakes": "Trenutno nema torti za izbor. Pozovite nas i dogovorićemo tortu po vašoj želji."
   },

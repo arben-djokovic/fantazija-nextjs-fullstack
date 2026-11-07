@@ -19,8 +19,8 @@ const customCakeSchema = new mongoose.Schema(
     cakeType: { type: String, enum: ["classic", "premium", "special"] },
     flavour: { type: String, trim: true },
     size: { type: String, enum: ["small", "large"] },
-    photo: { type: Boolean, default: false }, // jestiva slika na torti
-    photos: [{ type: String }], // linkovi slika koje je kupac poslao
+    photo: { type: Boolean, default: false }, // samo stare narudžbe: jestiva slika na torti, sa doplatom
+    photos: [{ type: String }], // linkovi slika koje je kupac poslao (za tortu ili primjer dekoracije)
     inscription: { type: String, trim: true, maxlength: 100 },
     wishes: { type: String, trim: true, maxlength: 1000 },
     idea: { type: String, trim: true, maxlength: 1000 }, // samo stare specijalne torte

@@ -9,7 +9,7 @@ import { eyebrow, fieldInput, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { canOptimize } from "@/lib/images";
 import { Link, useRouter } from "@/i18n/navigation";
-import { MAX_CAKE_PHOTOS, PHOTO_EXTRA, customCakePrice, needsPhonePricing } from "@/data/cakeBuilder";
+import { MAX_CAKE_PHOTOS, needsPhonePricing } from "@/data/cakeBuilder";
 
 // Termin preuzimanja i podatke kupca unosi checkout, pa se torta ovdje samo sastavi i doda u korpu.
 // Ukusi su torte iz ponude (baza), a veličine njihove opcije, pa se veličine mijenjaju sa ukusom.
@@ -81,19 +81,6 @@ function PhotoUpload({ t, photos, uploading, error, onFiles, onRemove }) {
   );
 }
 
-function Toggle({ label, hint, checked, onChange }) {
-  return (
-    <label className="mb-4 flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-line bg-cream p-4">
-      <span className="flex flex-col gap-1">
-        <strong className="text-sm text-ink">{label}</strong>
-        <small className="text-xs text-muted">{hint}</small>
-      </span>
-      <input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="peer sr-only" />
-      <span className="relative h-6 w-10 flex-none rounded-full bg-line transition-colors peer-checked:bg-primary after:absolute after:top-0.5 after:left-0.5 after:size-5 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4" />
-    </label>
-  );
-}
-
 // Najniža poznata cijena torte, za "od 15 €" na kartici ukusa. null kad su sve opcije po dogovoru.
 function lowestPrice(cake) {
   const prices = cake.options.map((option) => option.price).filter((price) => price !== null);
@@ -109,7 +96,6 @@ export default function CakeBuilder({ cakes }) {
   const [step, setStep] = useState(1);
   const [cakeId, setCakeId] = useState(cakes[0]?.id);
   const [optionId, setOptionId] = useState(cakes[0]?.options[0]?.id);
-  const [photo, setPhoto] = useState(false);
   const [photos, setPhotos] = useState([]); // linkovi poslatih slika
   const [uploading, setUploading] = useState(false);
   const [photoError, setPhotoError] = useState("");
@@ -128,7 +114,6 @@ export default function CakeBuilder({ cakes }) {
       setStep(1);
       setCakeId(cakes[0]?.id);
       setOptionId(cakes[0]?.options[0]?.id);
-      setPhoto(false);
       setPhotos([]);
       setPhotoError("");
       setInscription("");
@@ -155,8 +140,8 @@ export default function CakeBuilder({ cakes }) {
     );
   }
 
-  const total = customCakePrice(option.price, photo);
-  const phonePricing = total === null || needsPhonePricing({ wishes });
+  const total = option.price;
+  const phonePricing = total === null || needsPhonePricing({ wishes, photos });
   const optionLabel = tProducts(`options.${option.key}`);
   const servings = (entry) => (entry.servings ? tProducts("servings", { count: entry.servings }) : "");
 
@@ -196,7 +181,7 @@ export default function CakeBuilder({ cakes }) {
       kind: "cake",
       name: cake.name,
       option: optionLabel,
-      image: photo && photos[0] ? photos[0] : cake.image, // prva slika kupca se vidi u korpi, inače slika torte
+      image: cake.image, // fotografije kupca se u korpi vide posebno, ispod torte
       quantity: 1,
       unitPrice: total ?? undefined,
       phonePrice: phonePricing,
@@ -204,8 +189,7 @@ export default function CakeBuilder({ cakes }) {
       custom: {
         itemId: cake.id,
         optionId: option.id,
-        photo,
-        photos: photo ? photos : [],
+        photos,
         inscription: inscription.trim() || undefined,
         wishes: wishes.trim() || undefined,
         fasting,
@@ -316,22 +300,20 @@ export default function CakeBuilder({ cakes }) {
             {step === 2 && (
               <>
                 <h2 className="mb-6 font-serif text-3xl text-ink">{t("decorationTitle")}</h2>
-                <Toggle
-                  label={t("photoLabel")}
-                  hint={t("photoHint", { price: money(PHOTO_EXTRA) })}
-                  checked={photo}
-                  onChange={setPhoto}
+                <div className="mb-2 flex flex-col gap-1 text-xs font-semibold text-ink">
+                  <span>
+                    {t("photoLabel")} <small className="font-normal text-muted">{t("optional")}</small>
+                  </span>
+                  <small className="font-normal text-muted">{t("photoHint")}</small>
+                </div>
+                <PhotoUpload
+                  t={t}
+                  photos={photos}
+                  uploading={uploading}
+                  error={photoError}
+                  onFiles={addFiles}
+                  onRemove={(url) => setPhotos((current) => current.filter((entry) => entry !== url))}
                 />
-                {photo && (
-                  <PhotoUpload
-                    t={t}
-                    photos={photos}
-                    uploading={uploading}
-                    error={photoError}
-                    onFiles={addFiles}
-                    onRemove={(url) => setPhotos((current) => current.filter((entry) => entry !== url))}
-                  />
-                )}
 
                 <label className="mb-5 flex flex-col gap-2 text-xs font-semibold text-ink">
                   {t("inscription")} <small className="font-normal text-muted">{t("optional")}</small>
@@ -408,10 +390,10 @@ export default function CakeBuilder({ cakes }) {
             </span>
             <strong className="font-medium text-white">{option.price === null ? t("onRequest") : money(option.price)}</strong>
           </div>
-          {photo && (
+          {photos.length > 0 && (
             <div className="flex justify-between gap-3 border-b border-white/15 py-3 text-xs text-white/70">
               <span>{t("photo")}</span>
-              <strong className="font-medium text-white">+{money(PHOTO_EXTRA)}</strong>
+              <strong className="font-medium text-white">{photos.length}</strong>
             </div>
           )}
 

@@ -10,7 +10,6 @@ import { eyebrow, fieldInput, linkBtn, page } from "@/components/styles";
 import { formatPrice } from "@/lib/format";
 import { canOptimize } from "@/lib/images";
 import { pickupTimes, tomorrowISO } from "@/lib/date";
-import { PHOTO_EXTRA } from "@/data/cakeBuilder";
 import { Link } from "@/i18n/navigation";
 
 const PHONE = "+38268210652";
@@ -18,7 +17,6 @@ const PHONE_LABEL = "+382 68 210 652";
 
 export default function CheckoutView() {
   const t = useTranslations("Checkout");
-  const tCake = useTranslations("CakeBuilder");
   const locale = useLocale();
   const { items, total, hasPhonePrice, updateQuantity, removeItem, clear } = useCart();
   const [date, setDate] = useState("");
@@ -145,15 +143,12 @@ export default function CheckoutView() {
                     {item.option}
                     {item.unitPrice === undefined
                       ? ` · ${t("priceOnRequestLine")}`
-                      : item.custom?.photo
-                        ? // Torta sa slikom: osnovna cijena + doplata za sliku, npr. "Mala · 15 € + 5 € fotografija"
-                          ` · ${formatPrice(item.unitPrice - PHOTO_EXTRA, locale)} + ${formatPrice(PHOTO_EXTRA, locale)} ${tCake("photo").toLowerCase()}`
-                        : ` · ${formatPrice(item.unitPrice, locale)}`}
+                      : ` · ${formatPrice(item.unitPrice, locale)}`}
                   </p>
                   {item.summary && <p className="mt-1 text-xs text-muted">{item.summary}</p>}
-                  {item.custom?.photos?.length > 1 && (
+                  {item.custom?.photos?.length > 0 && (
                     <div className="mt-2 flex gap-1.5">
-                      {item.custom.photos.slice(1).map((url) => (
+                      {item.custom.photos.map((url) => (
                         <img key={url} src={url} alt="" className="size-10 rounded-md object-cover" />
                       ))}
                     </div>

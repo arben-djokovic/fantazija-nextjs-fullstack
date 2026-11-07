@@ -225,8 +225,8 @@
       }
     },
     "decorationTitle": "Decoration & details",
-    "photoLabel": "Photo on the cake",
-    "photoHint": "Add the photo you want on the cake (+{price})",
+    "photoLabel": "Photos",
+    "photoHint": "A photo you want on the cake or an example of the decoration. We then agree the price by phone.",
     "addPhoto": "Add a photo",
     "photoUploading": "Uploading photo...",
     "photoError": "The photo was not uploaded. Make sure it is an image (JPG, PNG, WEBP) up to 5 MB and try again.",
@@ -245,7 +245,7 @@
     "summaryTitle": "Order summary",
     "estimated": "Estimated price",
     "phonePricing": "Price agreed by phone",
-    "photo": "Photo",
+    "photo": "Photos",
     "specialCake": "Special cake",
     "noCakes": "There are no cakes to choose from right now. Call us and we will arrange a cake to your wishes."
   },
