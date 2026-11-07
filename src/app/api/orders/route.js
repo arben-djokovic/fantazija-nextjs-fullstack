@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+import { after } from "next/server";
 import { OrderError, createOrder } from "@/lib/orders";
+import { sendNewOrderEmail } from "@/lib/orderEmail";
 
 // Slanje narudžbe iz checkout-a: POST /api/orders
 export async function POST(request) {
@@ -12,6 +14,14 @@ export async function POST(request) {
 
   try {
     const order = await createOrder(body);
+    // Mejl vlasniku ide nakon odgovora: kupac ne čeka, a narudžba je sačuvana i ako slanje ne uspije.
+    after(async () => {
+      try {
+        await sendNewOrderEmail(order.toObject());
+      } catch (error) {
+        console.error("Mejl o novoj narudžbi nije poslat:", error);
+      }
+    });
     return Response.json({ orderId: order._id.toString() }, { status: 201 });
   } catch (error) {
     if (error instanceof OrderError) {

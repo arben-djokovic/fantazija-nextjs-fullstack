@@ -100,6 +100,12 @@ BUCKET_NAME=your-bucket-name
 BUCKET_REGION=eu-north-1
 AWS_ACCESS_KEY_ID=your-access-key-id
 AWS_SECRET_ACCESS_KEY=your-secret-access-key
+
+# Resend: email to the owner for every new order (skipped when RESEND_API_KEY is missing)
+RESEND_API_KEY=re_your_api_key
+ORDER_EMAIL_TO=you@example.com
+# Optional, must be on the domain verified in Resend
+ORDER_EMAIL_FROM="Fantazija narudžbe <narudzbe@fantazija.me>"
 ```
 
 To generate a session secret:
