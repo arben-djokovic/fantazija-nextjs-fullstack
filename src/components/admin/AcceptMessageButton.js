@@ -14,10 +14,18 @@ export function acceptMessage(locale) {
   return ACCEPT_MESSAGES[locale] ?? ACCEPT_MESSAGES.me;
 }
 
-// Koliko se čeka da Viber preuzme ekran prije nego što se otvori SMS.
-const VIBER_TIMEOUT = 1500;
+// Koliko se čeka da Viber preuzme ekran prije nego što se otvori SMS. Na Androidu se Viber zna otvarati sporije.
+const VIBER_TIMEOUT = 2500;
 
-const viberLink = (phone, text) => `viber://chat?number=${encodeURIComponent(phone)}&draft=${encodeURIComponent(text)}`;
+// iPhone/iPad (i iPad koji se predstavlja kao Mac).
+const isIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+// Viber na iPhone-u ne prepoznaje broj sa enkodovanim plusom ("%2B382...") i javlja "Requested page is unavailable",
+// pa tamo ide samo cifre (382...). Android i kompjuter rade sa "+".
+const viberLink = (phone, text) => {
+  const number = isIOS() ? phone.replace(/^\+/, "") : phone;
+  return `viber://chat?number=${encodeURIComponent(number)}&draft=${encodeURIComponent(text)}`;
+};
 // U sms: je broj dio adrese, ne parametar, i neki telefoni ne prepoznaju "%2B" umjesto "+".
 // normalizePhone ionako vraća samo "+" i cifre, pa je bezbjedan i bez enkodovanja.
 const smsLink = (phone, text) => `sms:${phone}?&body=${encodeURIComponent(text)}`;
@@ -46,17 +54,25 @@ export default function AcceptMessageButton({ phone, viber, locale }) {
       return;
     }
 
-    // Kad se Viber otvori, stranica pređe u pozadinu. Ako ostane vidljiva, Viber nije instaliran, pa ide SMS.
+    // Kad se Viber otvori, stranica izgubi fokus i pređe u pozadinu. Ako se ništa od toga ne desi, Viber nije
+    // instaliran, pa ide SMS. blur i pagehide stižu ranije od visibilitychange (Android), pa se prate sva tri.
     let left = false;
+    const markLeft = () => {
+      left = true;
+    };
     const onVisibility = () => {
       if (document.visibilityState === "hidden") left = true;
     };
+    window.addEventListener("blur", markLeft);
+    window.addEventListener("pagehide", markLeft);
     document.addEventListener("visibilitychange", onVisibility);
     window.location.href = viberLink(number, text);
 
     setTimeout(() => {
+      window.removeEventListener("blur", markLeft);
+      window.removeEventListener("pagehide", markLeft);
       document.removeEventListener("visibilitychange", onVisibility);
-      if (!left && document.visibilityState === "visible") window.location.href = smsLink(number, text);
+      if (!left && document.visibilityState === "visible" && document.hasFocus()) window.location.href = smsLink(number, text);
       setOpening(false);
     }, VIBER_TIMEOUT);
   };
